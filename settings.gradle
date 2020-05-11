@@ -1,0 +1,5 @@
+rootProject.name='Workbench'
+include ':app'
+include ':common'
+include ':main'
+include ':home'
