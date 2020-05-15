@@ -1,5 +1,5 @@
 rootProject.name='Workbench'
 include ':app'
-include ':common'
-include ':main'
-include ':home'
+include ':lib_common'
+include ':module_main'
+include ':module_home'
