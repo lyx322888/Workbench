@@ -3,13 +3,10 @@ package com.zpz.common.base;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
 import com.zpz.common.utils.ActivityManager;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 

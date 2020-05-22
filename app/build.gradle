@@ -18,7 +18,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    repositories {
 
+        flatDir {
+            dirs 'libs' //this way we can find the .aar file in libs folder
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
