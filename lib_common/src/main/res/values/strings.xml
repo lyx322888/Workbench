@@ -1,1 +1,3 @@
-<resources></resources>
+<resources>
+    <string name="main_gh">工号:</string>
+</resources>

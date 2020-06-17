@@ -17,9 +17,7 @@ import com.zpz.common.base.BaseApplication;
  */
 public class ToastUitl {
 
-
     private static Toast toast;
-    private static Toast toast2;
 
     private static Toast initToast(CharSequence message, int duration) {
         if (toast == null) {

@@ -3,14 +3,19 @@ package com.zpz.common.api;
 import android.content.Intent;
 import android.util.Log;
 
-
+import com.alibaba.android.arouter.core.LogisticsCenter;
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseApplication;
+import com.zpz.common.base.MyARouter;
+import com.zpz.common.utils.AppManager;
 import com.zpz.common.utils.NetWorkUtils;
+import com.zpz.common.utils.SPUtils;
 import com.zpz.common.utils.ToastUitl;
+import com.zpz.common.view.dalog.LoadingDialog;
 
-import org.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,7 +28,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class MyHttp {
-    private int opNum;
 
     public MyHttp() {
     }
@@ -37,15 +41,38 @@ public class MyHttp {
                     }
 
                     @Override
-                    public void onNext(JSONObject jsonObject) {
+                    public void onNext(JSONObject result) {
+                        switch (result.getInteger("state")){
+                            case 0:
+                                //失败
+                                ToastUitl.showShort(result.getString("msg"));
+                                listener.onError(0);
+                                break;
+                            case 1:
+                                //成功
+                                listener.onSuccess(result);
+                                break;
+                            case 2:
+                                //请先登录
+                                Postcard postcard = ARouter.getInstance().build(MyARouter.LoginActivity);
+                                LogisticsCenter.completion(postcard);
+                                if (!AppManager.getAppManager().isOpenActivity(postcard.getDestination()))
+                                ToastUitl.showShort("请先登录");
+                                SPUtils.setSharedBooleanData(BaseApplication.getInstance(), AppConfig.LOGIN_STATE, false);
+                                SPUtils.setSharedStringData(BaseApplication.getInstance(), AppConfig.LOGIN_TOKEN, "");
+//                                AppManager.getAppManager().finishAllExpectSpecifiedActivity(postcard.getDestination());
+                                AppManager.getAppManager().finishAllActivity();
+                                ARouter.getInstance().build(MyARouter.LoginActivity).navigation();
 
+                                break;
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("dfdf", "onError: "+e );
                         //请求错误
-//                LoadingDialog.cancelDialogForLoading();
+                        LoadingDialog.cancelDialogForLoading();
                         if (!NetWorkUtils.isNetConnected(BaseApplication.getInstance())) {
                             //网络
                             listener.onError(AppConfig.ERROR_STATE.NO_NETWORK);
@@ -58,8 +85,8 @@ public class MyHttp {
 
                     @Override
                     public void onComplete() {
-                        //请求完成
-//                LoadingDialog.cancelDialogForLoading();
+                        LoadingDialog.cancelDialogForLoading();
+                        listener.onFinish();
                     }
                 });
     }

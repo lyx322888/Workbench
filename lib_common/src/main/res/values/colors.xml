@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="backgroundColor">#f9f9f9</color><!--背景颜色-->
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#ffffff</color><!--白色 -->
     <color name="black">#000</color><!--黑色 -->
-    <color name="appColor">#812A12</color><!--黑色 -->
+    <color name="appColor">#812A12</color><!--主题颜色-->
+    <color name="appFontColor">#8D3E29</color><!--主题字体颜色-->
+    <color name="userHead">#F4ECEA</color><!--头像边框-->
+    <color name="grayEt">#F7F7FB</color><!--文本框背景-->
+    <color name="grayEtTitleFont">#69707F</color><!--文本框标题-->
+    <color name="grayEtContentFont">#1D1E2C</color><!--文本框字体-->
+    <color name="grayEtHintFont">#929292</color><!--文本框提示字体-->
+    <color name="grayTs">#AEADAD</color><!--提示-->
+    <color name="gray89">#898989</color>
+    <color name="fgx">#f4f2f2</color>
+    <color name="gztfontColor">#0D812A12</color>
+    <color name="tabtitleColor">#2C2C2C</color>
 </resources>

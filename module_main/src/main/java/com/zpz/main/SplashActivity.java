@@ -3,15 +3,19 @@ package com.zpz.main;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.os.Bundle;
 
 
 import androidx.annotation.NonNull;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseActivity;
+import com.zpz.common.base.DataBindingConfig;
+import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.PermissioinSettingPage;
 import com.zpz.common.utils.RxUtils;
-import com.zpz.main.databinding.ActivitySplashBinding;
+import com.zpz.common.utils.SPUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -24,16 +28,28 @@ import permissions.dispatcher.RuntimePermissions;
 
 //启动页
 @RuntimePermissions
-public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
+public class SplashActivity extends BaseActivity {
+
 
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_splash;
+    protected void initViewModel() {
+
     }
 
     @Override
-    public void initView() {
-        RxUtils.countdown(2, new Observer<Long>() {
+    protected DataBindingConfig getDataBindingConfig() {
+        return new DataBindingConfig(R.layout.activity_splash);
+    }
+
+    @Override
+    protected void setStatubarColor( ) {
+//        Sofia.with(this).invasionStatusBar();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RxUtils.countdown(1, new Observer<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
                 addDisposable(d);
@@ -54,13 +70,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
                 SplashActivityPermissionsDispatcher.showMainContentWithPermissionCheck(SplashActivity.this);
             }
         });
-    }
-
-    @Override
-    public void fillData() {
 
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -70,7 +81,11 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showMainContent() {
-        startActivity(new Intent(mContext, MainActivity.class));
+        if (SPUtils.getSharedBooleanData(this, AppConfig.LOGIN_STATE)){
+            ARouter.getInstance().build(MyARouter.MainActivity).navigation();
+        }else {
+            ARouter.getInstance().build(MyARouter.LoginActivity).navigation();
+        }
         finish();
     }
 

@@ -1,41 +1,78 @@
 package com.zpz.common.base;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import com.zpz.common.utils.ActivityManager;
+import android.os.IBinder;
+import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
+import com.yanzhenjie.sofia.Sofia;
+import com.zpz.common.R;
+import com.zpz.common.utils.AppManager;
+import com.zpz.common.utils.CommonUtils;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
-    protected V mbinding;
+public abstract class BaseActivity extends AppCompatActivity {
     private CompositeDisposable compositeDisposable ;//统一管理Rx的Disposable
     public Context mContext;
+    private ViewDataBinding mbinding;
+    private ViewModelProvider mActivityProvider;
     protected Activity mActivity;
+    protected abstract void initViewModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mbinding = DataBindingUtil.setContentView(this,getLayoutId());
+
+        initViewModel();
+        DataBindingConfig dataBindingConfig = getDataBindingConfig();
+        ViewDataBinding binding = DataBindingUtil.setContentView(this, dataBindingConfig.getLayout());
+        binding.setLifecycleOwner(this);
+        SparseArray bindingParams = dataBindingConfig.getBindingParams();
+        for (int i = 0, length = bindingParams.size(); i < length; i++) {
+            binding.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i));
+        }
+        mbinding = binding;
+
+        setStatubarColor();
         mContext = this;
         mActivity = this;
-        ActivityManager.addActivity(this);
-        this.initView();
-        this.fillData();
+        AppManager.getAppManager().addActivity(this);
     }
-    //获取布局文件
-    public abstract int getLayoutId();
-    //初始化view
-    public abstract void initView();
-    //加载网络数据
-    public abstract void fillData();
+
+
+    protected abstract DataBindingConfig getDataBindingConfig();
+
+    protected void setStatubarColor(){
+        Sofia.with(this).statusBarDarkFont().statusBarBackground(CommonUtils.getColor(R.color.white));
+    }
+
+    /**
+     * TODO tip: 警惕使用。非必要情况下，尽可能不在子类中拿到 binding 实例乃至获取 view 实例。使用即埋下隐患。
+     * 目前的方案是在 debug 模式下，对获取实例的情况给予提示。
+     * <p>
+     * @return
+     */
+    protected ViewDataBinding getBinding() {
+        return mbinding;
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityManager.removeActivity(this);
+        AppManager.getAppManager().removeActivity(this);
         //注销
         if (compositeDisposable!=null&&!compositeDisposable.isDisposed()){
             compositeDisposable.dispose();
@@ -43,6 +80,50 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         //解绑
         if (mbinding !=null){
             mbinding.unbind();
+        }
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideKeyboard(v, ev)) {
+                hideKeyboard(v.getWindowToken());
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+     *
+     * @param v
+     * @param event
+     * @return
+     */
+    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0],
+                    top = l[1],
+                    bottom = top + v.getHeight(),
+                    right = left + v.getWidth();
+            return !(event.getX() > left) || !(event.getX() < right)
+                    || !(event.getY() > top) || !(event.getY() < bottom);
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
+        return false;
+    }
+
+    /**
+     * 获取InputMethodManager，隐藏软键盘
+     *
+     * @param token
+     */
+    private void hideKeyboard(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
@@ -54,5 +135,12 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         }else {
             compositeDisposable.add(disposable);
         }
+    }
+
+    protected <T extends ViewModel> T getActivityViewModel(@NonNull Class<T> modelClass) {
+        if (mActivityProvider == null) {
+            mActivityProvider = new ViewModelProvider(this);
+        }
+        return mActivityProvider.get(modelClass);
     }
 }

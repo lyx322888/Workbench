@@ -6,8 +6,6 @@ import android.view.View;
 import androidx.databinding.DataBinderMapper;
 import androidx.databinding.DataBindingComponent;
 import androidx.databinding.ViewDataBinding;
-import com.zpz.workbench.databinding.MainBindingImpl;
-import java.lang.IllegalArgumentException;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -18,12 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DataBinderMapperImpl extends DataBinderMapper {
-  private static final int LAYOUT_ACTIVITYMAIN = 1;
-
-  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(1);
+  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(0);
 
   static {
-    INTERNAL_LAYOUT_ID_LOOKUP.put(com.zpz.workbench.R.layout.activity_main, LAYOUT_ACTIVITYMAIN);
   }
 
   @Override
@@ -33,14 +28,6 @@ public class DataBinderMapperImpl extends DataBinderMapper {
       final Object tag = view.getTag();
       if(tag == null) {
         throw new RuntimeException("view must have a tag");
-      }
-      switch(localizedLayoutId) {
-        case  LAYOUT_ACTIVITYMAIN: {
-          if ("layout/activity_main_0".equals(tag)) {
-            return new MainBindingImpl(component, view);
-          }
-          throw new IllegalArgumentException("The tag for activity_main is invalid. Received: " + tag);
-        }
       }
     }
     return null;
@@ -89,18 +76,19 @@ public class DataBinderMapperImpl extends DataBinderMapper {
   }
 
   private static class InnerBrLookup {
-    static final SparseArray<String> sKeys = new SparseArray<String>(1);
+    static final SparseArray<String> sKeys = new SparseArray<String>(3);
 
     static {
       sKeys.put(0, "_all");
+      sKeys.put(1, "click");
+      sKeys.put(2, "vm");
     }
   }
 
   private static class InnerLayoutIdLookup {
-    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(1);
+    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(0);
 
     static {
-      sKeys.put("layout/activity_main_0", com.zpz.workbench.R.layout.activity_main);
     }
   }
 }

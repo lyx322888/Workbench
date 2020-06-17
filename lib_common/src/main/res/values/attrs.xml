@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageViewMy">
+        <attr name="bor_width" format="dimension" />
+        <attr name="bor_color" format="color" />
+    </declare-styleable>
+</resources>

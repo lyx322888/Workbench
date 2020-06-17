@@ -1,20 +1,13 @@
 package com.zpz.common.api;
-
 import android.text.TextUtils;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-
 import com.zpz.common.BuildConfig;
 import com.zpz.common.api.fastjson.FastJsonConverterFactory;
 import com.zpz.common.base.BaseApplication;
 import com.zpz.common.utils.NetWorkUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -23,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 /**
  * Created by wushenghui on 2017/6/20.
  */
@@ -99,7 +92,7 @@ public class Api {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(FastJsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(ApiConstants.baseUrl)
                 .build();
         movieService = retrofit.create(ApiService.class);
@@ -118,7 +111,7 @@ public class Api {
      */
     private OkHttpClient.Builder getMyOkHttpClient() {
         final OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.IS_DEBUG) {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
