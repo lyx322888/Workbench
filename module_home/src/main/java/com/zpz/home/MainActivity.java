@@ -16,28 +16,35 @@ import com.zpz.home.databinding.HomeBinding;
 import com.zpz.home.vm.MainViewModel;
 
 @Route(path = MyARouter.MainActivity)
-public class MainActivity extends BaseActivity {
-    private MainViewModel mainViewModel;
+public class MainActivity extends BaseActivity<MainViewModel> {
+
+    private UserViewModel userViewModel;
 
     @Override
     protected void initViewModel() {
-        mainViewModel = getActivityViewModel(MainViewModel.class);
-        UserViewModel userViewModel = getActivityViewModel(UserViewModel.class);
+        super.initViewModel();
+        userViewModel = getActivityViewModel(UserViewModel.class);
+    }
+
+    @Override
+    protected void initData() {
+        userViewModel.requesUserInfo(InfoUtils.getToken());
+        viewModel.requesIndexNotice();
+
         userViewModel.getUserInfo().observe(this, new Observer<UserInfoBean>() {
             @Override
             public void onChanged(UserInfoBean userInfoBean) {
-                mainViewModel.mutableLiveData.setValue(userInfoBean);
+                viewModel.mutableLiveData.setValue(userInfoBean);
             }
         });
-        userViewModel.requesUserInfo(InfoUtils.getToken());
-        mainViewModel.requesIndexNotice();
+
     }
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
         return new DataBindingConfig(R.layout.activity_home)
-                .addBindingParam(BR.vm,mainViewModel)
-                .addBindingParam(BR.click,new ClickProxy());
+                .addBindingParam(BR.vm,viewModel)
+                .addBindingParam(BR.click, new ClickProxy());
     }
 
     @Override
@@ -48,7 +55,7 @@ public class MainActivity extends BaseActivity {
     }
 
     //点击事件
-    public class ClickProxy{
+    public  class ClickProxy{
         //企业初审
         public void jumpQycs(View view){
             ToastUitl.showShort("vd");
@@ -56,6 +63,10 @@ public class MainActivity extends BaseActivity {
         //设置
         public void jumpSetting(){
             ARouter.getInstance().build(MyARouter.SetingActivity).navigation();
+        }
+        //建档
+        public void bookbuilding(){
+
         }
     }
 }

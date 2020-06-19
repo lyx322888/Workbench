@@ -163,10 +163,24 @@
                                     android:layout_height="wrap_content"/>
                             </LinearLayout>
                             <LinearLayout
+                                android:orientation="vertical"
+                                android:gravity="center"
                                 android:layout_centerHorizontal="true"
                                 android:layout_width="96dp"
+                                android:onClick="@{()->click.bookbuilding()}"
                                 android:background="@drawable/line_w_radius15"
                                 android:layout_height="96dp">
+                                <ImageView
+                                    android:src="@mipmap/ic_qycs"
+                                    android:layout_width="28dp"
+                                    android:layout_height="33dp"/>
+                                <TextView
+                                    android:layout_marginTop="10dp"
+                                    android:text="建档"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/tabtitleColor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_alignParentEnd="true"

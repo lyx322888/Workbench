@@ -1,4 +1,4 @@
-package com.zpz.main;
+package com.zpz.main.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -16,6 +16,8 @@ import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.PermissioinSettingPage;
 import com.zpz.common.utils.RxUtils;
 import com.zpz.common.utils.SPUtils;
+import com.zpz.main.R;
+import com.zpz.main.vm.SplashViewModel;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -28,13 +30,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 //启动页
 @RuntimePermissions
-public class SplashActivity extends BaseActivity {
-
-
-    @Override
-    protected void initViewModel() {
-
-    }
+public class SplashActivity extends BaseActivity<SplashViewModel> {
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
@@ -44,6 +40,11 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void setStatubarColor( ) {
 //        Sofia.with(this).invasionStatusBar();
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @Override

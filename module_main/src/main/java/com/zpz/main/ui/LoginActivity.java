@@ -1,7 +1,6 @@
-package com.zpz.main;
+package com.zpz.main.ui;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.Observer;
@@ -17,34 +16,33 @@ import com.zpz.common.bean.LoginBean;
 import com.zpz.common.utils.SPUtils;
 import com.zpz.common.utils.ToastUitl;
 import com.zpz.common.view.dalog.LoadingDialog;
+import com.zpz.main.BR;
+import com.zpz.main.R;
 import com.zpz.main.vm.LoginViewModel;
 
 //登录
 @Route(path = MyARouter.LoginActivity)
-public class LoginActivity extends BaseActivity  {
-    private LoginViewModel loginViewModel;
+public class LoginActivity extends BaseActivity<LoginViewModel>  {
 
     @Override
-    protected void initViewModel() {
-        loginViewModel = getActivityViewModel(LoginViewModel.class);
-        loginViewModel.name.set(SPUtils.getSharedStringData(mContext, AppConfig.LOGIN_MOBILE));
-        loginViewModel.getLoginBeanMutableLiveData().observe(this, new Observer<LoginBean>() {
+    protected void initData() {
+        viewModel.name.set(SPUtils.getSharedStringData(mContext, AppConfig.LOGIN_MOBILE));
+        viewModel.getLoginBeanMutableLiveData().observe(this, new Observer<LoginBean>() {
             @Override
             public void onChanged(LoginBean loginBean) {
                 SPUtils.setSharedBooleanData(mContext, AppConfig.LOGIN_STATE, true);
                 SPUtils.setSharedStringData(mContext, AppConfig.LOGIN_TOKEN, loginBean.getData().getLogin_token());
-                SPUtils.setSharedStringData(mContext, AppConfig.LOGIN_MOBILE, loginViewModel.name.get());
+                SPUtils.setSharedStringData(mContext, AppConfig.LOGIN_MOBILE, viewModel.name.get());
                 finish();
                 ARouter.getInstance().build(MyARouter.MainActivity).navigation();
             }
         });
-
     }
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
         return new DataBindingConfig(R.layout.activity_login)
-                .addBindingParam(BR.vm,loginViewModel)
+                .addBindingParam(BR.vm,viewModel)
                 .addBindingParam(BR.click,new ClickProxy());
     }
 
@@ -57,16 +55,16 @@ public class LoginActivity extends BaseActivity  {
     public class ClickProxy{
         //登录
         public void doLogin(View view){
-            if (TextUtils.isEmpty(loginViewModel.name.get())) {
+            if (TextUtils.isEmpty(viewModel.name.get())) {
                 ToastUitl.showShort("请输入账号");
                 return;
             }
-            if (TextUtils.isEmpty(loginViewModel.password.get()) ) {
+            if (TextUtils.isEmpty(viewModel.password.get()) ) {
                 ToastUitl.showShort("请输入账号密码");
                 return;
             }
             LoadingDialog.showDialogForLoading(mActivity,"登录中...",false);
-            loginViewModel.requesLoginBean();
+            viewModel.requesLoginBean();
         }
     }
 

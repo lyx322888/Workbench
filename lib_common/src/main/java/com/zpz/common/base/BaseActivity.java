@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,21 +23,34 @@ import com.zpz.common.R;
 import com.zpz.common.utils.AppManager;
 import com.zpz.common.utils.CommonUtils;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatActivity {
+    protected VM viewModel;
     private CompositeDisposable compositeDisposable ;//统一管理Rx的Disposable
     public Context mContext;
     private ViewDataBinding mbinding;
     private ViewModelProvider mActivityProvider;
     protected Activity mActivity;
-    protected abstract void initViewModel();
+    protected abstract void initData();
+    protected abstract DataBindingConfig getDataBindingConfig();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         initViewModel();
+        initBinding();
+        setStatubarColor();
+        mContext = this;
+        mActivity = this;
+        AppManager.getAppManager().addActivity(this);
+        initData();
+    }
+    //绑定binding
+    private void initBinding(){
         DataBindingConfig dataBindingConfig = getDataBindingConfig();
         ViewDataBinding binding = DataBindingUtil.setContentView(this, dataBindingConfig.getLayout());
         binding.setLifecycleOwner(this);
@@ -45,18 +59,35 @@ public abstract class BaseActivity extends AppCompatActivity {
             binding.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i));
         }
         mbinding = binding;
-
-        setStatubarColor();
-        mContext = this;
-        mActivity = this;
-        AppManager.getAppManager().addActivity(this);
     }
 
-
-    protected abstract DataBindingConfig getDataBindingConfig();
-
+    //设置状态栏
     protected void setStatubarColor(){
         Sofia.with(this).statusBarDarkFont().statusBarBackground(CommonUtils.getColor(R.color.white));
+    }
+
+    //初始化viewmodel
+    protected  void initViewModel(){
+        if (viewModel == null) {
+            Class modelClass;
+            Type type = getClass().getGenericSuperclass();
+            if (type instanceof ParameterizedType) {
+                modelClass = (Class) ((ParameterizedType) type).getActualTypeArguments()[0];
+            } else {
+                //如果没有指定泛型参数，则默认使用BaseViewModel
+                modelClass = BaseViewModel.class;
+            }
+            viewModel = (VM) getActivityViewModel( modelClass);
+        }
+        //标题栏
+        if ((viewModel instanceof ToolBarViewModel)){
+            ((ToolBarViewModel)viewModel).getOnBackPressedEvent().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean b) {
+                    mActivity.onBackPressed();
+                }
+            });
+        }
     }
 
     /**

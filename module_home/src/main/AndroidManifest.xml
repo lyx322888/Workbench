@@ -3,7 +3,7 @@
     package="com.zpz.home">
 
     <application>
-        <activity android:name=".ui.SetingActivity"/>
+        <activity android:name=".ui.SettingActivity"/>
         <activity android:name=".MainActivity" />
     </application>
 

@@ -18,7 +18,6 @@ package com.zpz.common.base;
 
 import android.util.SparseArray;
 
-import androidx.lifecycle.ViewModel;
 
 /**
  * TODO tip:

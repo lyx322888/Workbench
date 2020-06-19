@@ -1,15 +1,20 @@
 package com.zpz.common.base.binding;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toolbar;
 
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.BindingConversion;
 
 import com.jakewharton.rxbinding2.view.RxView;
+import com.zpz.common.base.BaseViewModel;
+import com.zpz.common.base.ToolBarViewModel;
 import com.zpz.common.utils.GlideUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -69,4 +74,19 @@ public class CommonBindingAdapter {
     public static ColorDrawable convertColorToDrawable(int color) {
         return new ColorDrawable(color);
     }
+
+    //返回键
+    @SuppressLint("CheckResult")
+    @BindingAdapter("onBackClick")
+    public static void onBackClick(final View view, final ToolBarViewModel toolBarViewModel) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toolBarViewModel!=null){
+                    toolBarViewModel.getOnBackPressedEvent().postValue(true);
+                }
+            }
+        });
+    }
+
 }

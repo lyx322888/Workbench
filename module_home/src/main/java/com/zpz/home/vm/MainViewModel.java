@@ -16,7 +16,7 @@ import com.zpz.common.utils.InfoUtils;
 public class MainViewModel extends BaseViewModel {
     public MutableLiveData<UserInfoBean> mutableLiveData = new MutableLiveData<>();
     public MutableLiveData<HomeGg> homeGgMutableLiveData = new MutableLiveData<>();
-
+    //获取公告
     public void requesIndexNotice(){
         new MyHttp().doPost(Api.getDefault().getIndexNotice(InfoUtils.getToken()), new HttpListener() {
             @Override
