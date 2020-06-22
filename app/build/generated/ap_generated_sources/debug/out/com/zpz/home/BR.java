@@ -3,9 +3,7 @@ package com.zpz.home;
 public class BR {
   public static final int _all = 0;
 
-  public static final int activity = 1;
+  public static final int click = 1;
 
-  public static final int click = 2;
-
-  public static final int vm = 3;
+  public static final int vm = 2;
 }

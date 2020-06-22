@@ -29,7 +29,7 @@ public class LoginViewModel extends BaseViewModel {
         }
         return loginBeanMutableLiveData;
     }
-    //请求
+    //登录请求
     public void requesLoginBean( ){
         HashMap<String, Object> params = new HashMap<>();
         String passwordParams = password.get();

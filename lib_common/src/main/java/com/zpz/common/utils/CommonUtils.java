@@ -50,4 +50,6 @@ public class CommonUtils {
     public static int getColor( @ColorRes int id) {
       return   ContextCompat.getColor(BaseApplication.getInstance(),id);
     }
+
+
 }

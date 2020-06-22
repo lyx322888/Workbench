@@ -15,6 +15,7 @@ import com.zpz.common.base.MyARouter;
 import com.zpz.common.bean.LoginBean;
 import com.zpz.common.utils.SPUtils;
 import com.zpz.common.utils.ToastUitl;
+import com.zpz.common.utils.UserUtils;
 import com.zpz.common.view.dalog.LoadingDialog;
 import com.zpz.main.BR;
 import com.zpz.main.R;
@@ -30,9 +31,9 @@ public class LoginActivity extends BaseActivity<LoginViewModel>  {
         viewModel.getLoginBeanMutableLiveData().observe(this, new Observer<LoginBean>() {
             @Override
             public void onChanged(LoginBean loginBean) {
-                SPUtils.setSharedBooleanData(mContext, AppConfig.LOGIN_STATE, true);
-                SPUtils.setSharedStringData(mContext, AppConfig.LOGIN_TOKEN, loginBean.getData().getLogin_token());
-                SPUtils.setSharedStringData(mContext, AppConfig.LOGIN_MOBILE, viewModel.name.get());
+                UserUtils.saveLoginState(true);
+                UserUtils.saveToken(loginBean.getData().getLogin_token());
+                UserUtils.saveMobile(viewModel.name.get());
                 finish();
                 ARouter.getInstance().build(MyARouter.MainActivity).navigation();
             }

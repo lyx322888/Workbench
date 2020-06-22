@@ -16,6 +16,7 @@ import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.PermissioinSettingPage;
 import com.zpz.common.utils.RxUtils;
 import com.zpz.common.utils.SPUtils;
+import com.zpz.common.utils.UserUtils;
 import com.zpz.main.R;
 import com.zpz.main.vm.SplashViewModel;
 
@@ -82,7 +83,7 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
 
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showMainContent() {
-        if (SPUtils.getSharedBooleanData(this, AppConfig.LOGIN_STATE)){
+        if (UserUtils.getLoginState()){
             ARouter.getInstance().build(MyARouter.MainActivity).navigation();
         }else {
             ARouter.getInstance().build(MyARouter.LoginActivity).navigation();

@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_toEndOf="@id/iv_address"
                         android:id="@+id/tv_address"
-                        android:text="@{vm.mutableLiveData.data.city_name}"
+                        android:text="@{vm.userInfo.data.city_name}"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/appFontColor"
                         android:layout_width="wrap_content"
@@ -85,12 +85,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/civ_heard"
-                    imageUrl="@{vm.mutableLiveData.data.face}"
+                    imageUrl="@{vm.userInfo.data.face}"
                     android:src="@mipmap/ic_mr_head"
                     android:layout_width="81dp"
                     android:layout_height="81dp"/>
                 <TextView
-                    android:text="@{vm.mutableLiveData.data.nickname}"
+                    android:text="@{vm.userInfo.data.nickname}"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/black"
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:text="@{@string/main_gh+vm.mutableLiveData.data.work_no}"
+                    android:text="@{@string/main_gh+vm.userInfo.data.work_no}"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/gray89"
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:layout_marginHorizontal="32dp"
-                    android:text="@{vm.homeGgMutableLiveData.data.notice}"
+                    android:text="@{vm.homeGg.data.notice}"
                     android:layout_marginTop="10dp"
                     android:maxLines="2"
                     android:ellipsize="end"
@@ -171,7 +171,7 @@
                                 android:background="@drawable/line_w_radius15"
                                 android:layout_height="96dp">
                                 <ImageView
-                                    android:src="@mipmap/ic_qycs"
+                                    android:src="@mipmap/ic_jd"
                                     android:layout_width="28dp"
                                     android:layout_height="33dp"/>
                                 <TextView

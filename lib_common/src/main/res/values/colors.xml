@@ -9,6 +9,7 @@
     <color name="titleColor">#333</color><!--黑色 -->
     <color name="appColor">#812A12</color><!--主题颜色-->
     <color name="appFontColor">#8D3E29</color><!--主题字体颜色-->
+    <color name="exitFontColor">#E40D0D</color><!--退出字体颜色-->
     <color name="userHead">#F4ECEA</color><!--头像边框-->
     <color name="grayEt">#F7F7FB</color><!--文本框背景-->
     <color name="grayEtTitleFont">#69707F</color><!--文本框标题-->

@@ -9,7 +9,6 @@ import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.bean.UserInfoBean;
-import com.zpz.common.utils.InfoUtils;
 import com.zpz.common.utils.ToastUitl;
 import com.zpz.common.vm.UserViewModel;
 import com.zpz.home.databinding.HomeBinding;
@@ -18,25 +17,9 @@ import com.zpz.home.vm.MainViewModel;
 @Route(path = MyARouter.MainActivity)
 public class MainActivity extends BaseActivity<MainViewModel> {
 
-    private UserViewModel userViewModel;
-
-    @Override
-    protected void initViewModel() {
-        super.initViewModel();
-        userViewModel = getActivityViewModel(UserViewModel.class);
-    }
-
     @Override
     protected void initData() {
-        userViewModel.requesUserInfo(InfoUtils.getToken());
-        viewModel.requesIndexNotice();
 
-        userViewModel.getUserInfo().observe(this, new Observer<UserInfoBean>() {
-            @Override
-            public void onChanged(UserInfoBean userInfoBean) {
-                viewModel.mutableLiveData.setValue(userInfoBean);
-            }
-        });
 
     }
 
