@@ -2,7 +2,6 @@ package com.zpz.main.vm;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
-
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zpz.common.api.Api;
@@ -11,11 +10,11 @@ import com.zpz.common.api.MyHttp;
 import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseViewModel;
 import com.zpz.common.bean.LoginBean;
+import com.zpz.common.utils.UserUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-
 import static com.zpz.common.utils.CommonUtils.*;
 
 public class LoginViewModel extends BaseViewModel {
@@ -28,6 +27,9 @@ public class LoginViewModel extends BaseViewModel {
             loginBeanMutableLiveData  = new MutableLiveData<>();
         }
         return loginBeanMutableLiveData;
+    }
+    {
+        name.set(UserUtils.getMobile());
     }
     //登录请求
     public void requesLoginBean( ){

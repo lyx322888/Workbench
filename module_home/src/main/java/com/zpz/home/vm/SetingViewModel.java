@@ -1,21 +1,24 @@
 package com.zpz.home.vm;
 
-import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zpz.common.api.Api;
+import com.zpz.common.api.HttpListener;
+import com.zpz.common.api.MyHttp;
 import com.zpz.common.base.BaseApplication;
 import com.zpz.common.base.ToolBarViewModel;
 import com.zpz.common.utils.APPUtil;
 import com.zpz.common.utils.UserUtils;
 
-public class SetingModel extends ToolBarViewModel {
+public class SetingViewModel extends ToolBarViewModel {
     private MutableLiveData<Boolean> loginState ;
     public ObservableField<String> versionName = new ObservableField<>();
     {
         versionName.set(APPUtil.getVersionName(BaseApplication.getInstance()));
-        title.set("设置");
+
     }
 
     public LiveData<Boolean> getLoginstate(){
@@ -24,12 +27,23 @@ public class SetingModel extends ToolBarViewModel {
         }
         return loginState;
     }
+
     //退出登录
     public void requesOutLogin(){
-        UserUtils.saveLoginState(false);
-        if (loginState!=null){
-            loginState.setValue(false);
-        }
+        new MyHttp().doPost(Api.getDefault().logout(UserUtils.getToken()), new HttpListener() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                UserUtils.saveLoginState(false);
+                if (loginState!=null){
+                    loginState.setValue(false);
+                }
+            }
+        });
+
     }
 
+    @Override
+    protected void setTitle() {
+        title.set("设置");
+    }
 }

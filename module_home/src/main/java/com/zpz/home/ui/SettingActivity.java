@@ -12,12 +12,11 @@ import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.AppManager;
-import com.zpz.common.utils.UserUtils;
 import com.zpz.home.R;
-import com.zpz.home.vm.SetingModel;
+import com.zpz.home.vm.SetingViewModel;
 
 @Route(path = MyARouter.SetingActivity)
-public class SettingActivity extends BaseActivity<SetingModel> {
+public class SettingActivity extends BaseActivity<SetingViewModel> {
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
@@ -26,7 +25,12 @@ public class SettingActivity extends BaseActivity<SetingModel> {
                 .addBindingParam(BR.click,new ClickProxy());
     }
     @Override
-    protected void initData() {
+    protected void init() {
+
+    }
+
+    @Override
+    protected void initViewObservable() {
         viewModel.getLoginstate().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

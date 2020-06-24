@@ -30,7 +30,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MyHttp {
 
     public MyHttp() {
-    }
+     }
     public void doPost(Observable<JSONObject> observable, final HttpListener listener) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -39,7 +39,6 @@ public class MyHttp {
                     public void onSubscribe(Disposable d) {
 
                     }
-
                     @Override
                     public void onNext(JSONObject result) {
                         switch (result.getInteger("state")){

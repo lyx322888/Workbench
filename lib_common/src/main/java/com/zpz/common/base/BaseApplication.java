@@ -3,6 +3,9 @@ package com.zpz.common.base;
 import android.app.Application;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.lcodecore.tkrefreshlayout.footer.BallPulseView;
+import com.lcodecore.tkrefreshlayout.header.SinaRefreshView;
 import com.zpz.common.BuildConfig;
 
 //基础app
@@ -21,12 +24,17 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         init();
+        initTwinkingRefreshlayout();
     }
 
     private void init() {
         initARouter();
     }
-
+    //设置刷新样式
+    private void initTwinkingRefreshlayout(){
+        TwinklingRefreshLayout.setDefaultHeader(SinaRefreshView.class.getName());
+        TwinklingRefreshLayout.setDefaultFooter(BallPulseView.class.getName());
+    }
     private void initARouter() {
         //是否进行ARouter调试(可以通过AppConfig.isDebug=true/false来判断日志的是否开启)
         if (BuildConfig.IS_DEBUG) {

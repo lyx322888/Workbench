@@ -1,6 +1,5 @@
 package com.zpz.home;
 import android.view.View;
-import androidx.lifecycle.Observer;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -8,9 +7,6 @@ import com.yanzhenjie.sofia.Sofia;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
-import com.zpz.common.bean.UserInfoBean;
-import com.zpz.common.utils.ToastUitl;
-import com.zpz.common.vm.UserViewModel;
 import com.zpz.home.databinding.HomeBinding;
 import com.zpz.home.vm.MainViewModel;
 
@@ -18,8 +14,12 @@ import com.zpz.home.vm.MainViewModel;
 public class MainActivity extends BaseActivity<MainViewModel> {
 
     @Override
-    protected void initData() {
+    protected void init() {
 
+    }
+
+    @Override
+    protected void initViewObservable() {
 
     }
 
@@ -41,15 +41,18 @@ public class MainActivity extends BaseActivity<MainViewModel> {
     public  class ClickProxy{
         //企业初审
         public void jumpQycs(View view){
-            ToastUitl.showShort("vd");
+            ARouter.getInstance().build(MyARouter.FirstTrialActivity).navigation();
+
         }
+
         //设置
         public void jumpSetting(){
             ARouter.getInstance().build(MyARouter.SetingActivity).navigation();
         }
+
         //建档
         public void bookbuilding(){
-
+            ARouter.getInstance().build(MyARouter.CreateProcedureActivity).navigation();
         }
     }
 }

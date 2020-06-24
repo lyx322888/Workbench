@@ -44,13 +44,7 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
     }
 
     @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init() {
         RxUtils.countdown(1, new Observer<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -72,6 +66,10 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
                 SplashActivityPermissionsDispatcher.showMainContentWithPermissionCheck(SplashActivity.this);
             }
         });
+    }
+
+    @Override
+    protected void initViewObservable() {
 
     }
 

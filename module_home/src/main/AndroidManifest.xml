@@ -3,7 +3,9 @@
     package="com.zpz.home">
 
     <application>
-        <activity android:name=".ui.SettingActivity"/>
+        <activity android:name=".ui.CreateProcedureActivity"></activity>
+        <activity android:name=".ui.FirstTrialActivity" />
+        <activity android:name=".ui.SettingActivity" />
         <activity android:name=".MainActivity" />
     </application>
 

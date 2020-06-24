@@ -1,26 +1,17 @@
 package com.zpz.common.base.binding;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toolbar;
-
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.BindingConversion;
-
 import com.jakewharton.rxbinding2.view.RxView;
-import com.zpz.common.base.BaseViewModel;
 import com.zpz.common.base.ToolBarViewModel;
 import com.zpz.common.utils.GlideUtils;
-
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.functions.Consumer;
-
 public class CommonBindingAdapter {
     //图片加载
     @BindingAdapter("imageUrl")
@@ -52,10 +43,8 @@ public class CommonBindingAdapter {
             drawable.setShape(GradientDrawable.RECTANGLE);
             drawable.setGradientType(GradientDrawable.SWEEP_GRADIENT);
         }else {
-
             try {
                 drawable = (GradientDrawable) view.getBackground();
-
             } catch (Exception e) {
                 drawable = new GradientDrawable();
                 drawable.setShape(GradientDrawable.RECTANGLE);

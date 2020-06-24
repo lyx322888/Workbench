@@ -26,8 +26,12 @@ import com.zpz.main.vm.LoginViewModel;
 public class LoginActivity extends BaseActivity<LoginViewModel>  {
 
     @Override
-    protected void initData() {
-        viewModel.name.set(SPUtils.getSharedStringData(mContext, AppConfig.LOGIN_MOBILE));
+    protected void init() {
+
+    }
+
+    @Override
+    protected void initViewObservable() {
         viewModel.getLoginBeanMutableLiveData().observe(this, new Observer<LoginBean>() {
             @Override
             public void onChanged(LoginBean loginBean) {

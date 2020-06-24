@@ -52,4 +52,9 @@
         <item name="android:layout_width">12dp</item>
         <item name="android:layout_height">12dp</item>
     </style>
+    <style name="v_fgx">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.7dp</item>
+        <item name="android:background">@color/color_gray_line</item>
+    </style>
 </resources>

@@ -145,6 +145,7 @@
                             android:layout_height="wrap_content">
                             <LinearLayout
                                 android:orientation="vertical"
+                                android:foreground="?android:attr/selectableItemBackground"
                                 android:background="@drawable/line_w_radius15"
                                 onAntiShakeClick="@{click.jumpQycs}"
                                 android:layout_width="96dp"
@@ -163,6 +164,7 @@
                                     android:layout_height="wrap_content"/>
                             </LinearLayout>
                             <LinearLayout
+                                android:foreground="?android:attr/selectableItemBackground"
                                 android:orientation="vertical"
                                 android:gravity="center"
                                 android:layout_centerHorizontal="true"

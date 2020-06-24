@@ -9,7 +9,7 @@
             type="com.zpz.home.ui.SettingActivity.ClickProxy"/>
         <variable
             name="vm"
-            type="com.zpz.home.vm.SetingModel" />
+            type="com.zpz.home.vm.SetingViewModel" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -60,7 +60,7 @@
                 <ImageView
                     style="@style/MeImgRight"
                     android:scaleType="fitCenter"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     />
             </RelativeLayout>
@@ -78,7 +78,7 @@
                 <ImageView
                     style="@style/MeImgRight"
                     android:scaleType="fitCenter"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     />
             </RelativeLayout>
@@ -96,7 +96,7 @@
                 <ImageView
                     style="@style/MeImgRight"
                     android:scaleType="fitCenter"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     />
             </RelativeLayout>

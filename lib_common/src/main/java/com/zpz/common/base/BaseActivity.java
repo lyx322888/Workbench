@@ -22,6 +22,7 @@ import com.yanzhenjie.sofia.Sofia;
 import com.zpz.common.R;
 import com.zpz.common.utils.AppManager;
 import com.zpz.common.utils.CommonUtils;
+import com.zpz.common.utils.ToastUitl;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -36,8 +37,10 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
     private ViewDataBinding mbinding;
     private ViewModelProvider mActivityProvider;
     protected Activity mActivity;
-    protected abstract void initData();
+    protected abstract void init();
+    protected abstract void initViewObservable();
     protected abstract DataBindingConfig getDataBindingConfig();
+    protected void settingTitle(){};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,8 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
         mContext = this;
         mActivity = this;
         AppManager.getAppManager().addActivity(this);
-        initData();
+        settingTitle();
+        init();
     }
     //绑定binding
     private void initBinding(){
@@ -64,6 +68,10 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
     //设置状态栏
     protected void setStatubarColor(){
         Sofia.with(this).statusBarDarkFont().statusBarBackground(CommonUtils.getColor(R.color.white));
+    }
+    //
+    protected void showShortToast(String msg) {
+        ToastUitl.showShort(msg);
     }
 
     //初始化viewmodel
