@@ -1,5 +1,6 @@
 package com.zpz.home.ui;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -33,7 +34,7 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
         binding.commonToolbar.titleRightTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.e("dfdf", "onClick: " );
             }
         });
     }
