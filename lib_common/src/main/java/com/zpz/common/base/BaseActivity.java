@@ -52,6 +52,7 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
         AppManager.getAppManager().addActivity(this);
         settingTitle();
         init();
+        initViewObservable();
     }
     //绑定binding
     private void initBinding(){

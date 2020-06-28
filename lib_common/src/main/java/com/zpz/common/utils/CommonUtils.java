@@ -1,5 +1,9 @@
 package com.zpz.common.utils;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
@@ -51,5 +55,15 @@ public class CommonUtils {
       return   ContextCompat.getColor(BaseApplication.getInstance(),id);
     }
 
-
+    /**
+     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+     *
+     * @param phoneNum 电话号码
+     */
+    public static void callPhone(Activity activity,String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        activity.startActivity(intent);
+    }
 }

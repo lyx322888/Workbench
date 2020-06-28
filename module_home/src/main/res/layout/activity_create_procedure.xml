@@ -46,7 +46,6 @@
                         android:layout_width="67dp"
                         onAntiShakeClick="@{click.uploadLogo}"
                         android:layout_centerVertical="true"
-                        android:background="@color/appColor"
                         android:layout_alignParentEnd="true"
                         android:layout_height="67dp">
                     </com.zpz.common.view.MyImagView>
@@ -70,7 +69,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="16sp"
                         android:hint="请输入企业名称"
-
+                        android:text="@={vm.creteProceddure.data.company_name}"
                         android:imeOptions="actionNext"
                         android:background="@drawable/edt_bc"
                         android:maxLines="1"
@@ -89,6 +88,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="16sp"
                         android:hint="请输入法定代表人"
+                        android:text="@={vm.creteProceddure.data.legal_person}"
                         android:imeOptions="actionNext"
                         android:background="@drawable/edt_bc"
                         android:maxLines="1"
@@ -108,8 +108,10 @@
                         android:textSize="16sp"
                         android:hint="请输入企业注册资本"
                         android:imeOptions="actionNext"
+                        android:text="@={vm.creteProceddure.data.registered_capital}"
                         android:background="@drawable/edt_bc"
                         android:maxLines="1"
+                        android:inputType="number"
                         android:paddingHorizontal="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"/>
@@ -124,6 +126,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="16sp"
                         android:gravity="center_vertical"
+                        android:text="@{Integer.toString(vm.creteProceddure.data.establish_date)}"
                         android:hint="请选择成立时间"
                         onAntiShakeClick="@{click.selectTime}"
                         android:background="@drawable/edt_bc"
@@ -151,6 +154,7 @@
                             android:textSize="16sp"
                             android:layout_centerVertical="true"
                             android:maxLines="1"
+                            android:text="@={vm.creteProceddure.data.address}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
@@ -190,6 +194,7 @@
                         android:minHeight="110dp"
                         android:hint="请输入企业简介"
                         android:imeOptions="actionNext"
+                        android:text="@={vm.creteProceddure.data.introduce_text}"
                         android:background="@drawable/edt_bc"
                         android:padding="10dp"
                         android:layout_width="match_parent"
@@ -202,13 +207,13 @@
                         <ImageView
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            onAntiShakeClick="@{click.uploadAVideo}"
                             android:background="@drawable/bg_scsp"
                             android:layout_width="match_parent"
                             android:layout_height="189dp"/>
                         <ImageView
                             android:visibility="gone"
                             android:layout_gravity="end"
-                            onAntiShakeClick="@{click.uploadAVideo}"
                             android:src="@drawable/ic_guanbi"
                             android:layout_width="18dp"
                             android:layout_height="18dp"/>

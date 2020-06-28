@@ -13,6 +13,7 @@
         android:id="@+id/trl"
         android:layout_width="match_parent"
         app:tr_autoLoadMore="true"
+        app:tr_head_height="50dp"
         android:layout_height="match_parent"
         tools:context=".fragment.FirstTrialFragment">
         <androidx.recyclerview.widget.RecyclerView

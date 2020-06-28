@@ -2,13 +2,8 @@ package com.zpz.home.fragment;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -36,6 +31,10 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
         tabFragment.setArguments(bundle);
         return tabFragment;
     }
+    @Override
+    protected DataBindingConfig getDataBindingConfig() {
+        return new DataBindingConfig(R.layout.fragment_first_trial);
+    }
 
     @Override
     protected void init() {
@@ -43,9 +42,10 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
             status = getArguments().getInt("status");
         }
         firstTrialBinding = (FragmentFirstTrialBinding) getBinding();
-        firstTrialAdapter =new FirstTrialAdapter();
+        firstTrialAdapter =new FirstTrialAdapter(status);
         firstTrialBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         firstTrialBinding.rv.setAdapter(firstTrialAdapter);
+        //刷新加载
         firstTrialBinding.trl.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
@@ -71,15 +71,9 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
                 firstTrialAdapter.setNewData(dataBeans);
                 firstTrialBinding.trl.finishRefreshing();
                 firstTrialBinding.trl.finishLoadmore();
-
             }
         });
         viewModel.requesfirstTria(status);
-    }
-
-    @Override
-    protected DataBindingConfig getDataBindingConfig() {
-        return new DataBindingConfig(R.layout.fragment_first_trial);
     }
 
 

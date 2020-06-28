@@ -74,7 +74,7 @@
             android:drawablePadding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
+        <Button
             android:id="@+id/tv_qjd"
             android:background="@drawable/bg_app_color_3"
             android:text="去建档"

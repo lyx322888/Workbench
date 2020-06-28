@@ -1,7 +1,6 @@
 package com.zpz.home.vm;
 
 import androidx.lifecycle.MutableLiveData;
-
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zpz.common.api.Api;
@@ -13,7 +12,7 @@ import com.zpz.home.baen.FirstTriaBean;
 
 import java.util.HashMap;
 import java.util.List;
-
+//初审
 public class FirstTrialFmViewModel extends BaseViewModel {
     public int page = 1;
     private MutableLiveData<List<FirstTriaBean.DataBean>> firstTriaLiveData;

@@ -61,17 +61,17 @@ public class CreteProceddureBean {
         private String company_name;
         private String logo;
         private String legal_person;
-        private int registered_capital;
+        private String registered_capital;
         private int establish_date;
-        private int address;
+        private String address;
         private int lat;
         private int lng;
-        private int introduce_text;
-        private List<?> introduce_video;
-        private List<?> introduce_img;
-        private List<?> work_environment_img;
-        private List<?> enterprise_honor_img;
-        private List<?> keep_faith_contract_img;
+        private String introduce_text;
+        private List<String> introduce_video;
+        private List<String> introduce_img;
+        private List<String> work_environment_img;
+        private List<String> enterprise_honor_img;
+        private List<String> keep_faith_contract_img;
 
         public int getCompany_id() {
             return company_id;
@@ -105,11 +105,11 @@ public class CreteProceddureBean {
             this.legal_person = legal_person;
         }
 
-        public int getRegistered_capital() {
+        public String getRegistered_capital() {
             return registered_capital;
         }
 
-        public void setRegistered_capital(int registered_capital) {
+        public void setRegistered_capital(String registered_capital) {
             this.registered_capital = registered_capital;
         }
 
@@ -121,11 +121,11 @@ public class CreteProceddureBean {
             this.establish_date = establish_date;
         }
 
-        public int getAddress() {
+        public String getAddress() {
             return address;
         }
 
-        public void setAddress(int address) {
+        public void setAddress(String address) {
             this.address = address;
         }
 
@@ -145,27 +145,27 @@ public class CreteProceddureBean {
             this.lng = lng;
         }
 
-        public int getIntroduce_text() {
+        public String getIntroduce_text() {
             return introduce_text;
         }
 
-        public void setIntroduce_text(int introduce_text) {
+        public void setIntroduce_text(String introduce_text) {
             this.introduce_text = introduce_text;
         }
 
-        public List<?> getIntroduce_video() {
+        public List<String> getIntroduce_video() {
             return introduce_video;
         }
 
-        public void setIntroduce_video(List<?> introduce_video) {
+        public void setIntroduce_video(List<String> introduce_video) {
             this.introduce_video = introduce_video;
         }
 
-        public List<?> getIntroduce_img() {
+        public List<String> getIntroduce_img() {
             return introduce_img;
         }
 
-        public void setIntroduce_img(List<?> introduce_img) {
+        public void setIntroduce_img(List<String> introduce_img) {
             this.introduce_img = introduce_img;
         }
 
@@ -173,7 +173,7 @@ public class CreteProceddureBean {
             return work_environment_img;
         }
 
-        public void setWork_environment_img(List<?> work_environment_img) {
+        public void setWork_environment_img(List<String> work_environment_img) {
             this.work_environment_img = work_environment_img;
         }
 
@@ -181,7 +181,7 @@ public class CreteProceddureBean {
             return enterprise_honor_img;
         }
 
-        public void setEnterprise_honor_img(List<?> enterprise_honor_img) {
+        public void setEnterprise_honor_img(List<String> enterprise_honor_img) {
             this.enterprise_honor_img = enterprise_honor_img;
         }
 
@@ -189,7 +189,7 @@ public class CreteProceddureBean {
             return keep_faith_contract_img;
         }
 
-        public void setKeep_faith_contract_img(List<?> keep_faith_contract_img) {
+        public void setKeep_faith_contract_img(List<String> keep_faith_contract_img) {
             this.keep_faith_contract_img = keep_faith_contract_img;
         }
     }

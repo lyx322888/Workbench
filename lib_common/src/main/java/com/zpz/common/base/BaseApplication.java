@@ -6,7 +6,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.footer.BallPulseView;
 import com.lcodecore.tkrefreshlayout.header.SinaRefreshView;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumConfig;
 import com.zpz.common.BuildConfig;
+import com.zpz.common.utils.MediaLoader;
 
 //基础app
 public class BaseApplication extends Application {
@@ -29,6 +32,13 @@ public class BaseApplication extends Application {
 
     private void init() {
         initARouter();
+        initAlbum();
+    }
+
+    //图片选择框架
+    private void initAlbum() {
+        Album.initialize(AlbumConfig.newBuilder(this)
+                .setAlbumLoader(new MediaLoader()).build());
     }
     //设置刷新样式
     private void initTwinkingRefreshlayout(){

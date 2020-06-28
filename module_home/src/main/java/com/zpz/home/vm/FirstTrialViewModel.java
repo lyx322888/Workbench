@@ -23,13 +23,13 @@ public class FirstTrialViewModel extends ToolBarViewModel {
     }
     public String[] mTitles = new String[]{"审核中", "已通过", "未通过"};
 
-    private MutableLiveData<FirstAssessCountBean> firstAssessCountBeanMutableLiveData ;
+    private MutableLiveData<FirstAssessCountBean> firstAssessCountLiveData;
 
-    public LiveData<FirstAssessCountBean> getFirstAssessCountBeanMutableLiveData() {
-        if (firstAssessCountBeanMutableLiveData==null){
-            firstAssessCountBeanMutableLiveData =  new MutableLiveData<>();
+    public LiveData<FirstAssessCountBean> getFirstAssessCountLiveData() {
+        if (firstAssessCountLiveData ==null){
+            firstAssessCountLiveData =  new MutableLiveData<>();
         }
-        return firstAssessCountBeanMutableLiveData;
+        return firstAssessCountLiveData;
     }
 
     public void requesFirstAssessCount(){
@@ -37,7 +37,7 @@ public class FirstTrialViewModel extends ToolBarViewModel {
             @Override
             public void onSuccess(JSONObject result) {
                 FirstAssessCountBean firstAssessCountBean = new Gson().fromJson(result.toString(),FirstAssessCountBean.class);
-                firstAssessCountBeanMutableLiveData.setValue(firstAssessCountBean);
+                firstAssessCountLiveData.setValue(firstAssessCountBean);
             }
         });
     }

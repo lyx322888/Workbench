@@ -47,18 +47,18 @@ public class FirstTriaBean {
          * company_id : 0
          */
 
-        private int first_assess_id;
+        private long first_assess_id;
         private String company_name;
         private String logo;
         private String create_time;
         private String mobile;
-        private int company_id;
+        private long company_id;
 
-        public int getFirst_assess_id() {
+        public long getFirst_assess_id() {
             return first_assess_id;
         }
 
-        public void setFirst_assess_id(int first_assess_id) {
+        public void setFirst_assess_id(long first_assess_id) {
             this.first_assess_id = first_assess_id;
         }
 
@@ -94,11 +94,11 @@ public class FirstTriaBean {
             this.mobile = mobile;
         }
 
-        public int getCompany_id() {
+        public long getCompany_id() {
             return company_id;
         }
 
-        public void setCompany_id(int company_id) {
+        public void setCompany_id(long company_id) {
             this.company_id = company_id;
         }
     }

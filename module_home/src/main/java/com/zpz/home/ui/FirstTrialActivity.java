@@ -1,5 +1,7 @@
 package com.zpz.home.ui;
 
+import android.view.View;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -27,27 +29,36 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
         arrayList.add(FirstTrialFragment.newInstance(1));
         arrayList.add(FirstTrialFragment.newInstance(2));
         binding.labLayout.setViewPager(binding.orderViewPager,viewModel.mTitles,this,arrayList);
+        //分享
+        binding.commonToolbar.titleRightTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
     protected void initViewObservable() {
 
-        viewModel.getFirstAssessCountBeanMutableLiveData().observe(this, new Observer<FirstAssessCountBean>() {
+        viewModel.getFirstAssessCountLiveData().observe(this, new Observer<FirstAssessCountBean>() {
             @Override
             public void onChanged(FirstAssessCountBean firstAssessCountBean) {
                 if (firstAssessCountBean.getData().getCount_status_zero()!=0){
                     binding.labLayout.showMsg(0,firstAssessCountBean.getData().getCount_status_zero());
-//                    binding.labLayout.setMsgMargin(0,-10,13);
+                    binding.labLayout.setMsgMargin(0,30,10);
                 }else {
                     binding.labLayout.hideMsg(0);
                 }
                 if (firstAssessCountBean.getData().getCount_status_one()!=0){
                     binding.labLayout.showMsg(1,firstAssessCountBean.getData().getCount_status_one());
+                    binding.labLayout.setMsgMargin(1,30,10);
                 }else {
                     binding.labLayout.hideMsg(1);
                 }
                 if (firstAssessCountBean.getData().getCount_status_two()!=0){
                     binding.labLayout.showMsg(2,firstAssessCountBean.getData().getCount_status_two());
+                    binding.labLayout.setMsgMargin(2,30,10);
                 }else {
                     binding.labLayout.hideMsg(2);
                 }
