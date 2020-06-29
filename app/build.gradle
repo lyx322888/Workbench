@@ -2,7 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
+    signingConfigs {
+        release {
+            keyAlias 'wbx365'
+            keyPassword 'wbx365888'
+            storeFile file('../workbench.jks')
+            storePassword 'wbx365888'
+        }
 
+    }
     defaultConfig {
 
         ndk {

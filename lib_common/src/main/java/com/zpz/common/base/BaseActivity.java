@@ -44,11 +44,11 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        mActivity = this;
         initViewModel();
         initBinding();
         setStatubarColor();
-        mContext = this;
-        mActivity = this;
         AppManager.getAppManager().addActivity(this);
         settingTitle();
         init();

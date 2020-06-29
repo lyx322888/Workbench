@@ -62,12 +62,12 @@ public class CreteProceddureBean {
         private String logo;
         private String legal_person;
         private String registered_capital;
-        private int establish_date;
+        private String establish_date;
         private String address;
-        private int lat;
-        private int lng;
+        private String lat;
+        private String lng;
         private String introduce_text;
-        private List<String> introduce_video;
+        private String introduce_video;
         private List<String> introduce_img;
         private List<String> work_environment_img;
         private List<String> enterprise_honor_img;
@@ -113,11 +113,11 @@ public class CreteProceddureBean {
             this.registered_capital = registered_capital;
         }
 
-        public int getEstablish_date() {
+        public String getEstablish_date() {
             return establish_date;
         }
 
-        public void setEstablish_date(int establish_date) {
+        public void setEstablish_date(String establish_date) {
             this.establish_date = establish_date;
         }
 
@@ -129,19 +129,19 @@ public class CreteProceddureBean {
             this.address = address;
         }
 
-        public int getLat() {
+        public String getLat() {
             return lat;
         }
 
-        public void setLat(int lat) {
+        public void setLat(String lat) {
             this.lat = lat;
         }
 
-        public int getLng() {
+        public String getLng() {
             return lng;
         }
 
-        public void setLng(int lng) {
+        public void setLng(String lng) {
             this.lng = lng;
         }
 
@@ -153,11 +153,11 @@ public class CreteProceddureBean {
             this.introduce_text = introduce_text;
         }
 
-        public List<String> getIntroduce_video() {
+        public String getIntroduce_video() {
             return introduce_video;
         }
 
-        public void setIntroduce_video(List<String> introduce_video) {
+        public void setIntroduce_video(String introduce_video) {
             this.introduce_video = introduce_video;
         }
 
@@ -169,7 +169,7 @@ public class CreteProceddureBean {
             this.introduce_img = introduce_img;
         }
 
-        public List<?> getWork_environment_img() {
+        public List<String> getWork_environment_img() {
             return work_environment_img;
         }
 
@@ -177,7 +177,7 @@ public class CreteProceddureBean {
             this.work_environment_img = work_environment_img;
         }
 
-        public List<?> getEnterprise_honor_img() {
+        public List<String> getEnterprise_honor_img() {
             return enterprise_honor_img;
         }
 
@@ -185,7 +185,7 @@ public class CreteProceddureBean {
             this.enterprise_honor_img = enterprise_honor_img;
         }
 
-        public List<?> getKeep_faith_contract_img() {
+        public List<String> getKeep_faith_contract_img() {
             return keep_faith_contract_img;
         }
 

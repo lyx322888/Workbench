@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
@@ -16,7 +15,6 @@ import com.zpz.home.baen.FirstAssessCountBean;
 import com.zpz.home.databinding.ActivityFirstTrialBinding;
 import com.zpz.home.fragment.FirstTrialFragment;
 import com.zpz.home.vm.FirstTrialViewModel;
-
 import java.util.ArrayList;
 //初审
 @Route(path = MyARouter.FirstTrialActivity)

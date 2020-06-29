@@ -24,7 +24,7 @@ public class ChoosePictureUtils {
                         .statusBarColor(ContextCompat.getColor(context, R.color.appColor))
                         .toolBarColor(ContextCompat.getColor(context, R.color.appColor)).build())// Toolbar color..build())// StatusBar color.)
                 .camera(true)
-                .columnCount(4)
+                .columnCount(3)
                 .selectCount(maxSelectCount)
                 .onResult(new com.yanzhenjie.album.Action<ArrayList<AlbumFile>>() {
                     @Override
@@ -58,7 +58,7 @@ public class ChoosePictureUtils {
                         .statusBarColor(ContextCompat.getColor(context, R.color.appColor))
                         .toolBarColor(ContextCompat.getColor(context, R.color.appColor)).build())// Toolbar color..build())// StatusBar color.)
                 .camera(true)
-                .columnCount(4)
+                .columnCount(3)
                 .selectCount(maxSelectCount)
                 .onResult(new com.yanzhenjie.album.Action<ArrayList<AlbumFile>>() {
                     @Override

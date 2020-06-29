@@ -13,6 +13,9 @@ import com.zpz.common.base.BaseApplication;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 //工具
 public class CommonUtils {
     /**
@@ -65,5 +68,11 @@ public class CommonUtils {
         Uri data = Uri.parse("tel:" + phoneNum);
         intent.setData(data);
         activity.startActivity(intent);
+    }
+
+    //data转时间字符串
+    public static String getTime(Date date,String pattern) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(date);
     }
 }
