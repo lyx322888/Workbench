@@ -217,14 +217,22 @@
                         android:layout_marginEnd="6dp"
                         android:layout_height="wrap_content">
                         <ImageView
+                            android:id="@+id/iv_video"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             onAntiShakeClick="@{click.uploadAVideo}"
                             android:background="@drawable/bg_scsp"
                             android:layout_width="match_parent"
                             android:layout_height="189dp"/>
-                        <ImageView
+                        <cn.jzvd.JZVideoPlayerStandard
                             android:visibility="gone"
+                            android:id="@+id/jz_tiny_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="189dp"/>
+                        <ImageView
+                            android:id="@+id/iv_video_gb"
+                            android:visibility="gone"
+                            onAntiShakeClick="@{click.deleteVideo}"
                             android:layout_gravity="end"
                             android:src="@drawable/ic_guanbi"
                             android:layout_width="18dp"

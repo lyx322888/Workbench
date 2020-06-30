@@ -1,5 +1,7 @@
 package com.zpz.common.utils;
 
+import android.util.Log;
+
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -17,15 +19,12 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by wushenghui on 2017/6/23.
  * 图片上传到七牛的工具类
  */
 
 public class UpLoadPicUtils {
     private static final String AccessKey = "1gEl3V8jv_Gg4k-5ryUA42xWWrb2347j9DL8Tdnx";
     private static final String SecretKey = "ariMAvQKA96XI0gcAYm9se4_lXYoWK5j9A5fBiIC";
-//    private static final String AccessKey = "L_kSa1gvGrbPOzPMFvvA7RhO4L7Ux4z4-R4qXull";
-//    private static final String SecretKey = "goHUc06JheQLH9ESXjfE1avmJI8LJVR3bRsOIjc_";
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
 
@@ -91,14 +90,13 @@ public class UpLoadPicUtils {
             JSONObject _json = new JSONObject();
             long _dataline = System.currentTimeMillis() / 1000 + 3600;
             _json.put("deadline", _dataline);// 有效时间为一个小时
-            _json.put("scope", "qinqixin");
+            _json.put("scope", "qianqixin");
             String _encodedPutPolicy = UrlSafeBase64.encodeToString(_json
                     .toString().getBytes());
             byte[] _sign = HmacSHA1Encrypt(_encodedPutPolicy, SecretKey);
             String _encodedSign = UrlSafeBase64.encodeToString(_sign);
             String _uploadToken = AccessKey + ':' + _encodedSign + ':'
                     + _encodedPutPolicy;
-
             UploadManager uploadManager = new UploadManager();
             uploadManager.put(photoPath, null, _uploadToken,
                     new UpCompletionHandler() {
@@ -107,15 +105,13 @@ public class UpLoadPicUtils {
                                              JSONObject response) {
                             try {
                                 if (info.isOK()) {
-                                    listener.success(key+response.getString("hash"));
+                                    listener.success(AppConfig.IMAGES+response.getString("hash"));
                                 } else {
                                     listener.error();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
                     }, null);
 

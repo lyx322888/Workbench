@@ -1,11 +1,16 @@
 package com.zpz.common.utils;
 
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.util.Util;
+import com.zpz.common.R;
+import com.zpz.common.base.AppConfig;
 
 
 /**
@@ -13,13 +18,20 @@ import com.bumptech.glide.util.Util;
  */
 public class GlideUtils {
     public static void showSmallPic(ImageView imageView, String url) {
-        if (imageView == null || TextUtils.isEmpty(url)) {
+        if (imageView == null) {
             return;
         }
-
-        if (Util.isOnMainThread()) {
-            Glide.with(imageView.getContext()).load(url).into(imageView);
+        if (TextUtils.isEmpty(url)) {
+            Glide.with(imageView.getContext()).load(R.mipmap.loading_logo).into(imageView);
+            return;
         }
+        if (url.startsWith(AppConfig.IMAGES)) {
+            url = url + "?imageView2/0/w/500/h/500";
+        }
+
+        RequestOptions options = new RequestOptions().
+        error(R.mipmap.loading_logo);
+        Glide.with(imageView.getContext()).load(url).apply(options).into(imageView);
 
     }
 
