@@ -21,4 +21,6 @@
     <color name="gztfontColor">#0D812A12</color>
     <color name="tabtitleColor">#2C2C2C</color>
     <color name="color_gray_line">#ffeae7e7</color>
+    <color name="color_red_jd">#F23057</color>
+    <color name="color_green">#33B052</color>
 </resources>

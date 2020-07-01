@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 //初审
 public class FirstTrialFmViewModel extends BaseViewModel {
-    public int page = 1;
+
     private MutableLiveData<List<FirstTriaBean.DataBean>> firstTriaLiveData;
     public MutableLiveData<List<FirstTriaBean.DataBean>> getFirstTriaBeanMutableLiveData() {
         if (firstTriaLiveData ==null){
@@ -40,6 +40,13 @@ public class FirstTrialFmViewModel extends BaseViewModel {
                        list.addAll(firstTriaBean.getData());
                         firstTriaLiveData.setValue(list);
                     }
+            }
+            @Override
+            public void onError(int code) {
+                super.onError(code);
+                if (page!=1){
+                    page-=1;
+                }
             }
         });
     }

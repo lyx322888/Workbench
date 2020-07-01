@@ -6,9 +6,6 @@
         <variable
             name="vm"
             type="com.zpz.home.vm.FirstTrialViewModel" />
-        <variable
-            name="click"
-            type="com.zpz.home.ui.FirstTrialActivity.ClickProxy" />
     </data>
 
     <LinearLayout

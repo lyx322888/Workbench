@@ -11,7 +11,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.Url;
 
 /**
  * des:ApiService
@@ -58,9 +57,14 @@ public interface ApiService {
     @POST("/workerapi/user/get_create_record_info")
     Observable<JSONObject> getCreateRecordInfo(@FieldMap Map<String, Object> params);
 
-    //获取建档信息
+    //获取初审列表
     @FormUrlEncoded
     @POST("/workerapi/user/list_first_assess")
     Observable<JSONObject> listFirstAssess(@FieldMap Map<String, Object> params);
+
+    //档案列表
+    @FormUrlEncoded
+    @POST("/workerapi/user/list_company_record")
+    Observable<JSONObject> listCompanyRecord(@FieldMap Map<String, Object> params);
 
 }

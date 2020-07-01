@@ -3,9 +3,11 @@
     package="com.zpz.home">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <application>
 
-        <activity android:name=".ui.CreateProcedureActivity"
+    <application>
+        <activity android:name=".ui.FileListActivity"></activity>
+        <activity
+            android:name=".ui.CreateProcedureActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.FirstTrialActivity" />

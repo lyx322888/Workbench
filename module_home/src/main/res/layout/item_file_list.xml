@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.zpz.home.baen.FileListBean.DataBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/line_w_radius5"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.zpz.common.view.MyImagView
+                android:id="@+id/iv_photo"
+                imageUrl="@{vm.logo}"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <FrameLayout
+                android:layout_marginStart="6dp"
+                android:orientation="vertical"
+                android:minHeight="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:id="@+id/tv_name"
+                        tools:text="北京小桔科技有限公司"
+                        android:text="@{vm.company_name}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/appColor"
+                        tools:text="600分"
+                        android:text='@{vm.ratings+@string/fen}'
+                        android:layout_alignParentEnd="true"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_gravity="bottom"
+                    tools:text="档案号"
+                    android:text='@{@string/dah+vm.record_number}'
+                    android:textColor="#848484"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="@drawable/edt_bc"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@{vm.status==1?@drawable/ic_ytg:@drawable/ic_bohui}"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"/>
+                <TextView
+                    android:layout_marginStart="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:text='@{vm.status==1?@string/yjd:@string/bh}'
+                    android:textSize="13sp"
+                    android:textColor="@{vm.status==1?@color/color_green:@color/color_red_jd}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginStart="5dp"
+                android:background="@drawable/edt_bc"
+                android:layout_width="wrap_content"
+                android:visibility="@{vm.status==1?View.VISIBLE:View.GONE}"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/ic_zs"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"/>
+                <TextView
+                    android:layout_marginStart="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="查看证书"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            style="@style/v_fgx" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_jdzl"
+                    android:background="@drawable/bg_app_color_3"
+                    android:text="建档资料"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="13sp"
+                    android:paddingHorizontal="16dp"
+                    android:gravity="center"
+                    android:visibility="@{vm.status==1?View.VISIBLE:View.GONE}"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp" />
+                <Button
+                    android:id="@+id/btn_bj"
+                    android:background="@drawable/bg_app_color_3"
+                    android:text="编辑"
+                    android:textSize="13sp"
+                    android:visibility="@{vm.status==2?View.VISIBLE:View.GONE}"
+                    android:paddingHorizontal="16dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

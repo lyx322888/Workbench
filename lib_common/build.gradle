@@ -97,5 +97,5 @@ dependencies {
     //视频压缩
     api 'com.iceteck.silicompressorr:silicompressor:2.2.3'
     api 'com.googlecode.mp4parser:isoparser:1.1.21'
-
+    api 'com.github.yellowcath:VideoProcessor:2.4.0'
 }

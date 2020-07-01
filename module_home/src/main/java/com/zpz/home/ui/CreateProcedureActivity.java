@@ -1,8 +1,7 @@
 package com.zpz.home.ui;
 
-import android.os.Environment;
+import android.media.MediaMetadataRetriever;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,8 @@ import com.amap.api.location.AMapLocationListener;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.iceteck.silicompressorr.SiliCompressor;
+import com.hw.videoprocessor.VideoProcessor;
+import com.hw.videoprocessor.util.VideoProgressListener;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
@@ -41,10 +41,10 @@ import com.zpz.home.databinding.ActivityCreateProcedureBinding;
 import com.zpz.home.vm.CreateProcedureViewModel;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import cn.jzvd.JZVideoPlayer;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,7 +73,6 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
     private JDPhotoAdapter workPhotoAdapter;
     private JDPhotoAdapter ryPhotoAdapter;
     private HyPhotoAdapter hyPhotoAdapter;
-    //定位
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
     //声明AMapLocationClient类对象
@@ -151,30 +150,30 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
         workPhotoAdapter.setOnItemClickListener(new BaseBindingAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position) {
-                if (viewModel.getCreteProceddure().getValue().getData().getWork_environment_img().size()>12){
+                if (viewModel.getCreteProceddure().getValue().getWork_environment_img().size()>12){
                     showShortToast("最多只能传12张");
                 }else {
-                    chooseImage(REQUESTCODE_WORK_ENVIRONMENT,12-viewModel.getCreteProceddure().getValue().getData().getWork_environment_img().size());
+                    chooseImage(REQUESTCODE_WORK_ENVIRONMENT,12-viewModel.getCreteProceddure().getValue().getWork_environment_img().size());
                 }
             }
         });
         ryPhotoAdapter.setOnItemClickListener(new BaseBindingAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position) {
-                if (viewModel.getCreteProceddure().getValue().getData().getEnterprise_honor_img().size()>12){
+                if (viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().size()>12){
                     showShortToast("最多只能传12张");
                 }else {
-                    chooseImage(REQUESTCODE_HONOR,12-viewModel.getCreteProceddure().getValue().getData().getEnterprise_honor_img().size());
+                    chooseImage(REQUESTCODE_HONOR,12-viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().size());
                 }
             }
         });
         hyPhotoAdapter.setOnItemClickListener(new BaseBindingAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position) {
-                if (viewModel.getCreteProceddure().getValue().getData().getKeep_faith_contract_img().size()>12){
+                if (viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().size()>12){
                     showShortToast("最多只能传12张");
                 }else {
-                    chooseImage(REQUESTCODE_CONTRACT,12-viewModel.getCreteProceddure().getValue().getData().getKeep_faith_contract_img().size());
+                    chooseImage(REQUESTCODE_CONTRACT,12-viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().size());
                 }
             }
         });
@@ -183,10 +182,10 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
     @Override
     protected void initViewObservable() {
        LoadingDialog.showDialogForLoading(mActivity);
-       viewModel.getCreteProceddure().observe(this, new Observer<CreteProceddureBean>() {
+       viewModel.getCreteProceddure().observe(this, new Observer<CreteProceddureBean.DataBean>() {
            @Override
-           public void onChanged(CreteProceddureBean creteProceddureBean) {
-               if (TextUtils.isEmpty(creteProceddureBean.getData().getIntroduce_video())){
+           public void onChanged(CreteProceddureBean.DataBean dataBean) {
+               if (TextUtils.isEmpty(dataBean.getIntroduce_video())){
                    ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setVisibility(View.GONE);
                    ((ActivityCreateProcedureBinding)getBinding()).ivVideo.setVisibility(View.VISIBLE);
                    ((ActivityCreateProcedureBinding)getBinding()).ivVideoGb.setVisibility(View.GONE);
@@ -194,7 +193,7 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
                    ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setVisibility(View.VISIBLE);
                    ((ActivityCreateProcedureBinding)getBinding()).ivVideo.setVisibility(View.GONE);
                    ((ActivityCreateProcedureBinding)getBinding()).ivVideoGb.setVisibility(View.VISIBLE);
-                   ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setUp(creteProceddureBean.getData().getIntroduce_video(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "企业介绍");
+                   ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setUp(dataBean.getIntroduce_video(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "企业介绍");
                }
            }
        });
@@ -207,51 +206,15 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
         if (aMapLocation.getErrorCode() != AMapLocation.LOCATION_SUCCESS) {
             showShortToast("请开启定位");
         } else {
-            viewModel.getCreteProceddure().getValue().getData().setAddress(aMapLocation.getAddress());
-            viewModel.getCreteProceddure().getValue().getData().setLat(Double.toString(aMapLocation.getLatitude()));
-            viewModel.getCreteProceddure().getValue().getData().setLng(Double.toString(aMapLocation.getLongitude()));
+            viewModel.getCreteProceddure().getValue().setAddress(aMapLocation.getAddress());
+            viewModel.getCreteProceddure().getValue().setLat(Double.toString(aMapLocation.getLatitude()));
+            viewModel.getCreteProceddure().getValue().setLng(Double.toString(aMapLocation.getLongitude()));
             upData();
         }
     }
     //刷新数据
     private void upData(){
         viewModel.getCreteProceddure().setValue(viewModel.getCreteProceddure().getValue());
-    }
-
-    public class ClickProxy{
-        //提交
-        public void submit(View view){
-
-        }
-        //删除视频
-        public void deleteVideo(View view){
-            viewModel.getCreteProceddure().getValue().getData().setIntroduce_video("");
-            upData();
-        }
-        //上传视频
-        public void uploadAVideo(View view){
-            chooseVideo( );
-        }
-        //上传logo
-        public void uploadLogo(final View view){
-           chooseImage(REQUESTCODE_LOGO,1);
-        }
-        //选择时间
-        public void selectTime (View view){
-            //时间选择器
-            TimePickerView pvTime = new TimePickerBuilder(mContext, new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    viewModel.getCreteProceddure().getValue().getData().setEstablish_date(CommonUtils.getTime(date,"yyyy-MM-dd"));
-                    upData();
-                }
-            }).setType(new boolean[]{true, true, true, false, false, false}).build();
-            pvTime.show();
-        }
-        //定位
-        public void location (View view){
-            reLocation();
-        }
     }
 
     //选择图片
@@ -286,28 +249,28 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
             }
         });
     }
+
     //上传七牛
     private void upLoadPic(ArrayList<String> arrayList,final int requestCode){
-        //上传七牛
         UpLoadPicUtils.batchUpload(arrayList, new UpLoadPicUtils.BatchUpLoadPicListener() {
             @Override
             public void success(List<String> qiNiuPath) {
                 switch (requestCode){
                     case REQUESTCODE_LOGO:
                         //logo
-                        viewModel.getCreteProceddure().getValue().getData().setLogo(qiNiuPath.get(0));
+                        viewModel.getCreteProceddure().getValue().setLogo(qiNiuPath.get(0));
                         break;
                     case REQUESTCODE_WORK_ENVIRONMENT:
                         //工作环境
-                        viewModel.getCreteProceddure().getValue().getData().getWork_environment_img().addAll(qiNiuPath);
+                        viewModel.getCreteProceddure().getValue().getWork_environment_img().addAll(qiNiuPath);
                         break;
                     case REQUESTCODE_HONOR:
                         //荣誉
-                        viewModel.getCreteProceddure().getValue().getData().getEnterprise_honor_img().addAll(qiNiuPath);
+                        viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().addAll(qiNiuPath);
                         break;
                     case REQUESTCODE_CONTRACT:
                         //合约
-                        viewModel.getCreteProceddure().getValue().getData().getKeep_faith_contract_img().addAll(qiNiuPath);
+                        viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().addAll(qiNiuPath);
                         break;
                 }
                 upData();
@@ -341,43 +304,138 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
                     }
                 })
                 .start();
-
-
+    }
+    private File getTempMovieDir(){
+        File movie = new File(getCacheDir(), "movie");
+        movie.mkdirs();
+        return movie;
     }
 
     //压缩视频
     private void ysVideo(final String filePath){
-
-        Disposable d = Flowable.just(filePath)
-                .observeOn(Schedulers.io())
-                .map(new Function<String, String>() {
-                    @Override
-                    public String apply(String s) throws Exception {
-                        return SiliCompressor.with(mActivity).compressVideo(filePath,Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath());
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    File moviesDir =getTempMovieDir();
+                    String filePrefix = "speed_video";
+                    String fileExtn = ".mp4";
+                    File dest = new File(moviesDir, filePrefix + fileExtn);
+                    int fileNo = 0;
+                    while (dest.exists()) {
+                        fileNo++;
+                        dest = new File(moviesDir, filePrefix + fileNo + fileExtn);
                     }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String filePath) throws Exception {
-                        LoadingDialog.showDialogForLoading(mActivity,"上传视频",false);
-                        UpLoadPicUtils.upOnePic(filePath, new UpLoadPicUtils.UpLoadPicListener() {
-                            @Override
-                            public void success(String qiNiuPath) {
-                                viewModel.getCreteProceddure().getValue().getData().setIntroduce_video(qiNiuPath);
-                                upData();
-                                LoadingDialog.cancelDialogForLoading();
-                            }
+                    final String outputfilePath = dest.getAbsolutePath();
+                    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                    retriever.setDataSource(filePath);
+                    final int originWidth = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                    int originHeight = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                    try {
+                        VideoProcessor.processor(mActivity)
+                                .input(filePath)
+                                .output(outputfilePath)
+                                .outWidth(originWidth)
+                                .outHeight(originHeight)
+                                .progressListener(new VideoProgressListener() {
+                                    @Override
+                                    public void onProgress(float progress) {
+                                        if (progress==1){
+                                            LoadingDialog.showDialogForLoading(mActivity,"上传视频",false);
+                                            UpLoadPicUtils.upOnePic(outputfilePath, new UpLoadPicUtils.UpLoadPicListener() {
+                                                @Override
+                                                public void success(String qiNiuPath) {
+                                                    viewModel.getCreteProceddure().getValue().setIntroduce_video(qiNiuPath);
+                                                    upData();
+                                                    LoadingDialog.cancelDialogForLoading();
+                                                }
 
-                            @Override
-                            public void error() {
-                                showShortToast("上传失败，请稍后重试");
-                                LoadingDialog.cancelDialogForLoading();
-                            }
-                        });
+                                                @Override
+                                                public void error() {
+                                                    showShortToast("上传失败，请稍后重试");
+                                                    LoadingDialog.cancelDialogForLoading();
+                                                }
+                                            });
+                                        }
+                                    }
+                                })
+                                .process();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                });
-        addDisposable(d);
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        Disposable d = Flowable.just(filePath)
+//                .observeOn(Schedulers.io())
+//                .map(new Function<String, String>() {
+//                    @Override
+//                    public String apply(String s) throws Exception {
+//                        return SiliCompressor.with(mActivity).compressVideo(filePath,CommonUtils.getCacheDir(mContext,"video").getPath());
+//                    }
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<String>() {
+//                    @Override
+//                    public void accept(String filePath) throws Exception {
+//                        LoadingDialog.showDialogForLoading(mActivity,"上传视频",false);
+//                        UpLoadPicUtils.upOnePic(filePath, new UpLoadPicUtils.UpLoadPicListener() {
+//                            @Override
+//                            public void success(String qiNiuPath) {
+//                                viewModel.getCreteProceddure().getValue().setIntroduce_video(qiNiuPath);
+//                                upData();
+//                                LoadingDialog.cancelDialogForLoading();
+//                            }
+//
+//                            @Override
+//                            public void error() {
+//                                showShortToast("上传失败，请稍后重试");
+//                                LoadingDialog.cancelDialogForLoading();
+//                            }
+//                        });
+//                    }
+//                });
+//        addDisposable(d);
     }
+
+    public class ClickProxy{
+        //删除视频
+        public void deleteVideo(View view){
+            viewModel.getCreteProceddure().getValue().setIntroduce_video("");
+            upData();
+        }
+        //上传视频
+        public void uploadAVideo(View view){
+            chooseVideo( );
+        }
+        //上传logo
+        public void uploadLogo(final View view){
+            chooseImage(REQUESTCODE_LOGO,1);
+        }
+        //选择时间
+        public void selectTime (View view){
+            //时间选择器
+            TimePickerView pvTime = new TimePickerBuilder(mContext, new OnTimeSelectListener() {
+                @Override
+                public void onTimeSelect(Date date, View v) {
+                    viewModel.getCreteProceddure().getValue().setEstablish_date(CommonUtils.getTime(date,"yyyy-MM-dd"));
+                    upData();
+                }
+            }).setType(new boolean[]{true, true, true, false, false, false}).build();
+            pvTime.show();
+        }
+        //定位
+        public void location (View view){
+            reLocation();
+        }
+        //提交
+        public void submit(View view){
+            viewModel.requesSubmit(company_id,first_assess_id);
+        }
+    }
+
 
 }

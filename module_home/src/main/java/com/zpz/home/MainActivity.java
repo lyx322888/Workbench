@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity<MainViewModel> {
 
         //建档
         public void bookbuilding(){
-            ARouter.getInstance().build(MyARouter.CreateProcedureActivity).navigation();
+            ARouter.getInstance().build(MyARouter.FileListActivity).navigation();
         }
     }
 }

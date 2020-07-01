@@ -1,14 +1,10 @@
 package com.zpz.common.utils;
 
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.util.Util;
 import com.zpz.common.R;
 import com.zpz.common.base.AppConfig;
 

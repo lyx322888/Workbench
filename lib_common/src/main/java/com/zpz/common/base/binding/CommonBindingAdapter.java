@@ -5,12 +5,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.ImageView;
+
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.BindingConversion;
+
 import com.jakewharton.rxbinding2.view.RxView;
 import com.zpz.common.base.ToolBarViewModel;
 import com.zpz.common.utils.GlideUtils;
+
 import java.util.concurrent.TimeUnit;
+
 import io.reactivex.functions.Consumer;
 public class CommonBindingAdapter {
     //图片加载
@@ -63,6 +67,8 @@ public class CommonBindingAdapter {
     public static ColorDrawable convertColorToDrawable(int color) {
         return new ColorDrawable(color);
     }
+
+
 
     //返回键
     @SuppressLint("CheckResult")

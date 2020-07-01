@@ -70,11 +70,8 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
     @Override
     protected DataBindingConfig getDataBindingConfig() {
         return new DataBindingConfig(R.layout.activity_first_trial)
-                .addBindingParam(BR.vm,viewModel)
-                .addBindingParam(BR.click,new ClickProxy());
+                .addBindingParam(BR.vm,viewModel);
     }
 
-    public class ClickProxy {
 
-    }
 }
