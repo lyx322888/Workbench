@@ -13,6 +13,7 @@ public abstract class ToolBarViewModel extends BaseViewModel{
     public ObservableField<String> title  = new ObservableField<>();
     public ObservableField<String> rightTv  = new ObservableField<>();
     public ObservableBoolean rightTvVisible  = new ObservableBoolean();
+    public ObservableField<Boolean> backvisibility = new ObservableField<>();
 
     public MutableLiveData<Boolean> getOnBackPressedEvent() {
         if (onBackPressedEvent==null){
@@ -27,6 +28,7 @@ public abstract class ToolBarViewModel extends BaseViewModel{
         return onRightEvent;
     }
     {
+        backvisibility.set(true);
         setTitle();
     }
     protected abstract void setTitle();

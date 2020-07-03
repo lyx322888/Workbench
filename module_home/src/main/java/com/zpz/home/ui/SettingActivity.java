@@ -1,6 +1,4 @@
 package com.zpz.home.ui;
-
-
 import android.view.View;
 
 import androidx.databinding.library.baseAdapters.BR;
@@ -14,7 +12,7 @@ import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.AppManager;
 import com.zpz.home.R;
 import com.zpz.home.vm.SetingViewModel;
-
+//设置
 @Route(path = MyARouter.SetingActivity)
 public class SettingActivity extends BaseActivity<SetingViewModel> {
 
@@ -43,6 +41,7 @@ public class SettingActivity extends BaseActivity<SetingViewModel> {
     }
 
     public class ClickProxy{
+        //退出
         public void outLogin(View view){
             viewModel.requesOutLogin();
         }

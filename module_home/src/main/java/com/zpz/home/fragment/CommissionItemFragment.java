@@ -3,29 +3,28 @@ package com.zpz.home.fragment;
 import android.os.Bundle;
 
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.zpz.common.base.BaseFragment;
 import com.zpz.common.base.DataBindingConfig;
+import com.zpz.home.BR;
 import com.zpz.home.R;
-import com.zpz.home.adapter.FirstTrialAdapter;
-import com.zpz.home.baen.FirstTriaBean;
-import com.zpz.home.databinding.FragmentFirstTrialBinding;
-import com.zpz.home.vm.FirstTrialFmViewModel;
+import com.zpz.home.adapter.CommissionAdapter;
+import com.zpz.home.baen.CommissionItemBean;
+import com.zpz.home.databinding.FragmentCommissionItemBinding;
+import com.zpz.home.vm.CommissionItemViewModel;
 
 import java.util.List;
 
 /**
- * 初审列表
+ * 待办
  */
-public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
-    public FirstTrialAdapter firstTrialAdapter;
-    private FragmentFirstTrialBinding firstTrialBinding;
+public class CommissionItemFragment extends BaseFragment<CommissionItemViewModel> {
+    private FragmentCommissionItemBinding commissionItemBinding;
     public int status;
-    public static FirstTrialFragment newInstance(int status) {
-        FirstTrialFragment tabFragment = new FirstTrialFragment();
+    public static CommissionItemFragment newInstance(int status) {
+        CommissionItemFragment tabFragment = new CommissionItemFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("status", status);
         tabFragment.setArguments(bundle);
@@ -33,20 +32,20 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
     }
     @Override
     protected DataBindingConfig getDataBindingConfig() {
-        return new DataBindingConfig(R.layout.fragment_first_trial);
+        if (getArguments() != null) {
+            status = getArguments().getInt("status");
+        }
+        return new DataBindingConfig(R.layout.fragment_commission_item)
+                .addBindingParam(BR.adapter,new CommissionAdapter(mActivity,R.layout.item_commission,status))
+                .addBindingParam(BR.vm,viewModel);
     }
 
     @Override
     protected void init() {
-        if (getArguments() != null) {
-            status = getArguments().getInt("status");
-        }
-        firstTrialBinding = (FragmentFirstTrialBinding) getBinding();
-        firstTrialAdapter =new FirstTrialAdapter(status);
-        firstTrialBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        firstTrialBinding.rv.setAdapter(firstTrialAdapter);
+
+        commissionItemBinding = (FragmentCommissionItemBinding) getBinding();
         //刷新加载
-        firstTrialBinding.trl.setOnRefreshListener(new RefreshListenerAdapter() {
+        commissionItemBinding.trl.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
@@ -71,12 +70,11 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
 
     @Override
     protected void initViewObservable() {
-        viewModel.getFirstTriaBeanMutableLiveData().observe(this, new Observer<List<FirstTriaBean.DataBean>>() {
+        viewModel.getComissionlivedta().observe(this, new Observer<List<CommissionItemBean.DataBean>>() {
             @Override
-            public void onChanged(List<FirstTriaBean.DataBean> dataBeans) {
-                firstTrialAdapter.setNewData(dataBeans);
-                firstTrialBinding.trl.finishRefreshing();
-                firstTrialBinding.trl.finishLoadmore();
+            public void onChanged(List<CommissionItemBean.DataBean> dataBeans) {
+                commissionItemBinding.trl.finishRefreshing();
+                commissionItemBinding.trl.finishLoadmore();
             }
         });
         viewModel.requesfirstTria(status);

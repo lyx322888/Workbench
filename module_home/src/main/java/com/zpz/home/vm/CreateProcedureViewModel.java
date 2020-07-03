@@ -1,7 +1,7 @@
 package com.zpz.home.vm;
 
-import android.text.TextUtils;
 import androidx.lifecycle.MutableLiveData;
+
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zpz.common.api.Api;
@@ -40,7 +40,6 @@ public class CreateProcedureViewModel extends ToolBarViewModel {
             public void onSuccess(JSONObject result) {
                 CreteProceddureBean creteProceddureBean = new Gson().fromJson(result.toString(),CreteProceddureBean.class);
                 creteProceddure.setValue(creteProceddureBean.getData());
-
             }
 
             @Override
@@ -52,34 +51,6 @@ public class CreateProcedureViewModel extends ToolBarViewModel {
 
     //建档
     public void requesSubmit(long company_id,long first_assess_id){
-        if (creteProceddure.getValue()==null){
-            ToastUitl.showShort("请填写公司信息");
-            return;
-        }else if (TextUtils.isEmpty(creteProceddure.getValue().getCompany_name())){
-            ToastUitl.showShort("请填写公司名称");
-            return;
-        }else if (TextUtils.isEmpty(creteProceddure.getValue().getLogo())){
-            ToastUitl.showShort("请上传logo");
-            return;
-        }else if (TextUtils.isEmpty(creteProceddure.getValue().getLegal_person())){
-            ToastUitl.showShort("请填写法定代表人");
-            return;
-        }else if (TextUtils.isEmpty(creteProceddure.getValue().getRegistered_capital())){
-            ToastUitl.showShort("请填写注册资本");
-            return;
-        } else if (TextUtils.isEmpty(creteProceddure.getValue().getEstablish_date())){
-            ToastUitl.showShort("请填写成立日期");
-            return;
-        }else if (TextUtils.isEmpty(creteProceddure.getValue().getAddress())){
-            ToastUitl.showShort("请填写公司地址");
-            return;
-        } else if (TextUtils.isEmpty(creteProceddure.getValue().getIntroduce_text())){
-            ToastUitl.showShort("请填写公司介绍");
-            return;
-        }else if (TextUtils.isEmpty(creteProceddure.getValue().getIntroduce_video())){
-            ToastUitl.showShort("请上传公司介绍视频");
-            return;
-        }
 
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("login_token",UserUtils.getToken());
@@ -125,7 +96,8 @@ public class CreateProcedureViewModel extends ToolBarViewModel {
         new MyHttp().doPost(Api.getDefault().createRecord(hashMap), new HttpListener() {
             @Override
             public void onSuccess(JSONObject result) {
-
+                getOnBackPressedEvent().setValue(true);
+                ToastUitl.showShort("档案已提交，请等待审核");
             }
         });
     }

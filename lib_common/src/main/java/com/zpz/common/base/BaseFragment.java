@@ -25,9 +25,9 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
     private ViewModelProvider mActivityProvider;
     private ViewDataBinding mBinding;
     protected VM viewModel;
+    protected abstract DataBindingConfig getDataBindingConfig();
     protected abstract void init();
     protected abstract void initViewObservable();
-    protected abstract DataBindingConfig getDataBindingConfig();
     protected AppCompatActivity mActivity;
     @Override
     public void onAttach(@NonNull Context context) {
@@ -44,6 +44,7 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        initViewModel();
         DataBindingConfig dataBindingConfig = getDataBindingConfig();
         //TODO tip: DataBinding 严格模式：
         // 将 DataBinding 实例限制于 base 页面中，默认不向子类暴露，
@@ -59,7 +60,6 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
             binding.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i));
         }
         mBinding = binding;
-        initViewModel();
         init();
         initViewObservable();
         return binding.getRoot();

@@ -32,8 +32,7 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
         binding.commonToolbar.titleRightTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("dfdf", "onClick: " );
-            }
+                Log.e("dfdf", "onClick: " );            }
         });
     }
 

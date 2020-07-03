@@ -15,6 +15,7 @@
             android:layout_height="?attr/actionBarSize">
                 <ImageButton
                     android:src="@drawable/ic_back_jt"
+                    android:visibility="@{vm.backvisibility?View.VISIBLE:View.GONE}"
                     onBackClick="@{vm}"
                     android:background="?android:attr/selectableItemBackground"
                     android:layout_width="?attr/actionBarSize"

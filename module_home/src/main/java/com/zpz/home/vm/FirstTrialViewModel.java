@@ -14,7 +14,6 @@ import com.zpz.home.baen.FirstAssessCountBean;
 
 public class FirstTrialViewModel extends ToolBarViewModel {
 
-
     @Override
     protected void setTitle() {
         title.set("初审查询");

@@ -18,6 +18,7 @@ import com.zpz.home.vm.FileListViewModel;
 import java.util.List;
 
 @Route(path = MyARouter.FileListActivity)
+//档案管理
 public class FileListActivity extends BaseActivity<FileListViewModel> {
     private ActivityFileListBinding fileListBinding;
     @Override
@@ -36,14 +37,14 @@ public class FileListActivity extends BaseActivity<FileListViewModel> {
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
                 viewModel.page=1;
-                viewModel.requesListCompanyRecord();
+                viewModel.requesListCompanyRecord("1");
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
                 viewModel.page+=1;
-                viewModel.requesListCompanyRecord();
+                viewModel.requesListCompanyRecord("1");
             }
         });
     }
@@ -57,7 +58,7 @@ public class FileListActivity extends BaseActivity<FileListViewModel> {
                 fileListBinding.trl.finishLoadmore();
             }
         });
-        viewModel.requesListCompanyRecord();
+        viewModel.requesListCompanyRecord("1");
     }
 
 }

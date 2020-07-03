@@ -67,4 +67,14 @@ public interface ApiService {
     @POST("/workerapi/user/list_company_record")
     Observable<JSONObject> listCompanyRecord(@FieldMap Map<String, Object> params);
 
+    //待办列表
+    @FormUrlEncoded
+    @POST("/workerapi/user/list_backlog")
+    Observable<JSONObject> listBacklog(@FieldMap Map<String, Object> params);
+
+    //待办列表计数
+    @FormUrlEncoded
+    @POST("/workerapi/user/get_backlog_count")
+    Observable<JSONObject> getBacklogCount(@Field ("login_token") String loginToken);
+
 }

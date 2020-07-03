@@ -1,10 +1,8 @@
 package com.zpz.common.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
@@ -12,7 +10,6 @@ import androidx.core.content.ContextCompat;
 
 import com.zpz.common.base.BaseApplication;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -79,18 +76,5 @@ public class CommonUtils {
         return format.format(date);
     }
 
-    //缓存目录
-    public static File getCacheDir(Context context, String cacheName) {
-        File cacheDir = context.getExternalCacheDir();
-        if (cacheDir != null) {
-            File result = new File(cacheDir, cacheName);
-            if (!result.mkdirs() && (!result.exists() || !result.isDirectory())) {
-                // File wasn't able to create a directory, or the result exists but not a directory
-                return null;
-            }
-            return result;
-        }
 
-        return null;
-    }
 }

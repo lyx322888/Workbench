@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
         <variable
             name="vm"
             type="com.zpz.home.baen.FileListBean.DataBean" />
@@ -57,7 +58,7 @@
                     <TextView
                         android:textColor="@color/appColor"
                         tools:text="600分"
-                        android:text='@{vm.ratings+@string/fen}'
+                        android:text='@{TextUtils.isEmpty(vm.ratings)?vm.ratings:vm.ratings+@string/fen}'
                         android:layout_alignParentEnd="true"
                         android:textSize="14sp"
                         android:layout_width="wrap_content"
@@ -139,7 +140,6 @@
                     android:id="@+id/btn_jdzl"
                     android:background="@drawable/bg_app_color_3"
                     android:text="建档资料"
-                    android:layout_marginEnd="10dp"
                     android:textSize="13sp"
                     android:paddingHorizontal="16dp"
                     android:gravity="center"
@@ -148,6 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp" />
                 <Button
+                    android:layout_marginStart="10dp"
                     android:id="@+id/btn_bj"
                     android:background="@drawable/bg_app_color_3"
                     android:text="编辑"

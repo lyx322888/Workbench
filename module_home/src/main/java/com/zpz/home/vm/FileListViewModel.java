@@ -28,9 +28,10 @@ public class FileListViewModel extends ToolBarViewModel {
         return filelistlivedata;
     }
 
-    public void requesListCompanyRecord(){
+    public void requesListCompanyRecord(String type){
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("page",page);
+        hashMap.put("type",type);
         hashMap.put("login_token", UserUtils.getToken());
         hashMap.put("num",10);
         new MyHttp().doPost(Api.getDefault().listCompanyRecord(hashMap), new HttpListener() {

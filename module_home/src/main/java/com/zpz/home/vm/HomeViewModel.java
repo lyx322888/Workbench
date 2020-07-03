@@ -13,8 +13,7 @@ import com.zpz.common.bean.HomeGg;
 import com.zpz.common.bean.UserInfoBean;
 import com.zpz.common.utils.UserUtils;
 
-
-public class MainViewModel extends BaseViewModel {
+public class HomeViewModel extends BaseViewModel {
     private  MutableLiveData<UserInfoBean> mutableLiveData ;
     private MutableLiveData<HomeGg> homeGgMutableLiveData ;
 

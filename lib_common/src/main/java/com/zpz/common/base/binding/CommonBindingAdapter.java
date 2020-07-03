@@ -3,6 +3,7 @@ package com.zpz.common.base.binding;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -20,6 +21,7 @@ public class CommonBindingAdapter {
     //图片加载
     @BindingAdapter("imageUrl")
     public static void showPic(ImageView imageView, String url) {
+        Log.e("dfdf", "showPic: "+url );
         GlideUtils.showSmallPic(imageView,url);
     }
 
