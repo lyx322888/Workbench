@@ -1,11 +1,9 @@
 package com.zpz.common.api;
 
-import android.content.Intent;
-import android.util.Log;
-
 import com.alibaba.android.arouter.core.LogisticsCenter;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSONObject;
 import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseApplication;
 import com.zpz.common.base.MyARouter;
@@ -15,7 +13,6 @@ import com.zpz.common.utils.SPUtils;
 import com.zpz.common.utils.ToastUitl;
 import com.zpz.common.view.dalog.LoadingDialog;
 
-import com.alibaba.fastjson.JSONObject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,7 +21,6 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * Created by wushenghui on 2017/6/20.
  */
 
 public class MyHttp {
@@ -37,7 +33,7 @@ public class MyHttp {
                 .subscribe(new Observer<JSONObject>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        listener.onSubscribe(d);
                     }
                     @Override
                     public void onNext(JSONObject result) {
@@ -69,7 +65,6 @@ public class MyHttp {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("dfdf", "onError: "+e );
                         //请求错误
                         LoadingDialog.cancelDialogForLoading();
                         if (!NetWorkUtils.isNetConnected(BaseApplication.getInstance())) {
@@ -89,4 +84,5 @@ public class MyHttp {
                     }
                 });
     }
+
 }

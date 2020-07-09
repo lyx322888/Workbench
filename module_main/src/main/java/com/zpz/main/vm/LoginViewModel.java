@@ -2,10 +2,10 @@ package com.zpz.main.vm;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
+
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zpz.common.api.Api;
-import com.zpz.common.api.HttpListener;
 import com.zpz.common.api.MyHttp;
 import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseViewModel;
@@ -15,7 +15,8 @@ import com.zpz.common.utils.UserUtils;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import static com.zpz.common.utils.CommonUtils.*;
+
+import static com.zpz.common.utils.CommonUtils.EncoderByMd5;
 
 public class LoginViewModel extends BaseViewModel {
     private MutableLiveData<LoginBean> loginBeanMutableLiveData ;
@@ -42,8 +43,7 @@ public class LoginViewModel extends BaseViewModel {
         }
         params.put("account",name.get());
         params.put("password",passwordParams);
-
-        new MyHttp().doPost(Api.getDefault().login(params), new HttpListener() {
+        new MyHttp().doPost(Api.getDefault().login(params), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 LoginBean loginBean = new Gson().fromJson(result.toString(), LoginBean.class);

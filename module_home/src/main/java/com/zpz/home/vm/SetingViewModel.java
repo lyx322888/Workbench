@@ -6,19 +6,20 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zpz.common.api.Api;
-import com.zpz.common.api.HttpListener;
 import com.zpz.common.api.MyHttp;
 import com.zpz.common.base.BaseApplication;
-import com.zpz.common.base.ToolBarViewModel;
+import com.zpz.common.base.BaseViewModel;
 import com.zpz.common.utils.APPUtil;
+import com.zpz.common.utils.CleanDataUtils;
 import com.zpz.common.utils.UserUtils;
 
-public class SetingViewModel extends ToolBarViewModel {
+public class SetingViewModel extends BaseViewModel {
     private MutableLiveData<Boolean> loginState ;
     public ObservableField<String> versionName = new ObservableField<>();
+    public ObservableField<String> cacheSize = new ObservableField<>();
     {
         versionName.set(APPUtil.getVersionName(BaseApplication.getInstance()));
-
+        cacheSize.set(CleanDataUtils.getTotalCacheSize(BaseApplication.getInstance()));
     }
 
     public LiveData<Boolean> getLoginstate(){
@@ -30,7 +31,7 @@ public class SetingViewModel extends ToolBarViewModel {
 
     //退出登录
     public void requesOutLogin(){
-        new MyHttp().doPost(Api.getDefault().logout(UserUtils.getToken()), new HttpListener() {
+        new MyHttp().doPost(Api.getDefault().logout(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 UserUtils.saveLoginState(false);
@@ -40,10 +41,5 @@ public class SetingViewModel extends ToolBarViewModel {
             }
         });
 
-    }
-
-    @Override
-    protected void setTitle() {
-        title.set("设置");
     }
 }

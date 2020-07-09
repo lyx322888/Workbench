@@ -2,14 +2,17 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     signingConfigs {
         release {
-            keyAlias 'wbx365'
+            keyAlias 'wbx365888'
             keyPassword 'wbx365888'
             storeFile file('../workbench.jks')
             storePassword 'wbx365888'
         }
-
     }
     defaultConfig {
 
@@ -39,10 +42,16 @@ android {
         }
     }
     buildTypes {
-        release {
+            debug {
+                signingConfig signingConfigs.release
+            }
+
+            release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+            }
+
     }
     dataBinding {
         enabled true

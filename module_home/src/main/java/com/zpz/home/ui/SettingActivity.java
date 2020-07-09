@@ -1,4 +1,5 @@
 package com.zpz.home.ui;
+
 import android.view.View;
 
 import androidx.databinding.library.baseAdapters.BR;
@@ -9,7 +10,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
+import com.zpz.common.dialog.ConfirmDialog;
 import com.zpz.common.utils.AppManager;
+import com.zpz.common.utils.CleanDataUtils;
 import com.zpz.home.R;
 import com.zpz.home.vm.SetingViewModel;
 //设置
@@ -24,6 +27,7 @@ public class SettingActivity extends BaseActivity<SetingViewModel> {
     }
     @Override
     protected void init() {
+        setTitle("设置");
 
     }
 
@@ -38,12 +42,24 @@ public class SettingActivity extends BaseActivity<SetingViewModel> {
                 }
             }
         });
+
     }
 
     public class ClickProxy{
         //退出
         public void outLogin(View view){
-            viewModel.requesOutLogin();
+            ConfirmDialog confirmDialog =  ConfirmDialog.newInstance("您确定退出登录吗?");
+            confirmDialog.setDialogListener(() -> viewModel.requesOutLogin());
+            confirmDialog.show(getSupportFragmentManager(),"");
+        }
+        //清除缓存
+        public void clearCache(View view){
+            ConfirmDialog confirmDialog = ConfirmDialog.newInstance("您确定清除缓存吗?");
+            confirmDialog.setDialogListener(() -> {
+                CleanDataUtils.clearAllCache(mContext);
+                viewModel.cacheSize.set(CleanDataUtils.getTotalCacheSize(mContext));
+            });
+            confirmDialog.show(getSupportFragmentManager(),"");
         }
 
     }

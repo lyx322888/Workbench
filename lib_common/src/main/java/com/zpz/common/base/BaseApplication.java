@@ -3,12 +3,16 @@ package com.zpz.common.base;
 import android.app.Application;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.kingja.loadsir.core.LoadSir;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.footer.BallPulseView;
 import com.lcodecore.tkrefreshlayout.header.SinaRefreshView;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
 import com.zpz.common.BuildConfig;
+import com.zpz.common.callback.loadsir.EmptyCallback;
+import com.zpz.common.callback.loadsir.LoadingCallback;
+import com.zpz.common.callback.loadsir.TimeoutCallback;
 import com.zpz.common.utils.MediaLoader;
 
 //基础app
@@ -33,6 +37,16 @@ public class BaseApplication extends Application {
     private void init() {
         initARouter();
         initAlbum();
+        initLoadSir();
+    }
+
+    //状态页框架
+    private void initLoadSir() {
+        LoadSir.beginBuilder()
+                .addCallback(new EmptyCallback())
+                .addCallback(new LoadingCallback())
+                .addCallback(new TimeoutCallback())
+                .commit();
     }
 
     //图片选择框架

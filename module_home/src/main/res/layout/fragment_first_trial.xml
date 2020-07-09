@@ -8,7 +8,6 @@
             type="com.zpz.home.vm.FirstTrialFmViewModel" />
 
     </data>
-
     <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
         android:id="@+id/trl"
         android:layout_width="match_parent"

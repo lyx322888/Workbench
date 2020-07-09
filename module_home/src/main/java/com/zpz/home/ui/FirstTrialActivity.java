@@ -22,6 +22,7 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
     private ActivityFirstTrialBinding binding;
     @Override
     protected void init() {
+        setTitle("企业初审");
         binding = (ActivityFirstTrialBinding) getBinding();
         ArrayList<Fragment> arrayList = new ArrayList<>();
         arrayList.add(FirstTrialFragment.newInstance(0));
@@ -29,7 +30,8 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
         arrayList.add(FirstTrialFragment.newInstance(2));
         binding.labLayout.setViewPager(binding.orderViewPager,viewModel.mTitles,this,arrayList);
         //分享
-        binding.commonToolbar.titleRightTv.setOnClickListener(new View.OnClickListener() {
+        baseTitleBinding.titleRightTv.setText("分享初审表");
+        baseTitleBinding.titleRightTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("dfdf", "onClick: " );            }
@@ -38,7 +40,6 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
 
     @Override
     protected void initViewObservable() {
-
         viewModel.getFirstAssessCountLiveData().observe(this, new Observer<FirstAssessCountBean>() {
             @Override
             public void onChanged(FirstAssessCountBean firstAssessCountBean) {
@@ -65,12 +66,10 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
         viewModel.requesFirstAssessCount();
     }
 
-
     @Override
     protected DataBindingConfig getDataBindingConfig() {
         return new DataBindingConfig(R.layout.activity_first_trial)
                 .addBindingParam(BR.vm,viewModel);
     }
-
 
 }

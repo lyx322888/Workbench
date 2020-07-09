@@ -1,6 +1,7 @@
 package com.zpz.home.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.lifecycle.Observer;
 
@@ -14,6 +15,7 @@ import com.zpz.home.adapter.CommissionAdapter;
 import com.zpz.home.baen.CommissionItemBean;
 import com.zpz.home.databinding.FragmentCommissionItemBinding;
 import com.zpz.home.vm.CommissionItemViewModel;
+import com.zpz.home.vm.ExpireCompanyViewModel;
 
 import java.util.List;
 
@@ -22,18 +24,28 @@ import java.util.List;
  */
 public class CommissionItemFragment extends BaseFragment<CommissionItemViewModel> {
     private FragmentCommissionItemBinding commissionItemBinding;
-    public int status;
-    public static CommissionItemFragment newInstance(int status) {
+    private ExpireCompanyViewModel expireCompanyViewModel;
+    public String status;
+    public static CommissionItemFragment newInstance(String status) {
         CommissionItemFragment tabFragment = new CommissionItemFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("status", status);
+        bundle.putString("status", status);
         tabFragment.setArguments(bundle);
         return tabFragment;
     }
+
+    @Override
+    protected void initViewModel() {
+        super.initViewModel();
+        expireCompanyViewModel = getActivityViewModel(ExpireCompanyViewModel.class);
+    }
+
     @Override
     protected DataBindingConfig getDataBindingConfig() {
         if (getArguments() != null) {
-            status = getArguments().getInt("status");
+            status = getArguments().getString("status");
+        }else if (!TextUtils.isEmpty(expireCompanyViewModel.status.get())){
+            status = expireCompanyViewModel.status.get();
         }
         return new DataBindingConfig(R.layout.fragment_commission_item)
                 .addBindingParam(BR.adapter,new CommissionAdapter(mActivity,R.layout.item_commission,status))

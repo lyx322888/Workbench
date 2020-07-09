@@ -19,8 +19,8 @@ import retrofit2.http.POST;
 public interface ApiService {
     //获取版本号
     @FormUrlEncoded
-    @POST("/sjapi/version/get_version_info")
-    Observable<JSONObject> getVersion(@Field("app_type") String appType, @Field("version_code") String versionCode);
+    @POST("/workerapi/version/get_version_info")
+    Observable<JSONObject> getVersion(@Field("app_type") String appType, @Field("version_code") int versionCode);
 
     //登录
     @FormUrlEncoded

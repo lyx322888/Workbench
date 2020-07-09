@@ -3,25 +3,18 @@ package com.zpz.main.ui;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-
 
 import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.PermissioinSettingPage;
-import com.zpz.common.utils.RxUtils;
-import com.zpz.common.utils.SPUtils;
 import com.zpz.common.utils.UserUtils;
 import com.zpz.main.R;
 import com.zpz.main.vm.SplashViewModel;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -45,27 +38,29 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
 
     @Override
     protected void init() {
-        RxUtils.countdown(1, new Observer<Long>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                addDisposable(d);
-            }
+        hideTitleBar();
+//        RxUtils.countdown(1, new Observer<Long>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                addDisposable(d);
+//            }
+//
+//            @Override
+//            public void onNext(Long aLong) {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//            }
+//        });
+        SplashActivityPermissionsDispatcher.showMainContentWithPermissionCheck(SplashActivity.this);
 
-            @Override
-            public void onNext(Long aLong) {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                SplashActivityPermissionsDispatcher.showMainContentWithPermissionCheck(SplashActivity.this);
-            }
-        });
     }
 
     @Override

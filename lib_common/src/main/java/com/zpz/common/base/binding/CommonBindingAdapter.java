@@ -21,7 +21,6 @@ public class CommonBindingAdapter {
     //图片加载
     @BindingAdapter("imageUrl")
     public static void showPic(ImageView imageView, String url) {
-        Log.e("dfdf", "showPic: "+url );
         GlideUtils.showSmallPic(imageView,url);
     }
 

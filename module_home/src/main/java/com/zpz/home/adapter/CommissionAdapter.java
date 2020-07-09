@@ -12,8 +12,8 @@ import com.zpz.home.baen.CommissionItemBean;
 import com.zpz.home.databinding.ItemCommissionBinding;
 
 public class CommissionAdapter extends SimpleBaseBindingAdapter<CommissionItemBean.DataBean, ItemCommissionBinding> {
-    private int status;
-    public CommissionAdapter(Context context, int layout,int status) {
+    private String status;
+    public CommissionAdapter(Context context, int layout,String status) {
         super(context, layout);
         this.status = status;
     }
@@ -22,18 +22,18 @@ public class CommissionAdapter extends SimpleBaseBindingAdapter<CommissionItemBe
     protected void onSimpleBindItem(ItemCommissionBinding binding, final CommissionItemBean.DataBean item, RecyclerView.ViewHolder holder) {
         binding.setVm(item);
         switch (status){
-            case 1:
-                binding.tvTime.setText("提交时间:"+item.getCreate_time());
+            case "1":
+                binding.tvTime.setText(String.format("提交时间:%s",item.getCreate_time()));
                 binding.tvState.setText("已通过");
                 binding.tvQjd.setText("去建档");
                 break;
-            case 2:
-                binding.tvTime.setText("到期时间:"+item.getCreate_time());
+            case "2":
+                binding.tvTime.setText(String.format("到期时间:%s",item.getCreate_time()));
                 binding.tvState.setText("即将过期");
                 binding.tvQjd.setText("去年审");
                 break;
-            case 3:
-                binding.tvTime.setText("到期时间:"+item.getCreate_time());
+            case "3":
+                binding.tvTime.setText(String.format("到期时间:%s",item.getCreate_time()));
                 binding.tvState.setText("已过期");
                 binding.tvQjd.setText("重新建档");
                 break;

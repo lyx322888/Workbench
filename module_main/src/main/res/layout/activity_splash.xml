@@ -5,8 +5,14 @@
     <data>
     </data>
     <LinearLayout
+        android:background="@color/white"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         tools:ignore="UselessLeaf">
+        <ImageView
+            android:src="@drawable/app_shape"
+            android:scaleType="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>

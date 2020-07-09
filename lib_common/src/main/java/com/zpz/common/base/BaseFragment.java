@@ -13,8 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
+import com.zpz.common.callback.loadsir.EmptyCallback;
+import com.zpz.common.callback.loadsir.LoadingCallback;
+import com.zpz.common.callback.loadsir.TimeoutCallback;
 import com.zpz.common.utils.ToastUitl;
 
 import java.lang.reflect.ParameterizedType;
@@ -25,6 +32,8 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
     private ViewModelProvider mActivityProvider;
     private ViewDataBinding mBinding;
     protected VM viewModel;
+    protected LoadService loadService;
+
     protected abstract DataBindingConfig getDataBindingConfig();
     protected abstract void init();
     protected abstract void initViewObservable();
@@ -60,9 +69,13 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
             binding.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i));
         }
         mBinding = binding;
+        loadService = LoadSir.getDefault().register(binding.getRoot());
+        loadService.showSuccess();
+        baseHttpViewObservable();
         init();
         initViewObservable();
-        return binding.getRoot();
+
+        return loadService.getLoadLayout();
     }
 
     protected ViewDataBinding getBinding() {
@@ -81,6 +94,45 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
             }
             viewModel = (VM) getFragmentViewModel( modelClass);
         }
+    }
+    //基础Observable监听
+    private void baseHttpViewObservable(){
+        //空数据
+        viewModel.isShowEmpty.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    loadService.showCallback(EmptyCallback.class);
+                }
+            }
+        });
+        //加载中
+        viewModel.isShowLoading.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    loadService.showCallback(LoadingCallback.class);
+                }
+            }
+        });
+        //网络错误
+        viewModel.isShowTimeout.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    loadService.showCallback(TimeoutCallback.class);
+                }
+            }
+        });
+        //显示内容
+        viewModel.isShowSuccess.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    loadService.showSuccess();
+                }
+            }
+        });
     }
 
     protected <T extends ViewModel> T getFragmentViewModel(@NonNull Class<T> modelClass) {

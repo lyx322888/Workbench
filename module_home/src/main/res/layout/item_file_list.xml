@@ -101,6 +101,7 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/btn_ckzs"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/edt_bc"
                 android:layout_width="wrap_content"

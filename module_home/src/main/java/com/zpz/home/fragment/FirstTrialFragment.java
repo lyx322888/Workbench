@@ -82,6 +82,4 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
         viewModel.requesfirstTria(status);
     }
 
-
-
 }

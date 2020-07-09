@@ -2,7 +2,6 @@ package com.zpz.home.fragment;
 
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -10,7 +9,7 @@ import com.zpz.common.base.BaseFragment;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.home.R;
-import com.zpz.home.baen.CommissionCountBean;
+import com.zpz.common.bean.CommissionCountBean;
 import com.zpz.home.databinding.FragmentCommissionBinding;
 import com.zpz.home.vm.CommissionViewModel;
 
@@ -24,14 +23,16 @@ public class CommissionFragment extends BaseFragment<CommissionViewModel> {
         return new DataBindingConfig(R.layout.fragment_commission)
                 .addBindingParam(BR.vm,viewModel);
     }
+
+
     @Override
     protected void init() {
         binding = (FragmentCommissionBinding) getBinding();
         ArrayList<Fragment> arrayList = new ArrayList<>();
-        arrayList.add(CommissionItemFragment.newInstance(1));
-        arrayList.add(CommissionItemFragment.newInstance(2));
-        arrayList.add(CommissionItemFragment.newInstance(3));
-        binding.labLayout.setViewPager(binding.orderViewPager,viewModel.mTitles, (FragmentActivity) getActivity(),arrayList);
+        arrayList.add(CommissionItemFragment.newInstance("1"));
+        arrayList.add(CommissionItemFragment.newInstance("2"));
+        arrayList.add(CommissionItemFragment.newInstance("3"));
+        binding.labLayout.setViewPager(binding.orderViewPager,viewModel.mTitles, getActivity(),arrayList);
     }
 
     @Override
@@ -59,6 +60,6 @@ public class CommissionFragment extends BaseFragment<CommissionViewModel> {
                 }
             }
         });
-        viewModel.requesFirstAssessCount();
+        viewModel.requesBacklogCount();
     }
 }

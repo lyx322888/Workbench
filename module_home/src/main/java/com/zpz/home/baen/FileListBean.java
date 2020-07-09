@@ -55,6 +55,16 @@ public class FileListBean {
         private String record_number;
         private String ratings;
 
+        public String getReason_refusal() {
+            return reason_refusal;
+        }
+
+        public void setReason_refusal(String reason_refusal) {
+            this.reason_refusal = reason_refusal;
+        }
+
+        private String reason_refusal;
+
         public int getCompany_id() {
             return company_id;
         }

@@ -6,20 +6,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zpz.common.api.Api;
-import com.zpz.common.api.HttpListener;
 import com.zpz.common.api.MyHttp;
-import com.zpz.common.base.ToolBarViewModel;
+import com.zpz.common.base.BaseViewModel;
+import com.zpz.common.bean.CommissionCountBean;
 import com.zpz.common.utils.UserUtils;
-import com.zpz.home.baen.CommissionCountBean;
 
-public class CommissionViewModel extends ToolBarViewModel {
+public class CommissionViewModel extends BaseViewModel {
     public String[] mTitles = new String[]{"待建档", "即将到期", "已到期"};
 
-    @Override
-    protected void setTitle() {
-        title.set("待办");
-        backvisibility.set(false);
-    }
+
 
     private MutableLiveData<CommissionCountBean> commissionCountLiveData;
 
@@ -29,13 +24,19 @@ public class CommissionViewModel extends ToolBarViewModel {
         }
         return commissionCountLiveData;
     }
-
-    public void requesFirstAssessCount(){
-        new MyHttp().doPost(Api.getDefault().getBacklogCount(UserUtils.getToken()), new HttpListener() {
+    //统计
+    public void requesBacklogCount(){
+        new MyHttp().doPost(Api.getDefault().getBacklogCount(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 CommissionCountBean firstAssessCountBean = new Gson().fromJson(result.toString(),CommissionCountBean.class);
                 commissionCountLiveData.setValue(firstAssessCountBean);
+                showSuccess();
+            }
+
+            @Override
+            public void onError(int code) {
+
             }
         });
     }

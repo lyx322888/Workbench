@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.flyco.roundview.RoundRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginHorizontal="20dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    app:rv_cornerRadius="10dp"
+    app:rv_backgroundColor="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+        <TextView
+            android:textColor="@color/titleColor"
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"/>
+        <LinearLayout
+            android:layout_below="@id/tv_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_height="50dp">
+
+            <com.flyco.roundview.RoundTextView
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/tv_no_warn_again"
+                android:gravity="center"
+                app:rv_backgroundColor="@color/backgroundColor"
+                app:rv_cornerRadius="5dp"
+                android:backgroundTint="#e0e0e0"
+                android:layout_height="match_parent"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+            <com.flyco.roundview.RoundTextView
+                android:layout_margin="5dp"
+                android:id="@+id/tv_upload"
+                app:rv_cornerRadius="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:rv_backgroundColor="@color/appColor"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+</com.flyco.roundview.RoundRelativeLayout>

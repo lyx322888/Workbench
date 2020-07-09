@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -17,14 +18,13 @@ import com.amap.api.location.AMapLocationListener;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
-import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.api.widget.Widget;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.base.adapter.BaseBindingAdapter;
+import com.zpz.common.dialog.ConfirmDialog;
 import com.zpz.common.utils.ChoosePictureUtils;
 import com.zpz.common.utils.CommonUtils;
 import com.zpz.common.utils.FileUtils;
@@ -39,10 +39,12 @@ import com.zpz.home.adapter.JDPhotoAdapter;
 import com.zpz.home.baen.CreteProceddureBean;
 import com.zpz.home.databinding.ActivityCreateProcedureBinding;
 import com.zpz.home.vm.CreateProcedureViewModel;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import cn.jzvd.JZVideoPlayer;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -94,6 +96,7 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
 
     @Override
     protected void init() {
+        setTitle("企业建档");
         ARouter.getInstance().inject(this);
         adapterListener();
     }
@@ -214,6 +217,15 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
            }
        });
        viewModel.requesCreteProceddure(company_id,first_assess_id);
+
+       viewModel.getsubmitsuccess().observe(this, new Observer<Boolean>() {
+           @Override
+           public void onChanged(Boolean aBoolean) {
+               ConfirmDialog confirmDialog = ConfirmDialog.newInstance("档案已提交，请等待审核");
+               confirmDialog.setDialogListener(() -> finish());
+               confirmDialog.show(getSupportFragmentManager(),"");
+           }
+       });
     }
     //定位
     @Override
@@ -272,14 +284,18 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
         UpLoadPicUtils.batchUpload(arrayList, new UpLoadPicUtils.BatchUpLoadPicListener() {
             @Override
             public void success(List<String> qiNiuPath) {
-                for (int i = 0; i < qiNiuPath.size(); i++) {
-                    qiNiuPath.set(i,QiniuUtils.watermark(qiNiuPath.get(i),viewModel.getCreteProceddure().getValue().getAddress()));
-                    Log.e("dfdf", "success: "+qiNiuPath.get(i) );
+                if (requestCode!=REQUESTCODE_LOGO){
+                    //排除logo
+                    for (int i = 0; i < qiNiuPath.size(); i++) {
+                        qiNiuPath.set(i,QiniuUtils.watermark(qiNiuPath.get(i),viewModel.getCreteProceddure().getValue().getAddress()));
+                        Log.e("dfdf", "success: "+qiNiuPath.get(i) );
+                    }
                 }
                 switch (requestCode){
                     case REQUESTCODE_LOGO:
                         //logo
                         viewModel.getCreteProceddure().getValue().setLogo(qiNiuPath.get(0));
+                        Log.e("dfdf", "success: "+ qiNiuPath.get(0));
                         break;
                     case REQUESTCODE_WORK_ENVIRONMENT:
                         //工作环境
@@ -317,12 +333,7 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
                 .camera(true)
                 .columnCount(3)
                 .selectCount(1)
-                .onResult(new Action<ArrayList<AlbumFile>>() {
-                    @Override
-                    public void onAction(@NonNull ArrayList<AlbumFile> result) {
-                        ysVideo(result.get(0).getPath());
-                    }
-                })
+                .onResult(result -> ysVideo(result.get(0).getPath()))
                 .start();
     }
 
@@ -336,7 +347,6 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
                     @Override
                     public void onProgress(float progress, String outputfilePath) {
                         if (progress==1){
-                            Log.e("dfdf", "onProgress: "+outputfilePath);
                             emitter.onNext(outputfilePath);
                             emitter.onComplete();
                         }

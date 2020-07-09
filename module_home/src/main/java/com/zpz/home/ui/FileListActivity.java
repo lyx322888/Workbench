@@ -8,6 +8,7 @@ import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
+import com.zpz.common.callback.loadsir.LoadingCallback;
 import com.zpz.home.BR;
 import com.zpz.home.R;
 import com.zpz.home.adapter.FileListAdapter;
@@ -30,7 +31,9 @@ public class FileListActivity extends BaseActivity<FileListViewModel> {
 
     @Override
     protected void init() {
+        setTitle("档案管理");
         fileListBinding = (ActivityFileListBinding) getBinding();
+        loadService.showCallback(LoadingCallback.class);
         //刷新加载
         fileListBinding.trl.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
@@ -54,6 +57,7 @@ public class FileListActivity extends BaseActivity<FileListViewModel> {
         viewModel.getFilelistlivedata().observe(this, new Observer<List<FileListBean.DataBean>>() {
             @Override
             public void onChanged(List<FileListBean.DataBean> dataBeans) {
+                viewModel.showSuccess();
                 fileListBinding.trl.finishRefreshing();
                 fileListBinding.trl.finishLoadmore();
             }

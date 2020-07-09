@@ -10,21 +10,12 @@
             name="adapter"
             type="androidx.recyclerview.widget.RecyclerView.Adapter" />
     </data>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.FirstTrialActivity">
-        <include layout="@layout/common_toolbar"
-            android:id="@+id/common_toolbar"
-            bin:vm = "@{vm}"
-            />
         <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
             android:id="@+id/trl"
             android:layout_width="match_parent"
             bin:tr_autoLoadMore="true"
             bin:tr_head_height="50dp"
+            bin:tr_max_head_height="80dp"
             android:layout_height="match_parent"
             tools:context=".fragment.FirstTrialFragment">
             <androidx.recyclerview.widget.RecyclerView
@@ -36,5 +27,4 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
-    </LinearLayout>
 </layout>

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zpz.common.api.Api;
-import com.zpz.common.api.HttpListener;
 import com.zpz.common.api.MyHttp;
 import com.zpz.common.base.BaseViewModel;
 import com.zpz.common.utils.UserUtils;
@@ -26,31 +25,17 @@ public class CommissionItemViewModel extends BaseViewModel {
         return comissionlivedta;
     }
 
-    public void requesfirstTria(int status){
+    public void requesfirstTria(String status){
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("page",page);
         hashMap.put("login_token", UserUtils.getToken());
         hashMap.put("num",10);
         hashMap.put("type",status);
-        new MyHttp().doPost(Api.getDefault().listBacklog(hashMap), new HttpListener() {
+        new MyHttp().doPost(Api.getDefault().listBacklog(hashMap), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 CommissionItemBean firstTriaBean = new Gson().fromJson(result.toString(),CommissionItemBean.class);
-                if (page==1){
-                    comissionlivedta.setValue(firstTriaBean.getData());
-                }else {
-                    List<CommissionItemBean.DataBean>list = comissionlivedta.getValue();
-                    list.addAll(firstTriaBean.getData());
-                    comissionlivedta.setValue(list);
-                }
-            }
-
-            @Override
-            public void onError(int code) {
-                super.onError(code);
-                if (page!=1){
-                    page-=1;
-                }
+                comissionlivedta.setValue(manageList(comissionlivedta.getValue(),firstTriaBean.getData()));
             }
         });
     }
