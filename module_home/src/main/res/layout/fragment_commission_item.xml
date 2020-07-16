@@ -15,9 +15,8 @@
         android:id="@+id/trl"
         android:layout_width="match_parent"
         bin:tr_autoLoadMore="true"
-        bin:tr_head_height="50dp"
-        android:layout_height="match_parent"
-        tools:context=".fragment.FirstTrialFragment">
+        binding="@{vm}"
+        android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:orientation="vertical"
             android:id="@+id/rv"

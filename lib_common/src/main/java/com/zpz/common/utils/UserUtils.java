@@ -34,4 +34,10 @@ public class UserUtils {
     public static void saveLoginState(boolean state){
         SPUtils.setSharedBooleanData(BaseApplication.getInstance(), AppConfig.LOGIN_STATE, state);
     }
+
+    //清除登录信息
+    public static void clearRecord() {
+        SPUtils.setSharedBooleanData(BaseApplication.getInstance(), AppConfig.LOGIN_STATE, false);
+        SPUtils.setSharedStringData(BaseApplication.getInstance(), AppConfig.LOGIN_TOKEN, "");
+    }
 }

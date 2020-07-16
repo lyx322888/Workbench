@@ -3,27 +3,19 @@ package com.zpz.home.fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import androidx.lifecycle.Observer;
-
-import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.zpz.common.base.BaseFragment;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.home.BR;
 import com.zpz.home.R;
 import com.zpz.home.adapter.CommissionAdapter;
-import com.zpz.home.baen.CommissionItemBean;
-import com.zpz.home.databinding.FragmentCommissionItemBinding;
 import com.zpz.home.vm.CommissionItemViewModel;
 import com.zpz.home.vm.ExpireCompanyViewModel;
-
-import java.util.List;
 
 /**
  * 待办
  */
 public class CommissionItemFragment extends BaseFragment<CommissionItemViewModel> {
-    private FragmentCommissionItemBinding commissionItemBinding;
+    //从activity共享过来
     private ExpireCompanyViewModel expireCompanyViewModel;
     public String status;
     public static CommissionItemFragment newInstance(String status) {
@@ -48,50 +40,32 @@ public class CommissionItemFragment extends BaseFragment<CommissionItemViewModel
             status = expireCompanyViewModel.status.get();
         }
         return new DataBindingConfig(R.layout.fragment_commission_item)
-                .addBindingParam(BR.adapter,new CommissionAdapter(mActivity,R.layout.item_commission,status))
+                .addBindingParam(BR.adapter,new CommissionAdapter(status))
                 .addBindingParam(BR.vm,viewModel);
     }
 
     @Override
     protected void init() {
-
-        commissionItemBinding = (FragmentCommissionItemBinding) getBinding();
-        //刷新加载
-        commissionItemBinding.trl.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                super.onRefresh(refreshLayout);
-                viewModel.page=1;
-                viewModel.requesfirstTria(status);
-            }
-
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                super.onLoadMore(refreshLayout);
-                viewModel.page+=1;
-                viewModel.requesfirstTria(status);
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.requesfirstTria(status);
+        viewModel.onRefresh();
     }
 
     @Override
     protected void initViewObservable() {
-        viewModel.getComissionlivedta().observe(this, new Observer<List<CommissionItemBean.DataBean>>() {
-            @Override
-            public void onChanged(List<CommissionItemBean.DataBean> dataBeans) {
-                commissionItemBinding.trl.finishRefreshing();
-                commissionItemBinding.trl.finishLoadmore();
-            }
-        });
-        viewModel.requesfirstTria(status);
+
     }
 
+    @Override
+    protected void onLoadData() {
 
+    }
 
+    @Override
+    protected void onTwRefreshAndLoadMore() {
+        viewModel.requesfirstTria(status);
+    }
 }

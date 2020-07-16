@@ -24,7 +24,7 @@ public class UserViewModel extends BaseViewModel {
     }
 
     public void requesUserInfo(){
-        new MyHttp().doPost(Api.getDefault().getUserInfo(UserUtils.getToken()), new HttpViewModelListener() {
+       MyHttp.doPost(Api.getDefault().getUserInfo(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 UserInfoBean userInfoBean = new Gson().fromJson(result.toString(),UserInfoBean.class);

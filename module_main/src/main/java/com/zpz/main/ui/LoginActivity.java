@@ -3,15 +3,14 @@ package com.zpz.main.ui;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.lifecycle.Observer;
-
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.yanzhenjie.sofia.Sofia;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
-import com.zpz.common.bean.VersionBean;
 import com.zpz.common.dialog.UpdateDialogFragment;
 import com.zpz.common.utils.APPUtil;
 import com.zpz.common.utils.ToastUitl;
@@ -44,18 +43,24 @@ public class LoginActivity extends BaseActivity<LoginViewModel>  {
             UserUtils.saveLoginState(true);
             UserUtils.saveToken(loginBean.getData().getLogin_token());
             UserUtils.saveMobile(viewModel.name.get());
-            finish();
-            ARouter.getInstance().build(MyARouter.MainActivity).navigation();
+            ARouter.getInstance().build(MyARouter.MainActivity).navigation(this, new NavCallback() {
+                @Override
+                public void onArrival(Postcard postcard) {
+                    finish();
+                }
+            });
         });
         //版本更新
-        versionViewModel.getVersionliveData().observe(this, new Observer<VersionBean.DataBean>() {
-            @Override
-            public void onChanged(VersionBean.DataBean dataBean) {
-                if (TextUtils.equals(dataBean.getIs_update(),"1")){
-                    UpdateDialogFragment.newInstent(dataBean).show(getSupportFragmentManager(), "");
-                }
+        versionViewModel.getVersionliveData().observe(this, dataBean -> {
+            if (TextUtils.equals(dataBean.getIs_update(),"1")){
+                UpdateDialogFragment.newInstent(dataBean).show(getSupportFragmentManager(), "");
             }
         });
+
+    }
+
+    @Override
+    protected void onLoadData() {
         versionViewModel.requesVersionInfo(APPUtil.getVersionCode(mContext));
     }
 
@@ -69,7 +74,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel>  {
     @Override
     protected void setStatubarColor( ) {
         Sofia.with(this).invasionStatusBar().statusBarBackgroundAlpha(0).statusBarDarkFont();
-
     }
 
     public class ClickProxy{

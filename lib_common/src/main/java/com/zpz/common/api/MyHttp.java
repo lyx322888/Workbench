@@ -1,16 +1,15 @@
 package com.zpz.common.api;
 
-import com.alibaba.android.arouter.core.LogisticsCenter;
-import com.alibaba.android.arouter.facade.Postcard;
+import android.content.Intent;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSONObject;
 import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseApplication;
 import com.zpz.common.base.MyARouter;
-import com.zpz.common.utils.AppManager;
 import com.zpz.common.utils.NetWorkUtils;
-import com.zpz.common.utils.SPUtils;
 import com.zpz.common.utils.ToastUitl;
+import com.zpz.common.utils.UserUtils;
 import com.zpz.common.view.dalog.LoadingDialog;
 
 import io.reactivex.Observable;
@@ -25,9 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MyHttp {
 
-    public MyHttp() {
-     }
-    public void doPost(Observable<JSONObject> observable, final HttpListener listener) {
+    public static void doPost(Observable<JSONObject> observable, final HttpListener listener) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<JSONObject>() {
@@ -49,16 +46,9 @@ public class MyHttp {
                                 break;
                             case 2:
                                 //请先登录
-                                Postcard postcard = ARouter.getInstance().build(MyARouter.LoginActivity);
-                                LogisticsCenter.completion(postcard);
-                                if (!AppManager.getAppManager().isOpenActivity(postcard.getDestination()))
-                                ToastUitl.showShort("请先登录");
-                                SPUtils.setSharedBooleanData(BaseApplication.getInstance(), AppConfig.LOGIN_STATE, false);
-                                SPUtils.setSharedStringData(BaseApplication.getInstance(), AppConfig.LOGIN_TOKEN, "");
-//                                AppManager.getAppManager().finishAllExpectSpecifiedActivity(postcard.getDestination());
-                                AppManager.getAppManager().finishAllActivity();
-                                ARouter.getInstance().build(MyARouter.LoginActivity).navigation();
-
+                                ToastUitl.showShort("请重新登录");
+                                UserUtils.clearRecord();
+                                ARouter.getInstance().build(MyARouter.LoginActivity).withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK).navigation();
                                 break;
                         }
                     }
@@ -84,5 +74,6 @@ public class MyHttp {
                     }
                 });
     }
+
 
 }

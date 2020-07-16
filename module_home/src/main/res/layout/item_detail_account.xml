@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.zpz.common.utils.SpannableStringUtils"/>
+        <variable
+            name="vm"
+            type="com.zpz.home.baen.ListBonusBean.DataBean.WorkerUserMoneyLogBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/line_w_radius5"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.zpz.common.view.MyImagView
+                android:id="@+id/iv_photo"
+                imageUrl="@{vm.logo}"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <FrameLayout
+                android:layout_marginStart="6dp"
+                android:orientation="vertical"
+                android:minHeight="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:id="@+id/tv_name"
+                        android:text="@{vm.company_name}"
+                        tools:text="北京小桔科技有限公司"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+                <TextView
+                    android:textColor="@color/appColor"
+                    android:layout_gravity="end|center_vertical"
+                    tools:text="+000.00元"
+                    android:text='@{SpannableStringUtils.getBuilder(vm.status==1?"+":"-").append(vm.money+@string/yuan).create()}'
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_gravity="bottom"
+                    android:text="@{vm.create_time}"
+                    tools:text="1986年09月10日 18:54"
+                    android:textColor="#848484"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

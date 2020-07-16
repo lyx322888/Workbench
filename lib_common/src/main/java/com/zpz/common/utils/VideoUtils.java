@@ -12,7 +12,7 @@ public class VideoUtils {
 
     //压缩文件
     public static void videoCompressor(Context context, String filePath, final VieoProgressListener videoProgressListener) throws Exception {
-        File moviesDir = new File(context.getCacheDir(), "movie");
+        File moviesDir = new File(context.getExternalCacheDir(), "movie");
         moviesDir.mkdirs();
         String filePrefix = "speed_video";
         String fileExtn = ".mp4";
@@ -22,7 +22,7 @@ public class VideoUtils {
             fileNo++;
             dest = new File(moviesDir, filePrefix + fileNo + fileExtn);
         }
-        final String outputfilePath = dest.getAbsolutePath();
+        final String outputfilePath = dest.getPath();
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(filePath);
         final int originWidth = Integer.parseInt(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));

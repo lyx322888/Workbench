@@ -15,8 +15,16 @@ public final class MyARouter {
     public static final String FileListActivity = "/home/FileListActivity";
     //首页
     public static final String HomeFragment = "/home/HomeFragment";
+    //我的
+    public static final String MeFragment = "/home/MeFragment";
     //代办
     public static final String CommissionFragment = "/home/CommissionFragment";
     //到期企业 企业年审
     public static final String ExpireCompanyActivity = "/home/ExpireCompanyActivity";
+    //证书
+    public static final String CertificateActivity = "/home/CertificateActivity";
+    //分红明细
+    public static final String DetailAccountActivity = "/home/DetailAccountActivity";
+    //web
+    public static final String BaseWebActivity = "/commom/BaseWebActivity";
 }

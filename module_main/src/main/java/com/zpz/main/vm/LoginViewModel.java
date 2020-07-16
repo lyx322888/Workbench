@@ -43,7 +43,7 @@ public class LoginViewModel extends BaseViewModel {
         }
         params.put("account",name.get());
         params.put("password",passwordParams);
-        new MyHttp().doPost(Api.getDefault().login(params), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().login(params), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 LoginBean loginBean = new Gson().fromJson(result.toString(), LoginBean.class);

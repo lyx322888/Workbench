@@ -2,18 +2,17 @@ package com.zpz.main.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.zpz.common.base.BaseActivity;
+import com.zpz.common.base.BaseViewModel;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.utils.PermissioinSettingPage;
 import com.zpz.common.utils.UserUtils;
 import com.zpz.main.R;
-import com.zpz.main.vm.SplashViewModel;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -24,7 +23,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 //启动页
 @RuntimePermissions
-public class SplashActivity extends BaseActivity<SplashViewModel> {
+public class SplashActivity extends BaseActivity<BaseViewModel> {
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
@@ -33,38 +32,21 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
 
     @Override
     protected void setStatubarColor( ) {
-//        Sofia.with(this).invasionStatusBar();
     }
 
     @Override
     protected void init() {
         hideTitleBar();
-//        RxUtils.countdown(1, new Observer<Long>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//                addDisposable(d);
-//            }
-//
-//            @Override
-//            public void onNext(Long aLong) {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//            }
-//        });
         SplashActivityPermissionsDispatcher.showMainContentWithPermissionCheck(SplashActivity.this);
-
     }
 
     @Override
     protected void initViewObservable() {
+
+    }
+
+    @Override
+    protected void onLoadData() {
 
     }
 
@@ -76,6 +58,7 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
 
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
     void showMainContent() {
+        //懒加载
         if (UserUtils.getLoginState()){
             ARouter.getInstance().build(MyARouter.MainActivity).navigation();
         }else {
@@ -87,18 +70,10 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
     void showPermissionDialog(final PermissionRequest request) {
         new AlertDialog.Builder(this, R.style.SplashDialog).setTitle("提示").setMessage("请授予相关权限，否则微百姓无法正常工作")
-                .setCancelable(false).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                request.cancel();
-                finish();
-            }
-        }).setPositiveButton("授权", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                request.proceed();
-            }
-        }).create().show();
+                .setCancelable(false).setNegativeButton("取消", (dialogInterface, i) -> {
+                    request.cancel();
+                    finish();
+                }).setPositiveButton("授权", (dialogInterface, i) -> request.proceed()).create().show();
     }
 
     @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
@@ -109,16 +84,6 @@ public class SplashActivity extends BaseActivity<SplashViewModel> {
     @OnNeverAskAgain({Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
     void permissionNeverAskAgain() {
         new AlertDialog.Builder(this, R.style.SplashDialog).setTitle("提示").setMessage("为保证软件的正常工作，请在设置中授予相关权限")
-                .setCancelable(false).setNegativeButton("暂不", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        }).setPositiveButton("去设置", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                PermissioinSettingPage.start(SplashActivity.this, true);
-            }
-        }).create().show();
+                .setCancelable(false).setNegativeButton("暂不", (dialogInterface, i) -> finish()).setPositiveButton("去设置", (dialogInterface, i) -> PermissioinSettingPage.start(SplashActivity.this, true)).create().show();
     }
 }

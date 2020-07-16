@@ -21,7 +21,7 @@ public class MainViewModel extends BaseViewModel {
     }
     //统计
     public void requesBacklogCount(){
-        new MyHttp().doPost(Api.getDefault().getBacklogCount(UserUtils.getToken()), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().getBacklogCount(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 CommissionCountBean firstAssessCountBean = new Gson().fromJson(result.toString(),CommissionCountBean.class);

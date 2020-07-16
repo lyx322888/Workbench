@@ -6,7 +6,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
-import com.zpz.common.callback.loadsir.EmptyCallback;
 import com.zpz.home.BR;
 import com.zpz.home.R;
 import com.zpz.home.vm.ExpireCompanyViewModel;
@@ -20,10 +19,8 @@ public class ExpireCompanyActivity extends BaseActivity<ExpireCompanyViewModel> 
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
-        //fragment公用 ExpireCompanyViewModel 所以要在fragment需要时 提交设置好参数
         ARouter.getInstance().inject(this);
         viewModel.status.set(status);
-
         return new DataBindingConfig(R.layout.activity_expire_company)
                 .addBindingParam(BR.vm,viewModel);
     }
@@ -35,6 +32,10 @@ public class ExpireCompanyActivity extends BaseActivity<ExpireCompanyViewModel> 
 
     @Override
     protected void initViewObservable() {
+
+    }
+    @Override
+    protected void onLoadData() {
 
     }
 

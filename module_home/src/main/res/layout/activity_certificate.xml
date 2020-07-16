@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="证书编号 TFC5658865EV365"
+                android:text='@{@string/zsbh+vm.liveData.certificate_number}'
                 android:textColor="@color/appColor"
                 android:textSize="7sp"
                 app:layout_constraintLeft_toRightOf="@+id/imageView"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#282828"
                 android:textStyle="bold"
-                android:text="微百姓(厦门)科技有限公司"
+                android:text="@{vm.liveData.company_name}"
                 android:textSize="11sp"
                 app:layout_constraintLeft_toRightOf="@+id/imageView"
                 app:layout_constraintRight_toLeftOf="@+id/imageView"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#282828"
                 android:textSize="5sp"
-                android:text="依据GB/T23791-2009《企业质量信用等级划分通则》，\n 该公司在企业管理、产品质量、合同守信，经审核被评为《AAA级信用企业》。"
+                android:text="@{vm.liveData.certificate_text}"
                 app:layout_constraintLeft_toRightOf="@+id/imageView"
                 android:layout_marginTop="10dp"
                 app:layout_constraintWidth_percent="0.54"
@@ -71,6 +71,7 @@
                 android:id="@+id/iv_qrcode"
                 android:layout_width="0dp"
                 android:background="@color/appColor"
+                app:QRCodeUrl="@{vm.liveData.view_url}"
                 android:layout_height="0dp"
                 app:layout_constraintWidth_percent="0.1"
                 app:layout_constraintDimensionRatio="1:1"
@@ -95,7 +96,7 @@
                 android:id="@+id/tv_dnh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="信用建档号"
+                android:text='@{@string/xydah+vm.liveData.record_number}'
                 app:layout_constraintStart_toStartOf="@+id/tv_aaa"
                 app:layout_constraintTop_toBottomOf="@id/gl_4"
                 android:textColor="#282828"
@@ -105,7 +106,7 @@
                 android:id="@+id/tv_fz_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发证日期   2019年05月27日"
+                android:text='@{@string/fzrq+vm.liveData.certificate_time}'
                 app:layout_constraintEnd_toEndOf="@+id/tv_aaa"
                 app:layout_constraintTop_toBottomOf="@id/gl_4"
                 android:textColor="#282828"
@@ -116,7 +117,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="建档日期  "
+                android:text='@{@string/jdrq+vm.liveData.create_time}'
                 app:layout_constraintStart_toStartOf="@+id/tv_dnh"
                 app:layout_constraintTop_toBottomOf="@id/tv_dnh"
                 android:textColor="#282828"
@@ -127,7 +128,7 @@
                 android:id="@+id/tv_dq_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="到期日期   2019年05月27"
+                android:text='@{@string/dqrq+vm.liveData.end_time}'
                 app:layout_constraintStart_toStartOf="@id/tv_fz_time"
                 app:layout_constraintTop_toBottomOf="@id/tv_fz_time"
                 android:textColor="#282828"

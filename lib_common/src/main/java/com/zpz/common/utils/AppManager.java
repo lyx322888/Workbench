@@ -196,4 +196,17 @@ public class AppManager {
             }
         }
     }
+
+    /**
+     * 只保留栈顶
+     */
+    public void onlyTop(){
+        for (int i = 0; i < activityStack.size(); i++) {
+            if (null != activityStack.get(i)) {
+                if (i!=(activityStack.size()-1)){
+                    activityStack.get(i).finish();
+                }
+            }
+        }
+    }
 }

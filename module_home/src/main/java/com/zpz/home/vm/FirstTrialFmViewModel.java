@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 //初审
 public class FirstTrialFmViewModel extends BaseViewModel {
-
     private MutableLiveData<List<FirstTriaBean.DataBean>> firstTriaLiveData;
     public MutableLiveData<List<FirstTriaBean.DataBean>> getFirstTriaBeanMutableLiveData() {
         if (firstTriaLiveData ==null){
@@ -26,10 +25,10 @@ public class FirstTrialFmViewModel extends BaseViewModel {
     public void requesfirstTria(int status){
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("page",page);
+        hashMap.put("status",status);
         hashMap.put("login_token", UserUtils.getToken());
         hashMap.put("num",10);
-        hashMap.put("status",status);
-        new MyHttp().doPost(Api.getDefault().listFirstAssess(hashMap), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().listFirstAssess(hashMap), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 FirstTriaBean firstTriaBean = new Gson().fromJson(result.toString(),FirstTriaBean.class);

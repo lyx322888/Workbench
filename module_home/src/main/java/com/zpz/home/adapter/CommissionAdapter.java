@@ -1,20 +1,21 @@
 package com.zpz.home.adapter;
 
-import android.content.Context;
-import android.view.View;
+import android.app.Activity;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.base.adapter.SimpleBaseBindingAdapter;
+import com.zpz.common.utils.CommonUtils;
+import com.zpz.home.R;
 import com.zpz.home.baen.CommissionItemBean;
 import com.zpz.home.databinding.ItemCommissionBinding;
 
 public class CommissionAdapter extends SimpleBaseBindingAdapter<CommissionItemBean.DataBean, ItemCommissionBinding> {
     private String status;
-    public CommissionAdapter(Context context, int layout,String status) {
-        super(context, layout);
+    public CommissionAdapter( String status) {
+        super(R.layout.item_commission);
         this.status = status;
     }
 
@@ -40,14 +41,11 @@ public class CommissionAdapter extends SimpleBaseBindingAdapter<CommissionItemBe
             default:break;
 
         }
-        binding.tvQjd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance().build(MyARouter.CreateProcedureActivity)
-                        .withLong("company_id",item.getCompany_id())
-                        .withLong("first_assess_id",item.getFirst_assess_id())
-                        .navigation();
-            }
-        });
+        binding.tvQjd.setOnClickListener(v -> ARouter.getInstance().build(MyARouter.CreateProcedureActivity)
+                .withLong("company_id",item.getCompany_id())
+                .withLong("first_assess_id",item.getFirst_assess_id())
+                .navigation());
+        //电话
+        binding.tvPhone.setOnClickListener(v -> CommonUtils.callPhone((Activity) mContext,item.getMobile()));
     }
 }

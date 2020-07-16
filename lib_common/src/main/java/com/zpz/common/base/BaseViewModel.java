@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zpz.common.utils.ToastUitl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BaseViewModel extends ViewModel {
+public  class BaseViewModel extends ViewModel {
     //页数
     public int page = 1;
     //管理RxJava，主要针对RxJava异步操作造成的内存泄漏
@@ -25,6 +26,20 @@ public class BaseViewModel extends ViewModel {
     public MutableLiveData<Boolean> isShowLoading = new MutableLiveData<>();
     //显示内容
     public MutableLiveData<Boolean> isShowSuccess = new MutableLiveData<>();
+    //结束刷新、加载更多
+    public MutableLiveData<Boolean> finishTw = new MutableLiveData<>();
+    //加载数据
+    public MutableLiveData<Boolean> loadData = new MutableLiveData<>();
+    //刷新  loadData.setValue(true);会调用页面的onTwRefreshAndLoadMore
+    public void onRefresh(){
+        page=1;
+        loadData.setValue(true);
+    }
+    //加载更多  loadData.setValue(true);会调用页面的onTwRefreshAndLoadMore
+    public void onLoadMore(){
+        page+=1;
+        loadData.setValue(true);
+    }
 
     public void showEmpty(){
         isShowEmpty.setValue(true);
@@ -73,21 +88,34 @@ public class BaseViewModel extends ViewModel {
         }else {
             showSuccess();
             oldlist.addAll(newlist);
+            if (newlist.size()==0){
+                page-=1;
+                ToastUitl.showShort("没有更多了");
+            }
         }
         return oldlist;
 
     }
 
-    public abstract class HttpViewModelListener extends com.zpz.common.api.HttpListener {
+    //接口回调
+    public  abstract class HttpViewModelListener extends com.zpz.common.api.HttpListener {
         public abstract void onSuccess(JSONObject result);
         public void onError(int code){
+            super.onError(code);
             if (page!=1){
                 page-=1;
             }
         }
         public void onSubscribe(Disposable d){
+            super.onSubscribe(d);
             addDisposable(d);
         }
-        public void onFinish(){}
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+            finishTw.setValue(true);
+        }
+
     }
 }

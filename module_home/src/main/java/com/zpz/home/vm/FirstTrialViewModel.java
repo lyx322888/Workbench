@@ -26,7 +26,7 @@ public class FirstTrialViewModel extends BaseViewModel {
     }
 
     public void requesFirstAssessCount(){
-        new MyHttp().doPost(Api.getDefault().getFirstAssessCount(UserUtils.getToken()), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().getFirstAssessCount(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 FirstAssessCountBean firstAssessCountBean = new Gson().fromJson(result.toString(),FirstAssessCountBean.class);

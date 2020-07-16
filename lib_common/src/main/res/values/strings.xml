@@ -5,4 +5,10 @@
     <string name="yjd">已建档</string>
     <string name="bh">审核驳回</string>
     <string name="lxdh">联系电话:</string>
+    <string name="xydah">信用档案号&#160;&#160;</string>
+    <string name="zsbh">证书编号&#160;&#160;</string>
+    <string name="jdrq">建档日期&#160;&#160;</string>
+    <string name="fzrq">发证日期&#160;&#160;</string>
+    <string name="dqrq">到期日期&#160;&#160;</string>
+    <string name="yuan">元</string>
 </resources>

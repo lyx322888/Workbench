@@ -13,6 +13,7 @@
     <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
         android:id="@+id/trl"
         android:layout_width="match_parent"
+        binding="@{vm}"
         app:tr_head_height="50dp"
         app:tr_max_head_height="90dp"
         app:tr_enable_loadmore="false"
@@ -77,6 +78,7 @@
                             android:textSize="16sp"
                             android:layout_height="wrap_content"/>
                         <TextView
+                            android:visibility="gone"
                             android:layout_marginEnd="20dp"
                             android:layout_alignParentEnd="true"
                             android:id="@+id/tv_setting"
@@ -176,7 +178,7 @@
                                 android:gravity="center"
                                 android:layout_centerHorizontal="true"
                                 android:layout_width="96dp"
-                                android:onClick="@{()->click.bookbuilding()}"
+                                onAntiShakeClick= "@{()->click.bookbuilding()}"
                                 android:background="@drawable/line_w_radius15"
                                 android:layout_height="96dp">
                                 <ImageView
@@ -241,6 +243,8 @@
                             <LinearLayout
                                 android:layout_centerHorizontal="true"
                                 android:layout_width="96dp"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                onAntiShakeClick="@{click.learningMaterials}"
                                 android:orientation="vertical"
                                 android:gravity="center"
                                 android:background="@drawable/line_w_radius15"
@@ -261,6 +265,8 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_width="96dp"
                                 android:gravity="center"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                onAntiShakeClick="@{click.LearningVideo}"
                                 android:orientation="vertical"
                                 android:background="@drawable/line_w_radius15"
                                 android:layout_height="96dp">
@@ -284,9 +290,24 @@
                             android:weightSum="3"
                             android:layout_height="wrap_content">
                             <LinearLayout
+                                android:orientation="vertical"
                                 android:layout_width="96dp"
+                                onAntiShakeClick="@{click.detailAccount}"
+                                android:gravity="center"
+                                android:foreground="?android:attr/selectableItemBackground"
                                 android:background="@drawable/line_w_radius15"
                                 android:layout_height="96dp">
+                                <ImageView
+                                    android:src="@mipmap/ic_fhmx"
+                                    android:layout_width="28dp"
+                                    android:layout_height="33dp"/>
+                                <TextView
+                                    android:layout_marginTop="10dp"
+                                    android:text="分红明细"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/tabtitleColor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_centerHorizontal="true"

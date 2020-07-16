@@ -48,7 +48,7 @@ public class FileListBean {
          * ratings :
          */
 
-        private int company_id;
+        private long company_id;
         private String company_name;
         private String logo;
         private int status;
@@ -65,11 +65,11 @@ public class FileListBean {
 
         private String reason_refusal;
 
-        public int getCompany_id() {
+        public long getCompany_id() {
             return company_id;
         }
 
-        public void setCompany_id(int company_id) {
+        public void setCompany_id(long company_id) {
             this.company_id = company_id;
         }
 

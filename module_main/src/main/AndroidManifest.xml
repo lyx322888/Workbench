@@ -4,7 +4,8 @@
 
     <application>
         <activity android:name=".ui.MainActivity"/>
-        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.LoginActivity"
+             />
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">

@@ -59,6 +59,9 @@ public class ConfirmDialog extends DialogFragment {
         view.findViewById(R.id.tv_no_warn_again).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (listener!=null){
+                    listener.canceListener();
+                }
                 dismiss();
             }
         });
@@ -71,7 +74,6 @@ public class ConfirmDialog extends DialogFragment {
         super.onDestroyView();
     }
 
-
     public void setDialogListener(DialogListener listener) {
         this.listener = listener;
     }
@@ -81,7 +83,8 @@ public class ConfirmDialog extends DialogFragment {
         super.show(manager, tag);
     }
 
-    public interface DialogListener {
-        void dialogClickListener();
+    public static abstract class DialogListener {
+        public abstract void dialogClickListener();
+        public void canceListener(){}
     }
 }

@@ -1,6 +1,5 @@
 package com.zpz.home.adapter;
 
-import android.content.Context;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -11,12 +10,11 @@ import com.zpz.common.base.adapter.SimpleBaseBindingAdapter;
 import com.zpz.common.utils.GlideUtils;
 import com.zpz.home.R;
 import com.zpz.home.databinding.ItemHyPhotoBinding;
-import com.zpz.home.databinding.ItemJdPhotoBinding;
 
 public class HyPhotoAdapter extends SimpleBaseBindingAdapter<String, ItemHyPhotoBinding> {
 
-    public HyPhotoAdapter(Context context) {
-        super(context, R.layout.item_hy_photo);
+    public HyPhotoAdapter() {
+        super( R.layout.item_hy_photo);
     }
 
     @Override
@@ -46,12 +44,9 @@ public class HyPhotoAdapter extends SimpleBaseBindingAdapter<String, ItemHyPhoto
         if (binding != null) {
             binding.executePendingBindings();
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener!=null){
-                    mListener.onItemClickListener(position);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener!=null){
+                mListener.onItemClickListener(position);
             }
         });
 

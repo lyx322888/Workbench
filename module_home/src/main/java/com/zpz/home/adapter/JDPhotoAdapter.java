@@ -1,7 +1,5 @@
 package com.zpz.home.adapter;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -15,8 +13,8 @@ import com.zpz.home.databinding.ItemJdPhotoBinding;
 
 public class JDPhotoAdapter extends SimpleBaseBindingAdapter<String, ItemJdPhotoBinding> {
 
-    public JDPhotoAdapter(Context context) {
-        super(context, R.layout.item_jd_photo);
+    public JDPhotoAdapter() {
+        super( R.layout.item_jd_photo);
     }
 
     @Override

@@ -3,6 +3,7 @@
     xmlns:bin="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+
         <variable
             name="vm"
             type="com.zpz.home.vm.FileListViewModel" />
@@ -12,18 +13,16 @@
     </data>
         <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
             android:id="@+id/trl"
+            bin:binding="@{vm}"
             android:layout_width="match_parent"
-            bin:tr_autoLoadMore="true"
-            bin:tr_head_height="50dp"
-            bin:tr_max_head_height="80dp"
             android:layout_height="match_parent"
-            tools:context=".fragment.FirstTrialFragment">
+            bin:tr_autoLoadMore="true">
             <androidx.recyclerview.widget.RecyclerView
-                android:orientation="vertical"
                 android:id="@+id/rv"
                 adapter="@{adapter}"
                 refreshList="@{vm.filelistlivedata}"
                 bin:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>

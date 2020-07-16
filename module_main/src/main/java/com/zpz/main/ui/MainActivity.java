@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
+import androidx.startup.AppInitializer;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -20,11 +20,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yanzhenjie.sofia.Sofia;
 import com.zpz.common.base.BaseActivity;
+import com.zpz.common.base.BaseApplication;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.bean.CommissionCountBean;
-import com.zpz.common.bean.VersionBean;
 import com.zpz.common.dialog.UpdateDialogFragment;
+import com.zpz.common.initializer.AlbumInitializer;
 import com.zpz.common.utils.APPUtil;
 import com.zpz.common.vm.VersionViewModel;
 import com.zpz.main.R;
@@ -63,22 +64,20 @@ public class MainActivity extends BaseActivity<MainViewModel> {
     }
     @Override
     protected void initViewObservable() {
-        viewModel.getCountBeanLiveData().observe(this, new Observer<CommissionCountBean>() {
-            @Override
-            public void onChanged(CommissionCountBean commissionCountBean) {
-                CommissionCountBean.DataBean dataBean = commissionCountBean.getData();
-                dbMsgView.setText(String.format("%s",dataBean.getCount_type_one()+dataBean.getCount_type_two()+dataBean.getCount_type_three()));
-            }
+        viewModel.getCountBeanLiveData().observe(this, commissionCountBean -> {
+            CommissionCountBean.DataBean dataBean = commissionCountBean.getData();
+            dbMsgView.setText(String.format("%s",dataBean.getCount_type_one()+dataBean.getCount_type_two()+dataBean.getCount_type_three()));
         });
         //版本更新
-        versionViewModel.getVersionliveData().observe(this, new Observer<VersionBean.DataBean>() {
-            @Override
-            public void onChanged(VersionBean.DataBean dataBean) {
-                if (TextUtils.equals(dataBean.getIs_update(),"0")){
-                    UpdateDialogFragment.newInstent(dataBean).show(getSupportFragmentManager(), "");
-                }
+        versionViewModel.getVersionliveData().observe(this, dataBean -> {
+            if (TextUtils.equals(dataBean.getIs_update(),"1")){
+                UpdateDialogFragment.newInstent(dataBean).show(getSupportFragmentManager(), "");
             }
         });
+    }
+
+    @Override
+    protected void onLoadData() {
         versionViewModel.requesVersionInfo(APPUtil.getVersionCode(mContext));
     }
 
@@ -108,7 +107,7 @@ public class MainActivity extends BaseActivity<MainViewModel> {
         activityMainBinding = (ActivityMainBinding) getBinding();
         mHomeFragment = (Fragment) ARouter.getInstance().build(MyARouter.HomeFragment).navigation();
         commissionFragment = (Fragment) ARouter.getInstance().build(MyARouter.CommissionFragment).navigation();
-        mMeFragment = (Fragment) ARouter.getInstance().build(MyARouter.HomeFragment).navigation();
+        mMeFragment = (Fragment) ARouter.getInstance().build(MyARouter.MeFragment).navigation();
         activityMainBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -123,7 +122,8 @@ public class MainActivity extends BaseActivity<MainViewModel> {
                     viewModel.requesBacklogCount();
                     return true;
                 } else if (i == R.id.navigation_me) {
-                    ARouter.getInstance().build(MyARouter.SetingActivity).navigation();
+                    switchContent(mCurrFragment, mMeFragment, "我的");
+                    mCurrFragment = mMeFragment;
                     return true;
                 }
                 return false;

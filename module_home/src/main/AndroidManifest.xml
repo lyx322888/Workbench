@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application>
-        <activity android:name=".ui.CertificateActivity"></activity>
+        <activity android:name=".ui.DetailAccountActivity"/>
+        <activity android:name=".ui.CertificateActivity" />
         <activity android:name=".ui.ExpireCompanyActivity" />
         <activity android:name=".ui.FileListActivity" />
         <activity

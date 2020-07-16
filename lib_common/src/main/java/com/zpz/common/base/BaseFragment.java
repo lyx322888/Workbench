@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.zpz.common.callback.loadsir.EmptyCallback;
@@ -37,6 +38,8 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
     protected abstract DataBindingConfig getDataBindingConfig();
     protected abstract void init();
     protected abstract void initViewObservable();
+    //刷新
+    protected abstract void onLoadData();
     protected AppCompatActivity mActivity;
     @Override
     public void onAttach(@NonNull Context context) {
@@ -69,12 +72,18 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
             binding.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i));
         }
         mBinding = binding;
-        loadService = LoadSir.getDefault().register(binding.getRoot());
+        loadService = LoadSir.getDefault().register(binding.getRoot(), new Callback.OnReloadListener() {
+            @Override
+            public void onReload(View v) {
+                viewModel.showLoading();
+                viewModel.onRefresh();
+            }
+        });
         loadService.showSuccess();
         baseHttpViewObservable();
         init();
         initViewObservable();
-
+        onLoadData();
         return loadService.getLoadLayout();
     }
 
@@ -133,6 +142,18 @@ public abstract class BaseFragment<VM extends BaseViewModel>extends Fragment {
                 }
             }
         });
+        //加载更多和刷新
+        viewModel.loadData.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                onTwRefreshAndLoadMore();
+            }
+        });
+
+    }
+    //加载更多和刷新逻辑（不想与onLoadData一起的 可以重新该方法，onLoadData让进入页面就会加载）
+    protected void onTwRefreshAndLoadMore(){
+        onLoadData();
     }
 
     protected <T extends ViewModel> T getFragmentViewModel(@NonNull Class<T> modelClass) {

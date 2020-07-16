@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.yanzhenjie.sofia.Sofia;
@@ -51,6 +52,9 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
     protected abstract DataBindingConfig getDataBindingConfig();
     protected abstract void init();
     protected abstract void initViewObservable();
+    //刷新
+    protected abstract void onLoadData();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +62,15 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
         mContext = this;
         mActivity = this;
 
-
         initViewModel();
         initBinding();
         setStatubarColor();
-        baseHttpViewObservable();
+        baseViewObservable();
         init();
         initViewObservable();
+        onLoadData();
     }
+
 
     //绑定binding
     protected void initBinding(){
@@ -82,7 +87,13 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
         }
         mbinding = binding;
         //页面状态
-        loadService = LoadSir.getDefault().register(mbinding.getRoot());
+        loadService = LoadSir.getDefault().register(mbinding.getRoot(), new Callback.OnReloadListener() {
+            @Override
+            public void onReload(View v) {
+                viewModel.showLoading();
+                viewModel.onRefresh();
+            }
+        });
         loadService.showSuccess();
     }
     //设置标题
@@ -132,7 +143,7 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
         }
     }
     //基础Observable监听
-    private void baseHttpViewObservable(){
+    private void baseViewObservable(){
         //空数据
         viewModel.isShowEmpty.observe(this, new Observer<Boolean>() {
             @Override
@@ -170,6 +181,18 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
                 }
             }
         });
+        //加载数据
+        viewModel.loadData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                onTwRefreshAndLoadMore();
+            }
+        });
+
+    }
+    //加载更多和刷新逻辑（不想与onLoadData一起的 可以重新该方法，onLoadData让进入页面就会加载）
+    protected void onTwRefreshAndLoadMore(){
+        onLoadData();
     }
 
     /**
@@ -257,4 +280,5 @@ public abstract class BaseActivity <VM extends BaseViewModel>extends AppCompatAc
         }
         return mActivityProvider.get(modelClass);
     }
+
 }

@@ -30,7 +30,7 @@ public class FileListViewModel extends BaseViewModel {
         hashMap.put("type",type);
         hashMap.put("login_token", UserUtils.getToken());
         hashMap.put("num",10);
-        new MyHttp().doPost(Api.getDefault().listCompanyRecord(hashMap), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().listCompanyRecord(hashMap), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 FileListBean fileListBean = new Gson().fromJson(result.toString(),FileListBean.class);

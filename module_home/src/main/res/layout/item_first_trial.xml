@@ -1,90 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_marginHorizontal="10dp"
-    android:padding="15dp"
-    android:layout_marginTop="10dp"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/line_w_radius5"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="list"
+            type="com.zpz.home.baen.FirstTriaBean.DataBean" />
+    </data>
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/line_w_radius5"
         android:layout_height="wrap_content">
-        <com.zpz.common.view.MyImagView
-            android:id="@+id/iv_photo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
-        <FrameLayout
-            android:layout_marginStart="6dp"
-            android:orientation="vertical"
-            android:minHeight="50dp"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <RelativeLayout
+            <com.zpz.common.view.MyImagView
+                android:id="@+id/iv_photo"
+                imageUrl="@{list.logo}"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <FrameLayout
+                android:layout_marginStart="6dp"
+                android:orientation="vertical"
+                android:minHeight="50dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <TextView
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:id="@+id/tv_name"
-                tools:text="北京小桔科技有限公司"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textStyle="bold"
-                android:layout_marginEnd="50dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:id="@+id/tv_name"
+                        android:text="@{list.company_name}"
+                        tools:text="北京小桔科技有限公司"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tv_state"
+                        android:textColor="@color/appColor"
+                        tools:text="审核中"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
                 <TextView
-                    android:id="@+id/tv_state"
-                    android:textColor="@color/appColor"
-                    tools:text="审核中"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="14sp"
+                    android:id="@+id/tv_time"
+                    android:layout_gravity="bottom"
+                    tools:text="1986年09月10日 18:54"
+                    android:text="@{list.create_time}"
+                    android:textColor="#848484"
+                    android:textSize="12sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </LinearLayout>
+        <View
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            style="@style/v_fgx" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv_time"
-                android:layout_gravity="bottom"
-                tools:text="1986年09月10日 18:54"
-                android:textColor="#848484"
+                android:gravity="center_vertical"
                 android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_phone"
+                android:textColor="#848484"
+                tools:text="联系电话:1506605465546"
+                android:text='@{@string/lxdh+list.mobile}'
+                android:drawableEnd="@mipmap/ic_phone"
+                android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </FrameLayout>
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/tv_qjd"
+                android:background="@drawable/bg_app_color_3"
+                android:text="去建档"
+                android:textSize="13sp"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="16dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp" />
+        </RelativeLayout>
     </LinearLayout>
-    <View
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-       style="@style/v_fgx"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:gravity="center_vertical"
-            android:textSize="12sp"
-            android:layout_centerVertical="true"
-            android:id="@+id/tv_phone"
-            android:textColor="#848484"
-            tools:text="联系电话:1506605465546"
-            android:drawableEnd="@mipmap/ic_phone"
-            android:drawablePadding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/tv_qjd"
-            android:background="@drawable/bg_app_color_3"
-            android:text="去建档"
-            android:textSize="13sp"
-            android:layout_centerVertical="true"
-            android:paddingHorizontal="16dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"/>
-    </RelativeLayout>
-</LinearLayout>
+</layout>

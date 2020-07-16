@@ -38,7 +38,7 @@ public class CreateProcedureViewModel extends BaseViewModel {
         hashMap.put("company_id",company_id);
         hashMap.put("first_assess_id",first_assess_id);
         hashMap.put("login_token", UserUtils.getToken());
-        new MyHttp().doPost(Api.getDefault().getCreateRecordInfo(hashMap), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().getCreateRecordInfo(hashMap), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 CreteProceddureBean creteProceddureBean = new Gson().fromJson(result.toString(),CreteProceddureBean.class);
@@ -92,7 +92,7 @@ public class CreateProcedureViewModel extends BaseViewModel {
             keep_faith_contract_img.deleteCharAt(keep_faith_contract_img.length()-1);
         }
         hashMap.put("keep_faith_contract_img",keep_faith_contract_img);
-        new MyHttp().doPost(Api.getDefault().createRecord(hashMap), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().createRecord(hashMap), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 getsubmitsuccess().setValue(true);

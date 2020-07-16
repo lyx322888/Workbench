@@ -30,17 +30,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Scheduler;
-
 
 public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends RecyclerView.Adapter {
 
-    protected final Context mContext;
+    protected  Context mContext;
     protected List<M> mList = new ArrayList<>();
     protected OnItemClickListener mListener;
-    public BaseBindingAdapter(Context context) {
-        this.mContext = context;
-    }
 
     public List<M> getList() {
         return mList;
@@ -64,7 +59,8 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
     @Override
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        B binding = DataBindingUtil.inflate(LayoutInflater.from(this.mContext), this.getLayoutResId(viewType), parent, false);
+        mContext = parent.getContext();
+        B binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), this.getLayoutResId(viewType), parent, false);
         return new BaseBindingViewHolder(binding.getRoot());
     }
 

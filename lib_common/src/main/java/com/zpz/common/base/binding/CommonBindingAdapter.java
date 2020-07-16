@@ -2,16 +2,17 @@ package com.zpz.common.base.binding;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.BindingConversion;
 
+import com.google.zxing.WriterException;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.zpz.common.base.ToolBarViewModel;
+import com.zpz.common.utils.EncodingHandler;
 import com.zpz.common.utils.GlideUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -22,6 +23,18 @@ public class CommonBindingAdapter {
     @BindingAdapter("imageUrl")
     public static void showPic(ImageView imageView, String url) {
         GlideUtils.showSmallPic(imageView,url);
+    }
+
+    //图片加载
+    @BindingAdapter("QRCodeUrl")
+    public static void QRCodeUrl(ImageView imageView, String url) {
+        try {
+            if (!TextUtils.isEmpty(url)){
+                imageView.setImageBitmap(EncodingHandler.createQRCode(url,300));
+            }
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
      //按钮防抖
@@ -39,36 +52,12 @@ public class CommonBindingAdapter {
                 });
     }
 
-    //圆角
-    @BindingAdapter({"radius"})
-    public static void radius(View view,int radius){
-        GradientDrawable drawable ;
-        if (view.getBackground()==null){
-            drawable = new GradientDrawable();
-            drawable.setShape(GradientDrawable.RECTANGLE);
-            drawable.setGradientType(GradientDrawable.SWEEP_GRADIENT);
-        }else {
-            try {
-                drawable = (GradientDrawable) view.getBackground();
-            } catch (Exception e) {
-                drawable = new GradientDrawable();
-                drawable.setShape(GradientDrawable.RECTANGLE);
-                drawable.setGradientType(GradientDrawable.SWEEP_GRADIENT);
-                if (view.getBackground() instanceof ColorDrawable) {
-                    drawable.setColor(((ColorDrawable) view.getBackground()).getColor());
-                }
-            }
-        }
-        drawable.setCornerRadius(radius);
-        view.setBackground(drawable);
-    }
 
     //color转换Drawable
     @BindingConversion
     public static ColorDrawable convertColorToDrawable(int color) {
         return new ColorDrawable(color);
     }
-
 
 
     //返回键

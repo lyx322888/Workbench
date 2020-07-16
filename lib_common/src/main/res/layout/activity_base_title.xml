@@ -16,7 +16,13 @@
             app:navigationIcon="@drawable/ic_back_jt"
             android:theme="@style/ToolbarTheme"
             android:layout_height="?attr/actionBarSize">
-
+            <ImageView
+                android:id="@+id/iv_close"
+                android:visibility="gone"
+                android:src="@drawable/ic_close_24"
+                android:padding="10dp"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_gravity="center"

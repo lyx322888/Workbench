@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zpz.common">
     <!-- 相机 -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 检查网络权限 -->
@@ -14,13 +15,23 @@
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于读取手机当前的状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于申请调用A-GPS模块 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!--安装未知应用权限-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 安装未知应用权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
-
     <application>
+        <activity android:name=".base.BaseWebActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true">
+        <intent-filter>
+            <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+        <!--更新-->
         <service android:name=".update.UpdateService" />
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
@@ -33,7 +44,37 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider> <!-- 高德 -->
+        </provider>
+        <!--+++++++++++++++++++++++++++启动优化+++++++++++++++++++++++++++-->
+        <provider
+            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            tools:node="merge">
+            <!--浏览器 -->
+            <meta-data
+                android:name="com.zpz.common.initializer.QbsdkInitializer"
+                android:value="@string/androidx_startup" />
+            <!--图片选择框架  -->
+            <meta-data
+                android:name="com.zpz.common.initializer.AlbumInitializer"
+                android:value="@string/androidx_startup"
+                />
+            <!--阿里跳转  -->
+            <meta-data
+                android:name="com.zpz.common.initializer.ARouterInitializer"
+                android:value="@string/androidx_startup" />
+            <!--友盟-->
+            <meta-data
+                android:name="com.zpz.common.initializer.UmengInitializer"
+                android:value="@string/androidx_startup"/>
+            <!--状态页框架-->
+            <meta-data
+                android:name="com.zpz.common.initializer.LoadSirInitializer"
+                android:value="@string/androidx_startup"/>
+        </provider>
+
+        <!-- ++++++++++++++++++++++++++++++++高德 +++++++++++++++++++++++++++++-->
         <service android:name="com.amap.api.location.APSService" />
 
         <meta-data

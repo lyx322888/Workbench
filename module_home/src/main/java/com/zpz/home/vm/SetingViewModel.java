@@ -31,7 +31,7 @@ public class SetingViewModel extends BaseViewModel {
 
     //退出登录
     public void requesOutLogin(){
-        new MyHttp().doPost(Api.getDefault().logout(UserUtils.getToken()), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().logout(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 UserUtils.saveLoginState(false);

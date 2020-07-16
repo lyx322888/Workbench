@@ -1,12 +1,11 @@
 package com.zpz.home.ui;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,14 +15,12 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.api.widget.Widget;
 import com.zpz.common.base.BaseActivity;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
-import com.zpz.common.base.adapter.BaseBindingAdapter;
 import com.zpz.common.dialog.ConfirmDialog;
 import com.zpz.common.utils.ChoosePictureUtils;
 import com.zpz.common.utils.CommonUtils;
@@ -36,24 +33,19 @@ import com.zpz.home.BR;
 import com.zpz.home.R;
 import com.zpz.home.adapter.HyPhotoAdapter;
 import com.zpz.home.adapter.JDPhotoAdapter;
-import com.zpz.home.baen.CreteProceddureBean;
 import com.zpz.home.databinding.ActivityCreateProcedureBinding;
 import com.zpz.home.vm.CreateProcedureViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.jzvd.JZVideoPlayer;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import top.zibin.luban.Luban;
 
@@ -83,9 +75,9 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
 
     @Override
     protected DataBindingConfig getDataBindingConfig() {
-        workPhotoAdapter = new JDPhotoAdapter(mActivity);
-        ryPhotoAdapter = new JDPhotoAdapter(mActivity);
-        hyPhotoAdapter = new HyPhotoAdapter(mActivity);
+        workPhotoAdapter = new JDPhotoAdapter();
+        ryPhotoAdapter = new JDPhotoAdapter();
+        hyPhotoAdapter = new HyPhotoAdapter();
         return new DataBindingConfig(R.layout.activity_create_procedure)
                 .addBindingParam(BR.vm, viewModel)
                 .addBindingParam(BR.workAdapter, workPhotoAdapter)
@@ -150,49 +142,41 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
         }
         //删除压缩图片缓存目录
         FileUtils.deleteFile(FileUtils.getCacheDir(mActivity,"image").getAbsolutePath());
+        FileUtils.deleteFile(FileUtils.getCacheDir(mActivity,"movie").getAbsolutePath());
     }
 
     //适配器点击事件
     private void adapterListener() {
-        workPhotoAdapter.setOnItemClickListener(new BaseBindingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClickListener(int position) {
-                if (viewModel.getCreteProceddure().getValue().getWork_environment_img().size()>12){
-                    showShortToast("最多只能传12张");
+        workPhotoAdapter.setOnItemClickListener(position -> {
+            if (viewModel.getCreteProceddure().getValue().getWork_environment_img().size()>12){
+                showShortToast("最多只能传12张");
+            }else {
+                if (!TextUtils.isEmpty(viewModel.getCreteProceddure().getValue().getAddress())){
+                    chooseImage(REQUESTCODE_WORK_ENVIRONMENT,12-viewModel.getCreteProceddure().getValue().getWork_environment_img().size());
                 }else {
-                    if (!TextUtils.isEmpty(viewModel.getCreteProceddure().getValue().getAddress())){
-                        chooseImage(REQUESTCODE_WORK_ENVIRONMENT,12-viewModel.getCreteProceddure().getValue().getWork_environment_img().size());
-                    }else {
-                        showShortToast("请先定位公司地址");
-                    }
+                    showShortToast("请先定位公司地址");
                 }
             }
         });
-        ryPhotoAdapter.setOnItemClickListener(new BaseBindingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClickListener(int position) {
-                if (viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().size()>12){
-                    showShortToast("最多只能传12张");
+        ryPhotoAdapter.setOnItemClickListener(position -> {
+            if (viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().size()>12){
+                showShortToast("最多只能传12张");
+            }else {
+                if (!TextUtils.isEmpty(viewModel.getCreteProceddure().getValue().getAddress())){
+                    chooseImage(REQUESTCODE_HONOR,12-viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().size());
                 }else {
-                    if (!TextUtils.isEmpty(viewModel.getCreteProceddure().getValue().getAddress())){
-                        chooseImage(REQUESTCODE_HONOR,12-viewModel.getCreteProceddure().getValue().getEnterprise_honor_img().size());
-                    }else {
-                        showShortToast("请先定位地址");
-                    }
+                    showShortToast("请先定位地址");
                 }
             }
         });
-        hyPhotoAdapter.setOnItemClickListener(new BaseBindingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClickListener(int position) {
-                if (viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().size()>12){
-                    showShortToast("最多只能传12张");
+        hyPhotoAdapter.setOnItemClickListener(position -> {
+            if (viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().size()>12){
+                showShortToast("最多只能传12张");
+            }else {
+                if (!TextUtils.isEmpty(viewModel.getCreteProceddure().getValue().getAddress())){
+                    chooseImage(REQUESTCODE_CONTRACT,12-viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().size());
                 }else {
-                    if (!TextUtils.isEmpty(viewModel.getCreteProceddure().getValue().getAddress())){
-                        chooseImage(REQUESTCODE_CONTRACT,12-viewModel.getCreteProceddure().getValue().getKeep_faith_contract_img().size());
-                    }else {
-                        showShortToast("请先定位公司地址");
-                    }
+                    showShortToast("请先定位公司地址");
                 }
             }
         });
@@ -200,33 +184,38 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
     //数据监听
     @Override
     protected void initViewObservable() {
-       LoadingDialog.showDialogForLoading(mActivity);
-       viewModel.getCreteProceddure().observe(this, new Observer<CreteProceddureBean.DataBean>() {
-           @Override
-           public void onChanged(CreteProceddureBean.DataBean dataBean) {
-               if (TextUtils.isEmpty(dataBean.getIntroduce_video())){
-                   ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setVisibility(View.GONE);
-                   ((ActivityCreateProcedureBinding)getBinding()).ivVideo.setVisibility(View.VISIBLE);
-                   ((ActivityCreateProcedureBinding)getBinding()).ivVideoGb.setVisibility(View.GONE);
-               }else {
-                   ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setVisibility(View.VISIBLE);
-                   ((ActivityCreateProcedureBinding)getBinding()).ivVideo.setVisibility(View.GONE);
-                   ((ActivityCreateProcedureBinding)getBinding()).ivVideoGb.setVisibility(View.VISIBLE);
-                   ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setUp(dataBean.getIntroduce_video(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "企业介绍");
-               }
+
+       viewModel.getCreteProceddure().observe(this, dataBean -> {
+           if (TextUtils.isEmpty(dataBean.getIntroduce_video())){
+               ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setVisibility(View.GONE);
+               ((ActivityCreateProcedureBinding)getBinding()).ivVideo.setVisibility(View.VISIBLE);
+               ((ActivityCreateProcedureBinding)getBinding()).ivVideoGb.setVisibility(View.GONE);
+           }else {
+               ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setVisibility(View.VISIBLE);
+               ((ActivityCreateProcedureBinding)getBinding()).ivVideo.setVisibility(View.GONE);
+               ((ActivityCreateProcedureBinding)getBinding()).ivVideoGb.setVisibility(View.VISIBLE);
+               ((ActivityCreateProcedureBinding)getBinding()).jzTinyId.setUp(dataBean.getIntroduce_video(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "企业介绍");
            }
        });
-       viewModel.requesCreteProceddure(company_id,first_assess_id);
 
-       viewModel.getsubmitsuccess().observe(this, new Observer<Boolean>() {
-           @Override
-           public void onChanged(Boolean aBoolean) {
-               ConfirmDialog confirmDialog = ConfirmDialog.newInstance("档案已提交，请等待审核");
-               confirmDialog.setDialogListener(() -> finish());
-               confirmDialog.show(getSupportFragmentManager(),"");
-           }
+       viewModel.getsubmitsuccess().observe(this, aBoolean -> {
+           ConfirmDialog confirmDialog = ConfirmDialog.newInstance("档案已提交，请等待审核");
+           confirmDialog.setDialogListener(new ConfirmDialog.DialogListener() {
+               @Override
+               public void dialogClickListener() {
+                   finish();
+               }
+           });
+           confirmDialog.show(getSupportFragmentManager(),"");
        });
     }
+
+    @Override
+    protected void onLoadData() {
+        viewModel.requesCreteProceddure(company_id,first_assess_id);
+    }
+
+
     //定位
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
@@ -247,39 +236,28 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
 
     //选择图片
     private void chooseImage(final int requestCode, int maxSelectable){
-        ChoosePictureUtils.choosePictureCommon(mActivity, maxSelectable,new ChoosePictureUtils.Action<ArrayList<String>>() {
-            @Override
-            public void onAction(@NonNull ArrayList<String> result) {
-                LoadingDialog.showDialogForLoading(mActivity);
-                //图片压缩
-                Disposable d = Flowable.just(result)
-                        .observeOn(Schedulers.io())
-                        .map(new Function<ArrayList<String>, ArrayList<String>>() {
-                            @Override
-                            public ArrayList<String> apply(@NonNull ArrayList<String> list) throws Exception {
-                                // 同步方法直接返回压缩后的文件
-                                ArrayList<String> arrayList = new ArrayList<>();
-                                List<File> files=Luban.with(mContext).load(list).setTargetDir(FileUtils.getCacheDir(mContext,"image").getAbsolutePath()).get();
-                                for (int i = 0; i < files.size(); i++) {
-                                    arrayList.add(files.get(i).getPath());
-                                }
-                                return arrayList;
-                            }
-                        })
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<ArrayList<String>>() {
-                            @Override
-                            public void accept(ArrayList<String> arrayList) throws Exception {
-                              upLoadPic( arrayList,requestCode);
-                            }
-                        });
-                addDisposable(d);
-            }
+        ChoosePictureUtils.choosePictureCommon(mActivity, maxSelectable, result -> {
+            LoadingDialog.showDialogForLoading(mActivity);
+            //图片压缩
+            Disposable d = Flowable.just(result)
+                    .observeOn(Schedulers.io())
+                    .map(list -> {
+                        // 同步方法直接返回压缩后的文件
+                        ArrayList<String> arrayList = new ArrayList<>();
+                        List<File> files=Luban.with(mContext).load(list).setTargetDir(FileUtils.getCacheDir(mContext,"image").getAbsolutePath()).get();
+                        for (int i = 0; i < files.size(); i++) {
+                            arrayList.add(files.get(i).getPath());
+                        }
+                        return arrayList;
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(arrayList -> upLoadPic( arrayList,requestCode));
+            addDisposable(d);
         });
     }
 
 
-    //上传七牛
+    //上传图片七牛
     private void upLoadPic(ArrayList<String> arrayList,final int requestCode){
         UpLoadPicUtils.batchUpload(arrayList, new UpLoadPicUtils.BatchUpLoadPicListener() {
             @Override
@@ -321,7 +299,7 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
         });
     }
 
-    //视频
+    //选择视频
     private void chooseVideo( ){
         Album.video(this) // Video selection.
                 .multipleChoice()
@@ -333,27 +311,35 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
                 .camera(true)
                 .columnCount(3)
                 .selectCount(1)
-                .onResult(result -> ysVideo(result.get(0).getPath()))
+                .onResult(result ->{
+                    String path = result.get(0).getPath();
+                    ConfirmDialog confirmDialog = ConfirmDialog.newInstance("是否压缩视频？");
+                    confirmDialog.setDialogListener(new ConfirmDialog.DialogListener() {
+                        @Override
+                        public void dialogClickListener() {
+                            ysVideo(path);
+                        }
+
+                        @Override
+                        public void canceListener() {
+                            upOnevideo(path);
+                        }
+                    });
+                    new Handler().postDelayed(() -> confirmDialog.show(getSupportFragmentManager(),""),500);
+                })
                 .start();
+
     }
 
     //压缩视频
     private void ysVideo(final String filePath){
         LoadingDialog.showDialogForLoading(mActivity,"压缩视频",false);
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
-                VideoUtils.videoCompressor(mContext, filePath, new VideoUtils.VieoProgressListener() {
-                    @Override
-                    public void onProgress(float progress, String outputfilePath) {
-                        if (progress==1){
-                            emitter.onNext(outputfilePath);
-                            emitter.onComplete();
-                        }
-                    }
-                });
+        Observable.create((ObservableOnSubscribe<String>) emitter -> VideoUtils.videoCompressor(mContext, filePath, (progress, outputfilePath) -> {
+            if (progress==1){
+                emitter.onNext(outputfilePath);
+                emitter.onComplete();
             }
-        }).subscribeOn(Schedulers.newThread())
+        })).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new io.reactivex.Observer<String>() {
                     @Override
@@ -363,22 +349,7 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
 
                     @Override
                     public void onNext(final String outputfilePath) {
-                        LoadingDialog.showDialogForLoading(mActivity,"上传视频",false);
-                        UpLoadPicUtils.upOnePic(outputfilePath, new UpLoadPicUtils.UpLoadPicListener() {
-                            @Override
-                            public void success(String qiNiuPath) {
-                                FileUtils.deleteFile(outputfilePath);
-                                viewModel.getCreteProceddure().getValue().setIntroduce_video(qiNiuPath);
-                                upData();
-                                LoadingDialog.cancelDialogForLoading();
-                            }
-
-                            @Override
-                            public void error() {
-                                showShortToast("上传失败，请稍后重试");
-                                LoadingDialog.cancelDialogForLoading();
-                            }
-                        });
+                        upOnevideo(outputfilePath);
                     }
 
                     @Override
@@ -392,6 +363,25 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
                     }
                 });
 
+    }
+
+    //上传图片到七牛
+    public void upOnevideo(String videoUrl){
+        LoadingDialog.showDialogForLoading(mActivity,"上传视频",false);
+        UpLoadPicUtils.upOnePic(videoUrl, new UpLoadPicUtils.UpLoadPicListener() {
+            @Override
+            public void success(String qiNiuPath) {
+                viewModel.getCreteProceddure().getValue().setIntroduce_video(qiNiuPath);
+                upData();
+                LoadingDialog.cancelDialogForLoading();
+            }
+
+            @Override
+            public void error() {
+                showShortToast("上传失败，请稍后重试");
+                LoadingDialog.cancelDialogForLoading();
+            }
+        });
     }
 
     public class ClickProxy{
@@ -411,12 +401,9 @@ public class CreateProcedureActivity extends BaseActivity<CreateProcedureViewMod
         //选择时间
         public void selectTime (View view){
             //时间选择器
-            TimePickerView pvTime = new TimePickerBuilder(mContext, new OnTimeSelectListener() {
-                @Override
-                public void onTimeSelect(Date date, View v) {
-                    viewModel.getCreteProceddure().getValue().setEstablish_date(CommonUtils.getTime(date,"yyyy-MM-dd"));
-                    upData();
-                }
+            TimePickerView pvTime = new TimePickerBuilder(mContext, (date, v) -> {
+                viewModel.getCreteProceddure().getValue().setEstablish_date(CommonUtils.getTime(date,"yyyy-MM-dd"));
+                upData();
             }).setType(new boolean[]{true, true, true, false, false, false}).build();
             pvTime.show();
         }

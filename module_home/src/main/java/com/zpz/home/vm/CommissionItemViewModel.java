@@ -31,7 +31,7 @@ public class CommissionItemViewModel extends BaseViewModel {
         hashMap.put("login_token", UserUtils.getToken());
         hashMap.put("num",10);
         hashMap.put("type",status);
-        new MyHttp().doPost(Api.getDefault().listBacklog(hashMap), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().listBacklog(hashMap), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 CommissionItemBean firstTriaBean = new Gson().fromJson(result.toString(),CommissionItemBean.class);

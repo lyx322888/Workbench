@@ -16,5 +16,9 @@ public class AppConfig {
         int JURISDICTION  = 123;//权限受制
     }
 
+    public static class ThirdParty{
+        public static String UMENGKEY = "5f0d49eb978eea08f5a149bb";
+    }
+
 
 }

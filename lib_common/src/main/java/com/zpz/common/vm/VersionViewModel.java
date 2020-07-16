@@ -22,7 +22,7 @@ public class VersionViewModel extends BaseViewModel {
     }
 
     public void requesVersionInfo(int versionCode){
-        new MyHttp().doPost(Api.getDefault().getVersion(AppConfig.apptype, versionCode), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().getVersion(AppConfig.apptype, versionCode), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 VersionBean versionBean = new Gson().fromJson(result.toString(),VersionBean.class);

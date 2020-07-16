@@ -16,19 +16,15 @@
 
 package com.zpz.common.base.adapter;
 
-import android.content.Context;
-
 import androidx.annotation.LayoutRes;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 public abstract class SimpleBaseBindingAdapter<M, B extends ViewDataBinding> extends BaseBindingAdapter {
 
     private final int layout;
 
-    public SimpleBaseBindingAdapter(Context context, int layout) {
-        super(context);
+    public SimpleBaseBindingAdapter(int layout) {
         this.layout = layout;
     }
 

@@ -33,7 +33,7 @@ public class HomeViewModel extends BaseViewModel {
 
     //获取公告
     public void requesIndexNotice(){
-        new MyHttp().doPost(Api.getDefault().getIndexNotice(UserUtils.getToken()), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().getIndexNotice(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 HomeGg homeGg = new Gson().fromJson(result.toString(),HomeGg.class);
@@ -49,7 +49,8 @@ public class HomeViewModel extends BaseViewModel {
 
     //用户信息
     public void requesUserInfo(){
-        new MyHttp().doPost(Api.getDefault().getUserInfo(UserUtils.getToken()), new HttpViewModelListener() {
+
+        MyHttp.doPost( Api.getDefault().getUserInfo(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 UserInfoBean userInfoBean = new Gson().fromJson(result.toString(),UserInfoBean.class);

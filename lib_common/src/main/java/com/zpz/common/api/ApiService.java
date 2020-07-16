@@ -77,4 +77,14 @@ public interface ApiService {
     @POST("/workerapi/user/get_backlog_count")
     Observable<JSONObject> getBacklogCount(@Field ("login_token") String loginToken);
 
+    //证件
+    @FormUrlEncoded
+    @POST("/workerapi/user/get_certificate_info")
+    Observable<JSONObject> getCertificateInfo(@Field ("login_token") String loginToken,@Field("company_id") long company_id);
+
+    //分红
+    @FormUrlEncoded
+    @POST("/workerapi/user/list_bonus")
+    Observable<JSONObject> listBonus(@FieldMap Map<String, Object> params);
+
 }

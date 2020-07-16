@@ -2,27 +2,18 @@ package com.zpz.home.fragment;
 
 import android.os.Bundle;
 
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.databinding.library.baseAdapters.BR;
 
-import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.zpz.common.base.BaseFragment;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.home.R;
 import com.zpz.home.adapter.FirstTrialAdapter;
-import com.zpz.home.baen.FirstTriaBean;
-import com.zpz.home.databinding.FragmentFirstTrialBinding;
 import com.zpz.home.vm.FirstTrialFmViewModel;
-
-import java.util.List;
 
 /**
  * 初审列表
  */
 public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
-    public FirstTrialAdapter firstTrialAdapter;
-    private FragmentFirstTrialBinding firstTrialBinding;
     public int status;
     public static FirstTrialFragment newInstance(int status) {
         FirstTrialFragment tabFragment = new FirstTrialFragment();
@@ -33,53 +24,37 @@ public class FirstTrialFragment extends BaseFragment<FirstTrialFmViewModel> {
     }
     @Override
     protected DataBindingConfig getDataBindingConfig() {
-        return new DataBindingConfig(R.layout.fragment_first_trial);
+        if (getArguments() != null) {
+            status = getArguments().getInt("status");
+        }
+        return new DataBindingConfig(R.layout.fragment_first_trial)
+                .addBindingParam(BR.vm,viewModel)
+                .addBindingParam(BR.adapter,new FirstTrialAdapter(status));
     }
 
     @Override
     protected void init() {
-        if (getArguments() != null) {
-            status = getArguments().getInt("status");
-        }
-        firstTrialBinding = (FragmentFirstTrialBinding) getBinding();
-        firstTrialAdapter =new FirstTrialAdapter(status);
-        firstTrialBinding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        firstTrialBinding.rv.setAdapter(firstTrialAdapter);
-        //刷新加载
-        firstTrialBinding.trl.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                super.onRefresh(refreshLayout);
-                viewModel.page=1;
-                viewModel.requesfirstTria(status);
-            }
 
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                super.onLoadMore(refreshLayout);
-                viewModel.page+=1;
-                viewModel.requesfirstTria(status);
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.requesfirstTria(status);
+        viewModel.onRefresh();
     }
 
     @Override
     protected void initViewObservable() {
-        viewModel.getFirstTriaBeanMutableLiveData().observe(this, new Observer<List<FirstTriaBean.DataBean>>() {
-            @Override
-            public void onChanged(List<FirstTriaBean.DataBean> dataBeans) {
-                firstTrialAdapter.setNewData(dataBeans);
-                firstTrialBinding.trl.finishRefreshing();
-                firstTrialBinding.trl.finishLoadmore();
-            }
-        });
-        viewModel.requesfirstTria(status);
+
     }
 
+    @Override
+    protected void onLoadData() {
+
+    }
+
+    @Override
+    protected void onTwRefreshAndLoadMore() {
+        viewModel.requesfirstTria(status);
+    }
 }

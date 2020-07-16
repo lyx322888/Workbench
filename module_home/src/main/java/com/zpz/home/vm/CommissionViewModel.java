@@ -14,11 +14,9 @@ import com.zpz.common.utils.UserUtils;
 public class CommissionViewModel extends BaseViewModel {
     public String[] mTitles = new String[]{"待建档", "即将到期", "已到期"};
 
+    private MutableLiveData<CommissionCountBean.DataBean> commissionCountLiveData;
 
-
-    private MutableLiveData<CommissionCountBean> commissionCountLiveData;
-
-    public LiveData<CommissionCountBean> getCountBeanLiveData() {
+    public LiveData<CommissionCountBean.DataBean> getCountBeanLiveData() {
         if (commissionCountLiveData ==null){
             commissionCountLiveData =  new MutableLiveData<>();
         }
@@ -26,11 +24,11 @@ public class CommissionViewModel extends BaseViewModel {
     }
     //统计
     public void requesBacklogCount(){
-        new MyHttp().doPost(Api.getDefault().getBacklogCount(UserUtils.getToken()), new HttpViewModelListener() {
+        MyHttp.doPost(Api.getDefault().getBacklogCount(UserUtils.getToken()), new HttpViewModelListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 CommissionCountBean firstAssessCountBean = new Gson().fromJson(result.toString(),CommissionCountBean.class);
-                commissionCountLiveData.setValue(firstAssessCountBean);
+                commissionCountLiveData.setValue(firstAssessCountBean.getData());
                 showSuccess();
             }
 
