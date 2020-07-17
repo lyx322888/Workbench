@@ -19,14 +19,12 @@ public class HomeViewModel extends BaseViewModel {
     public LiveData<HomeGg> getHomeGg (){
         if (homeGgMutableLiveData==null){
             homeGgMutableLiveData = new MutableLiveData<>();
-            requesIndexNotice();
         }
         return homeGgMutableLiveData;
     }
     public LiveData<UserInfoBean> getUserInfo (){
         if (mutableLiveData==null){
             mutableLiveData = new MutableLiveData<>();
-            requesUserInfo();
         }
         return mutableLiveData;
     }

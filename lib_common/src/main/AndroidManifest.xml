@@ -29,6 +29,13 @@
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
         </activity>
+        <!--微信-->
+        <activity
+            android:name="com.zpz.workbench.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <!--更新-->
         <service android:name=".update.UpdateService" />
 
@@ -80,6 +87,8 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c1567611ac5f1bf6d7d2c42e7e1d574b" />
+
+
     </application>
 
 </manifest>

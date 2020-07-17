@@ -1,16 +1,20 @@
 package com.zpz.common.base;
 
 import android.view.View;
+import android.webkit.JavascriptInterface;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.download.library.DownloadImpl;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.zpz.common.R;
 import com.zpz.common.databinding.ActivityBaseWebBinding;
+import com.zpz.common.dialog.DownFileDialog;
+
 @Route(path = MyARouter.BaseWebActivity)
 public class BaseWebActivity extends BaseActivity<BaseViewModel> {
     ActivityBaseWebBinding baseWebBinding;
@@ -55,6 +59,9 @@ public class BaseWebActivity extends BaseActivity<BaseViewModel> {
         webView.getSettings().setSupportZoom(false); // 支持缩放
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
 
+        // 设置与Js交互的权限
+        webView.addJavascriptInterface(new InJavaScriptLocalObj(), "android");
+
         webView.loadUrl(url);
         webView.setWebViewClient(webViewClient);
         webView.setWebChromeClient(webChromeClient);
@@ -97,6 +104,7 @@ public class BaseWebActivity extends BaseActivity<BaseViewModel> {
         webView.removeAllViews();
         webView.destroy();
         webView = null;
+        DownloadImpl.getInstance().cancelAll();
         super.onDestroy();
     }
     @Override
@@ -107,4 +115,14 @@ public class BaseWebActivity extends BaseActivity<BaseViewModel> {
             super.onBackPressed();
         }
     }
+
+    final class InJavaScriptLocalObj {
+        @JavascriptInterface
+        public void downFile(String url){
+            final DownFileDialog downFileDialog =DownFileDialog.newInstance(url);
+            downFileDialog.show(getSupportFragmentManager(),"");
+        }
+    }
+
 }
+

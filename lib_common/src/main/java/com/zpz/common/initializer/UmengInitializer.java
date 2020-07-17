@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.startup.Initializer;
 
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 import com.zpz.common.BuildConfig;
 import com.zpz.common.base.AppConfig;
 
@@ -19,6 +20,7 @@ public class UmengInitializer implements Initializer<UMConfigure> {
     public UMConfigure create(@NonNull Context context) {
         UMConfigure.setLogEnabled(BuildConfig.IS_DEBUG);
         UMConfigure.init(context, AppConfig.ThirdParty.UMENGKEY, "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null);
+        PlatformConfig.setWeixin(AppConfig.WX_APP_ID, AppConfig.WX_APP_SECRET);
         return null;
     }
 

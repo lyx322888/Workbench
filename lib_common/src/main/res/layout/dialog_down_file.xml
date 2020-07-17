@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        app:rv_cornerRadius="10dp"
+        app:rv_backgroundColor="@color/white">
+
+        <TextView
+            android:textColor="@color/titleColor"
+            android:id="@+id/tv_content"
+            android:text="文件下载："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp" />
+
+        <com.zpz.common.view.NumberProgressBar
+            android:layout_marginHorizontal="10dp"
+            android:layout_below="@id/tv_content"
+            style="@style/UpdateAppNumberProgressBar_Red"
+            android:id="@+id/progress_bar"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_below="@id/progress_bar"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_height="50dp">
+
+            <com.flyco.roundview.RoundTextView
+                android:visibility="invisible"
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                app:rv_backgroundColor="@color/backgroundColor"
+                app:rv_cornerRadius="5dp"
+                android:backgroundTint="#e0e0e0"
+                android:layout_height="match_parent"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <com.flyco.roundview.RoundTextView
+                android:layout_margin="5dp"
+                android:id="@+id/tv_qx"
+                app:rv_cornerRadius="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:rv_backgroundColor="@color/appColor"
+                android:gravity="center"
+                android:text="取消下载"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </com.flyco.roundview.RoundRelativeLayout>
+</layout>

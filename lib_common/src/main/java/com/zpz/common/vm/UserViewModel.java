@@ -12,13 +12,10 @@ import com.zpz.common.bean.UserInfoBean;
 import com.zpz.common.utils.UserUtils;
 //用户信息
 public class UserViewModel extends BaseViewModel {
-    private MutableLiveData<UserInfoBean> userLiveData;
-
-
-    public LiveData<UserInfoBean> getUserInfo(){
+    private MutableLiveData<UserInfoBean.DataBean> userLiveData;
+    public LiveData<UserInfoBean.DataBean> getUserInfo(){
         if (userLiveData==null){
             userLiveData = new MutableLiveData<>();
-            requesUserInfo();
         }
         return userLiveData;
     }
@@ -28,7 +25,7 @@ public class UserViewModel extends BaseViewModel {
             @Override
             public void onSuccess(JSONObject result) {
                 UserInfoBean userInfoBean = new Gson().fromJson(result.toString(),UserInfoBean.class);
-                userLiveData.setValue(userInfoBean);
+                userLiveData.setValue(userInfoBean.getData());
             }
 
         });

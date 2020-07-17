@@ -60,6 +60,8 @@
                     android:id="@+id/npb"
                     style="@style/UpdateAppNumberProgressBar_Red"
                     android:paddingTop="10dp"
+                    app:progress_reached_color="@color/appColor"
+                    app:progress_text_color="@color/appColor"
                     android:paddingBottom="10dp"
                     android:visibility="gone" />
 

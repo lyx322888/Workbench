@@ -81,7 +81,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
         public void LearningVideo(View view){
             ARouter.getInstance().build(MyARouter.BaseWebActivity)
                     .withString("title","学习课堂")
-                    .withString("url","http://www.wbx365.com/Wbxwaphome/video").navigation();
+                    .withString("url","https://api.qygs.org.cn/workerapi/htmlpage/study_video").navigation();
         }
     }
 }

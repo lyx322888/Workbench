@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vm"
+            type="com.zpz.common.vm.UserViewModel" />
+    </data>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.flyco.roundview.RoundFrameLayout
+                android:id="@+id/content"
+                app:rv_cornerRadius="15dp"
+                android:layout_width="match_parent"
+                app:rv_backgroundColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="17dp"
+                android:background="@color/backgroundColor"
+                app:layout_constraintBottom_toTopOf="@+id/llbt"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="17dp">
+
+                <ImageView
+                    android:layout_width="170dp"
+                    android:layout_height="140dp"
+                    android:layout_gravity="end"
+                    android:src="@mipmap/bg_login" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom">
+
+                    <ImageView
+                        android:layout_width="148dp"
+                        android:layout_height="0dp"
+                        android:src="@mipmap/bg_main"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="719:404"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="26dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_height="wrap_content">
+
+                        <com.zpz.common.view.CircleImageView
+                            android:id="@+id/civ_heard"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/ic_mr_head"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            app:layout_constraintStart_toEndOf="@id/civ_heard"
+                            app:layout_constraintTop_toTopOf="@id/civ_heard"
+                            android:textSize="22sp"
+                            android:layout_marginStart="5dp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_work_no"
+                            app:layout_constraintBottom_toBottomOf="@id/civ_heard"
+                            app:layout_constraintStart_toEndOf="@id/civ_heard"
+                            android:textSize="13sp"
+                            android:layout_marginStart="5dp"
+                            android:textColor="@color/gray89"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <ImageView
+                        android:layout_marginTop="23dp"
+                        android:src="@mipmap/ic_logo"
+                        android:layout_width="83dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="83dp" />
+
+                    <ImageView
+                        android:src="@mipmap/ic_text"
+                        android:layout_marginHorizontal="30dp"
+                        android:scaleType="centerInside"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="25sp"
+                        android:text="企业信用初审"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:id="@+id/iv_ewm"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+                </LinearLayout>
+            </com.flyco.roundview.RoundFrameLayout>
+            <LinearLayout
+                android:id="@+id/llbt"
+                android:layout_width="match_parent"
+                android:layout_height="113dp"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/pop_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/share_wechat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/ic_fxvx"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:text="微信好友"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/share_bctp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/ic_fxbctp"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:text="保存图片"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
