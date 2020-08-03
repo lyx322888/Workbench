@@ -6,7 +6,6 @@ import android.webkit.JavascriptInterface;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.download.library.DownloadImpl;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -104,7 +103,6 @@ public class BaseWebActivity extends BaseActivity<BaseViewModel> {
         webView.removeAllViews();
         webView.destroy();
         webView = null;
-        DownloadImpl.getInstance().cancelAll();
         super.onDestroy();
     }
     @Override
@@ -117,11 +115,19 @@ public class BaseWebActivity extends BaseActivity<BaseViewModel> {
     }
 
     final class InJavaScriptLocalObj {
+        //下载视频
         @JavascriptInterface
         public void downFile(String url){
             final DownFileDialog downFileDialog =DownFileDialog.newInstance(url);
             downFileDialog.show(getSupportFragmentManager(),"");
         }
+        //下载资料
+        @JavascriptInterface
+        public void archivesFile(String url){
+            final DownFileDialog downFileDialog =DownFileDialog.newInstance(url);
+            downFileDialog.show(getSupportFragmentManager(),"");
+        }
+
     }
 
 }

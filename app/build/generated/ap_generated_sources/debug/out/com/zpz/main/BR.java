@@ -13,9 +13,11 @@ public class BR {
 
   public static final int ryAdapter = 5;
 
-  public static final int str = 6;
+  public static final int sharevm = 6;
 
-  public static final int vm = 7;
+  public static final int str = 7;
 
-  public static final int workAdapter = 8;
+  public static final int vm = 8;
+
+  public static final int workAdapter = 9;
 }

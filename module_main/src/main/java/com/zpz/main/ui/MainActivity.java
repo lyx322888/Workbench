@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.startup.AppInitializer;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -20,12 +19,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yanzhenjie.sofia.Sofia;
 import com.zpz.common.base.BaseActivity;
-import com.zpz.common.base.BaseApplication;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.bean.CommissionCountBean;
 import com.zpz.common.dialog.UpdateDialogFragment;
-import com.zpz.common.initializer.AlbumInitializer;
 import com.zpz.common.utils.APPUtil;
 import com.zpz.common.vm.VersionViewModel;
 import com.zpz.main.R;
@@ -38,7 +35,7 @@ public class MainActivity extends BaseActivity<MainViewModel> {
     public Fragment mHomeFragment;
     @Autowired(name = MyARouter.CommissionFragment)
     public Fragment commissionFragment;
-    @Autowired(name = MyARouter.HomeFragment)
+    @Autowired(name = MyARouter.MeFragment)
     public Fragment mMeFragment;
     public Fragment mCurrFragment;
     private ActivityMainBinding activityMainBinding;
@@ -66,7 +63,13 @@ public class MainActivity extends BaseActivity<MainViewModel> {
     protected void initViewObservable() {
         viewModel.getCountBeanLiveData().observe(this, commissionCountBean -> {
             CommissionCountBean.DataBean dataBean = commissionCountBean.getData();
-            dbMsgView.setText(String.format("%s",dataBean.getCount_type_one()+dataBean.getCount_type_two()+dataBean.getCount_type_three()));
+            int count = dataBean.getCount_type_one()+dataBean.getCount_type_two()+dataBean.getCount_type_three();
+            if (count==0){
+                dbMsgView.setVisibility(View.GONE);
+            }else {
+                dbMsgView.setVisibility(View.VISIBLE);
+                dbMsgView.setText(String.format("%s",dataBean.getCount_type_one()+dataBean.getCount_type_two()+dataBean.getCount_type_three()));
+            }
         });
         //版本更新
         versionViewModel.getVersionliveData().observe(this, dataBean -> {

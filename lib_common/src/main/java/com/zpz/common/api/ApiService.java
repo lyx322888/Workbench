@@ -87,4 +87,9 @@ public interface ApiService {
     @POST("/workerapi/user/list_bonus")
     Observable<JSONObject> listBonus(@FieldMap Map<String, Object> params);
 
+    //初审分享
+    @FormUrlEncoded
+    @POST("/workerapi/user/get_share_first_assess_url")
+    Observable<JSONObject> get_share_first_assess_url(@Field ("login_token") String loginToken);
+
 }

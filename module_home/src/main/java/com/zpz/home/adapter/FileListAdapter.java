@@ -3,6 +3,7 @@ package com.zpz.home.adapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.MyARouter;
 import com.zpz.common.base.adapter.SimpleBaseBindingAdapter;
 import com.zpz.home.R;
@@ -22,5 +23,10 @@ public class FileListAdapter extends SimpleBaseBindingAdapter<FileListBean.DataB
                 .withLong("first_assess_id",0)
                 .navigation());
         binding.btnCkzs.setOnClickListener(v -> ARouter.getInstance().build(MyARouter.CertificateActivity).withLong("company_id",item.getCompany_id()).navigation());
+        binding.btnJdzl.setOnClickListener(v ->  ARouter.getInstance().build(MyARouter.BaseWebActivity)
+                .withString("title","企业详情")
+                .withString("url", AppConfig.COMPANYDETAILS +item.getCompany_id()).navigation());
+
     }
+
 }

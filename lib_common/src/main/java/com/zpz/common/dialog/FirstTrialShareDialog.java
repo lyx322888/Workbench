@@ -24,13 +24,15 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.zpz.common.R;
-import com.zpz.common.base.AppConfig;
+import com.zpz.common.bean.FirsTrialShareBean;
 import com.zpz.common.bean.UserInfoBean;
 import com.zpz.common.databinding.DialogCsfxBinding;
 import com.zpz.common.utils.BitmapUtils;
 import com.zpz.common.utils.EncodingHandler;
 import com.zpz.common.utils.GlideUtils;
 import com.zpz.common.utils.ScannerUtils;
+import com.zpz.common.utils.ToastUitl;
+import com.zpz.common.vm.FirsTrialViewShareModel;
 import com.zpz.common.vm.UserViewModel;
 
 /**
@@ -39,11 +41,13 @@ import com.zpz.common.vm.UserViewModel;
 public class FirstTrialShareDialog extends DialogFragment {
     private DialogCsfxBinding csfxBinding;
     private UserViewModel viewModel;
+    private FirsTrialViewShareModel firsTrialViewShareModel;
 
     public static FirstTrialShareDialog newInstance() {
         FirstTrialShareDialog uploadAccreditationDialog = new FirstTrialShareDialog();
         return uploadAccreditationDialog;
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -71,8 +75,10 @@ public class FirstTrialShareDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        firsTrialViewShareModel = new ViewModelProvider(this).get(FirsTrialViewShareModel.class);
         csfxBinding = DialogCsfxBinding.inflate(inflater,container,false);
         csfxBinding.setVm(viewModel);
+        csfxBinding.setSharevm(firsTrialViewShareModel);
         loaddata();
         init();
         return csfxBinding.getRoot();
@@ -90,14 +96,25 @@ public class FirstTrialShareDialog extends DialogFragment {
         csfxBinding.shareWechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UMWeb web = new UMWeb(AppConfig.CSSHARE);
-                web.setTitle("全国企业信用公示平台【企业初审】");//标题
-                web.setThumb(new UMImage(getContext(),R.mipmap.ic_app));  //缩略图
-                web.setDescription("填写相关企业信息进行企业初审，通过初审可建立企业信用档案");//描述
-                new ShareAction(getActivity())
-                        .setPlatform(SHARE_MEDIA.WEIXIN)//传入平台
-                        .withMedia(web)
-                        .share();
+                if (firsTrialViewShareModel.data.getValue()!=null){
+                    UMWeb web = new UMWeb(firsTrialViewShareModel.data.getValue().getShare_url());
+                    web.setTitle("全国企业信用公示平台【企业初审】");//标题
+                    web.setThumb(new UMImage(getContext(),R.mipmap.ic_app));  //缩略图
+                    web.setDescription("填写相关企业信息进行企业初审，通过初审可建立企业信用档案");//描述
+                    new ShareAction(getActivity())
+                            .setPlatform(SHARE_MEDIA.WEIXIN)//传入平台
+                            .withMedia(web)
+                            .share();
+                    dismiss();
+                }else {
+                    ToastUitl.showShort("网络走丢啦，请检查网络并重新进入");
+                }
+
+            }
+        });
+        csfxBinding.cl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });
@@ -112,13 +129,19 @@ public class FirstTrialShareDialog extends DialogFragment {
                 csfxBinding.tvWorkNo.setText("工号："+dataBean.getWork_no());
             }
         });
+        firsTrialViewShareModel.data.observe(this, new Observer<FirsTrialShareBean.DataBean>() {
+            @Override
+            public void onChanged(FirsTrialShareBean.DataBean dataBean) {
+                try {
+                    csfxBinding.ivEwm.setImageBitmap(EncodingHandler.createQRCode(dataBean.getShare_url(),300));
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         viewModel.requesUserInfo();
+        firsTrialViewShareModel.requesShare();
 
-        try {
-            csfxBinding.ivEwm.setImageBitmap(EncodingHandler.createQRCode(AppConfig.CSSHARE,300));
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

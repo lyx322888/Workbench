@@ -6,8 +6,12 @@
         <variable
             name="vm"
             type="com.zpz.common.vm.UserViewModel" />
+        <variable
+            name="sharevm"
+            type="com.zpz.common.vm.FirsTrialViewShareModel" />
     </data>
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.flyco.roundview.RoundFrameLayout
@@ -110,6 +114,7 @@
 
                     <ImageView
                         android:id="@+id/iv_ewm"
+                        QRCodeUrl="@{sharevm.data.share_url}"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="30dp"
                         android:layout_gravity="center_horizontal"
@@ -146,7 +151,6 @@
                         android:text="微信好友"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
-
                     <TextView
                         android:id="@+id/share_bctp"
                         android:layout_width="wrap_content"
@@ -159,8 +163,6 @@
                         android:textColor="@color/black"
                         android:textSize="12sp" />
                 </LinearLayout>
-
-
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

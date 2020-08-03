@@ -44,16 +44,16 @@
             android:layout_height="50dp">
 
             <com.flyco.roundview.RoundTextView
+                android:id="@+id/tv_dk"
                 android:visibility="invisible"
                 android:layout_margin="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                app:rv_backgroundColor="@color/backgroundColor"
                 app:rv_cornerRadius="5dp"
-                android:backgroundTint="#e0e0e0"
+                app:rv_backgroundColor="@color/appColor"
                 android:layout_height="match_parent"
-                android:text="取消"
+                android:text="打开"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -68,7 +68,6 @@
                 android:gravity="center"
                 android:text="取消下载"
                 android:textColor="@color/white" />
-
         </LinearLayout>
     </com.flyco.roundview.RoundRelativeLayout>
 </layout>

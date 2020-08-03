@@ -17,7 +17,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 安装未知应用权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <application>
+    <application
+        android:requestLegacyExternalStorage="true" >
         <activity android:name=".base.BaseWebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
@@ -29,12 +30,6 @@
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
         </activity>
-        <!--微信-->
-        <activity
-            android:name="com.zpz.workbench.wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--更新-->
         <service android:name=".update.UpdateService" />
@@ -43,6 +38,15 @@
             android:name="android.max_aspect"
             android:value="2.4" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.zpz.common.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.zpz.common.provider"

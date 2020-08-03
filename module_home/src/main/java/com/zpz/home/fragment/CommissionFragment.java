@@ -1,5 +1,6 @@
 package com.zpz.home.fragment;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
 
@@ -40,18 +41,22 @@ public class CommissionFragment extends BaseFragment<CommissionViewModel> {
             if (commissionCountBean.getCount_type_one()!=0){
                 binding.labLayout.showMsg(0,commissionCountBean.getCount_type_one());
                 binding.labLayout.setMsgMargin(0,30,10);
+                binding.labLayout.getMsgView(0).setBackgroundColor(ContextCompat.getColor(mActivity,R.color.appColor));
+
             }else {
                 binding.labLayout.hideMsg(0);
             }
             if (commissionCountBean.getCount_type_two()!=0){
                 binding.labLayout.showMsg(1,commissionCountBean.getCount_type_two());
                 binding.labLayout.setMsgMargin(1,30,10);
+                binding.labLayout.getMsgView(1).setBackgroundColor(ContextCompat.getColor(mActivity,R.color.appColor));
             }else {
                 binding.labLayout.hideMsg(1);
             }
             if (commissionCountBean.getCount_type_three()!=0){
                 binding.labLayout.showMsg(2,commissionCountBean.getCount_type_three());
                 binding.labLayout.setMsgMargin(2,30,10);
+                binding.labLayout.getMsgView(2).setBackgroundColor(ContextCompat.getColor(mActivity,R.color.appColor));
             }else {
                 binding.labLayout.hideMsg(2);
             }

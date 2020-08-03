@@ -25,7 +25,7 @@ public class CommonBindingAdapter {
         GlideUtils.showSmallPic(imageView,url);
     }
 
-    //图片加载
+    //二维码
     @BindingAdapter("QRCodeUrl")
     public static void QRCodeUrl(ImageView imageView, String url) {
         try {

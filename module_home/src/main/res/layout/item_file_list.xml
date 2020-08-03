@@ -122,6 +122,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+            <com.flyco.roundview.RoundTextView
+                bind:rv_backgroundColor="@color/grayEt"
+                android:padding="5dp"
+                bind:rv_cornerRadius="6dp"
+                android:textColor="@color/color_red_jd"
+                android:layout_marginStart="10dp"
+                android:visibility="@{vm.status!=1?View.VISIBLE:View.GONE}"
+                android:text="@{@string/bhyy+vm.reason_refusal}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
         <View
             android:layout_marginTop="16dp"

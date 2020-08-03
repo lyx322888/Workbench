@@ -20,6 +20,7 @@ public class DetailAccountActivity extends BaseActivity<DetailAccountViewModel> 
 
     @Override
     protected void init() {
+        viewModel.showLoading();
         setTitle("分红明细");
     }
 

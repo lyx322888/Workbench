@@ -1,15 +1,24 @@
 package com.zpz.common.api;
+
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.zpz.common.BuildConfig;
 import com.zpz.common.api.fastjson.FastJsonConverterFactory;
+import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseApplication;
+import com.zpz.common.utils.APPUtil;
 import com.zpz.common.utils.NetWorkUtils;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -68,7 +77,7 @@ public class Api {
     private Api() {
         //缓存
         File cacheFile = new File(BaseApplication.getInstance().getCacheDir(), "cache");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+        final Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         //增加头部信息
         Interceptor headerInterceptor = new Interceptor() {
             @Override
@@ -79,6 +88,27 @@ public class Api {
                 return chain.proceed(build);
             }
         };
+        //添加post公共参数
+        Interceptor interceptorParameters=new Interceptor() {
+            @NotNull
+            @Override
+            public Response intercept(@NotNull Chain chain) throws IOException {
+                Request request = chain.request();
+                if (request.body() instanceof FormBody) {
+                    FormBody.Builder  builder = new FormBody.Builder();
+                    FormBody formBody = (FormBody) request.body();
+                    for (int i = 0; i < formBody.size(); i++) {
+                        builder.addEncoded(formBody.encodedName(i), formBody.encodedValue(i));
+                    }
+                    formBody = builder.addEncoded("version_code", String.valueOf(APPUtil.getVersionCode(BaseApplication.getInstance())))
+                            .addEncoded("app_type", AppConfig.apptype)
+                            .build();
+                    request = request.newBuilder().post(formBody).build();
+                }
+                return chain.proceed(request);
+            }
+        };
+
 
         OkHttpClient okHttpClient = getMyOkHttpClient()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -86,6 +116,7 @@ public class Api {
                 .addInterceptor(mRewriteCacheControlInterceptor)
                 .addNetworkInterceptor(mRewriteCacheControlInterceptor)
                 .addInterceptor(headerInterceptor)
+                .addInterceptor(interceptorParameters)
                 .cache(cache)
                 .build();
 
@@ -156,7 +187,6 @@ public class Api {
             Response originalResponse = chain.proceed(request);
             if (NetWorkUtils.isNetConnected(BaseApplication.getInstance())) {
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-
                 return originalResponse.newBuilder()
                         .header("Cache-Control", cacheControl)
                         .removeHeader("Pragma")

@@ -57,7 +57,7 @@
                     android:id="@+id/tv_time"
                     android:layout_gravity="bottom"
                     tools:text="1986年09月10日 18:54"
-                    android:text="@{list.create_time}"
+                    android:text="@{@string/tjsj+list.create_time}"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:layout_width="wrap_content"

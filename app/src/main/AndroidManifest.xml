@@ -11,6 +11,12 @@
         android:name=".MyApplication"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+        <!--微信-->
+        <activity
+            android:name="com.zpz.workbench.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

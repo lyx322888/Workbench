@@ -91,7 +91,7 @@ dependencies {
     api 'com.lcodecorex:tkrefreshlayout:1.0.7'
     //滚轮
     api 'com.contrarywind:Android-PickerView:4.1.9'
-    //dingwei
+    //高德
     api 'com.amap.api:location:4.2.0'
     //七牛
     api 'com.qiniu:qiniu-android-sdk:7.6.3'
@@ -116,7 +116,7 @@ dependencies {
     api  "com.umeng.umsdk:share-board:$share_version"
     api  "com.umeng.umsdk:share-wx:$share_version"
     //谷歌启动优化
-    api "androidx.startup:startup-runtime:1.0.0-alpha01"
+    api "androidx.startup:startup-runtime:1.0.0-alpha02"
     //paging
     def paging_version = "2.1.2"
     api "androidx.paging:paging-runtime:$paging_version"

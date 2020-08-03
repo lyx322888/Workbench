@@ -1,5 +1,6 @@
 package com.zpz.home.ui;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -47,18 +48,22 @@ public class FirstTrialActivity extends BaseActivity<FirstTrialViewModel> {
             if (firstAssessCountBean.getData().getCount_status_zero()!=0){
                 binding.labLayout.showMsg(0,firstAssessCountBean.getData().getCount_status_zero());
                 binding.labLayout.setMsgMargin(0,30,10);
+                binding.labLayout.getMsgView(0).setBackgroundColor(ContextCompat.getColor(mContext,R.color.appColor));
             }else {
                 binding.labLayout.hideMsg(0);
             }
             if (firstAssessCountBean.getData().getCount_status_one()!=0){
                 binding.labLayout.showMsg(1,firstAssessCountBean.getData().getCount_status_one());
                 binding.labLayout.setMsgMargin(1,30,10);
+                binding.labLayout.getMsgView(1).setBackgroundColor(ContextCompat.getColor(mContext,R.color.appColor));
+
             }else {
                 binding.labLayout.hideMsg(1);
             }
             if (firstAssessCountBean.getData().getCount_status_two()!=0){
                 binding.labLayout.showMsg(2,firstAssessCountBean.getData().getCount_status_two());
                 binding.labLayout.setMsgMargin(2,30,10);
+                binding.labLayout.getMsgView(2).setBackgroundColor(ContextCompat.getColor(mContext,R.color.appColor));
             }else {
                 binding.labLayout.hideMsg(2);
             }

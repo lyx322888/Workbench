@@ -69,7 +69,7 @@ public class SplashActivity extends BaseActivity<BaseViewModel> {
 
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
     void showPermissionDialog(final PermissionRequest request) {
-        new AlertDialog.Builder(this, R.style.SplashDialog).setTitle("提示").setMessage("请授予相关权限，否则微百姓无法正常工作")
+        new AlertDialog.Builder(this, R.style.SplashDialog).setTitle("提示").setMessage("请授予相关权限，否则无法正常工作")
                 .setCancelable(false).setNegativeButton("取消", (dialogInterface, i) -> {
                     request.cancel();
                     finish();

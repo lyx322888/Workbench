@@ -1,8 +1,5 @@
-if (isModule.toBoolean()) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.android.library'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     compileOptions {
@@ -43,7 +40,9 @@ android {
     dataBinding {
         enabled true
     }
-
+    viewBinding {
+        enabled = true
+    }
 }
 
 

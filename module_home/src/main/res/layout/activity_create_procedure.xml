@@ -246,13 +246,24 @@
                     android:paddingVertical="21dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textStyle="bold"
-                        android:text="工作环境"
-                        android:textSize="16sp"
-                        android:textColor="@color/titleColor"
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="工作环境"
+                            android:textSize="16sp"
+                            android:textColor="@color/titleColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="  (最多12张)"
+                            android:textSize="11sp"
+                            android:textColor="@color/gray89"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
                         <androidx.recyclerview.widget.RecyclerView
                             android:orientation="horizontal"
                             refreshList="@{vm.creteProceddure.work_environment_img}"
@@ -272,13 +283,24 @@
                     android:paddingVertical="21dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textStyle="bold"
-                        android:text="企业荣誉"
-                        android:textSize="16sp"
-                        android:textColor="@color/titleColor"
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="企业荣誉"
+                            android:textSize="16sp"
+                            android:textColor="@color/titleColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="  (最多12张)"
+                            android:textSize="11sp"
+                            android:textColor="@color/gray89"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:orientation="horizontal"
                         refreshList="@{vm.creteProceddure.enterprise_honor_img}"
@@ -297,13 +319,24 @@
                     android:paddingVertical="21dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textStyle="bold"
-                        android:text="守信合约"
-                        android:textSize="16sp"
-                        android:textColor="@color/titleColor"
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="守信合约"
+                            android:textSize="16sp"
+                            android:textColor="@color/titleColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="  (最多12张)"
+                            android:textSize="11sp"
+                            android:textColor="@color/gray89"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:orientation="horizontal"
                         refreshList="@{vm.creteProceddure.keep_faith_contract_img}"

@@ -39,7 +39,6 @@ public class CommissionAdapter extends SimpleBaseBindingAdapter<CommissionItemBe
                 binding.tvQjd.setText("重新建档");
                 break;
             default:break;
-
         }
         binding.tvQjd.setOnClickListener(v -> ARouter.getInstance().build(MyARouter.CreateProcedureActivity)
                 .withLong("company_id",item.getCompany_id())

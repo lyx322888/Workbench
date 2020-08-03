@@ -18,9 +18,6 @@ import java.util.List;
 public class DataBinderMapperImpl extends DataBinderMapper {
   private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(0);
 
-  static {
-  }
-
   @Override
   public ViewDataBinding getDataBinder(DataBindingComponent component, View view, int layoutId) {
     int localizedLayoutId = INTERNAL_LAYOUT_ID_LOOKUP.get(layoutId);
@@ -76,7 +73,7 @@ public class DataBinderMapperImpl extends DataBinderMapper {
   }
 
   private static class InnerBrLookup {
-    static final SparseArray<String> sKeys = new SparseArray<String>(9);
+    static final SparseArray<String> sKeys = new SparseArray<String>(10);
 
     static {
       sKeys.put(0, "_all");
@@ -85,16 +82,14 @@ public class DataBinderMapperImpl extends DataBinderMapper {
       sKeys.put(3, "hyAdapter");
       sKeys.put(4, "list");
       sKeys.put(5, "ryAdapter");
-      sKeys.put(6, "str");
-      sKeys.put(7, "vm");
-      sKeys.put(8, "workAdapter");
+      sKeys.put(6, "sharevm");
+      sKeys.put(7, "str");
+      sKeys.put(8, "vm");
+      sKeys.put(9, "workAdapter");
     }
   }
 
   private static class InnerLayoutIdLookup {
     static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(0);
-
-    static {
-    }
   }
 }

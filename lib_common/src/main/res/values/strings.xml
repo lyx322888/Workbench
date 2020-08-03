@@ -10,5 +10,7 @@
     <string name="jdrq">建档日期&#160;&#160;</string>
     <string name="fzrq">发证日期&#160;&#160;</string>
     <string name="dqrq">到期日期&#160;&#160;</string>
+    <string name="tjsj">提交时间:</string>
     <string name="yuan">元</string>
+    <string name="bhyy">驳回原因:</string>
 </resources>

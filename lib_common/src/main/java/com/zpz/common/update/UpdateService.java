@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 
+import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseApplication;
 
 import java.io.File;
@@ -82,14 +83,14 @@ public class UpdateService extends Service {
                 //8.0的手机判断是否有安装未知应用权限 8.0以上自动判断canRequestPackageInstalls
                 boolean installAllowed= getPackageManager().canRequestPackageInstalls();
                 if(installAllowed){
-                    Uri apkUri = FileProvider.getUriForFile(BaseApplication.getInstance(), "com.zpz.common.provider", file);
+                    Uri apkUri = FileProvider.getUriForFile(BaseApplication.getInstance(),  AppConfig.APPPROVIDER, file);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
                 }else {
                     startInstallPermissionSettingActivity();
                 }
             }else {
-                Uri apkUri = FileProvider.getUriForFile(BaseApplication.getInstance(), "com.zpz.common.provider", file);
+                Uri apkUri = FileProvider.getUriForFile(BaseApplication.getInstance(),  AppConfig.APPPROVIDER, file);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
             }

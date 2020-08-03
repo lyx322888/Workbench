@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.zpz.common.base.AppConfig;
 import com.zpz.common.base.BaseFragment;
 import com.zpz.common.base.DataBindingConfig;
 import com.zpz.common.base.MyARouter;
@@ -74,14 +75,14 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
         public void learningMaterials(View view){
             ARouter.getInstance().build(MyARouter.BaseWebActivity)
                     .withString("title","资料下载")
-                    .withString("url","https://qygs.org.cn/wap/firstassess/first_assess_one").navigation();
+                    .withString("url", AppConfig.MATERIAL).navigation();
         }
 
         //学习课堂
         public void LearningVideo(View view){
             ARouter.getInstance().build(MyARouter.BaseWebActivity)
                     .withString("title","学习课堂")
-                    .withString("url","https://api.qygs.org.cn/workerapi/htmlpage/study_video").navigation();
+                    .withString("url",AppConfig.STUDYVIDEO).navigation();
         }
     }
 }
